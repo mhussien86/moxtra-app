@@ -1,8 +1,10 @@
 package com.madroid.moxtraapp.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,9 @@ import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.LoginRequestDTO;
 import com.madroid.moxtraapp.dtos.LoginResponseDTO;
+import com.madroid.moxtraapp.ui.contactslist.ContactsListActivity;
+
+import org.parceler.Parcels;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -58,7 +63,14 @@ public class LoginFragment extends BaseFragment implements LoginView{
     @OnClick(R.id.login_button)
     protected void onLoginButtonClicked(View view){
 
-        loginPresenter.login(new LoginRequestDTO(emailEditText.getText().toString(),passwordEditText.getText().toString()));
+        if(TextUtils.isEmpty(emailEditText.getText())){
+            emailEditText.setError("Please enter your email address");
+        }else if(TextUtils.isEmpty(passwordEditText.getText())){
+            passwordEditText.setError("Please enter your password");
+        }else {
+            loginPresenter.login(new LoginRequestDTO(emailEditText.getText().toString(),passwordEditText.getText().toString()));
+        }
+
     }
 
     @Override
@@ -82,9 +94,9 @@ public class LoginFragment extends BaseFragment implements LoginView{
     @Override
     public void succededToLogin(LoginResponseDTO loginResponseDTO) {
 
-        Snackbar.make(getView(),""+loginResponseDTO.getUserData().getFirstName(),Snackbar.LENGTH_LONG).show();
-
-
-
+        Intent intent = new Intent(getActivity(), ContactsListActivity.class);
+        intent.putExtra("data", Parcels.wrap(loginResponseDTO));
+        startActivity(intent);
+        getActivity().finish();
     }
 }

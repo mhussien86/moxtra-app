@@ -43,7 +43,7 @@ public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnLog
     public void onLoginSucceed(LoginResponseDTO loginResponseDTO) {
 
         loginView.hideProgress();
-        onLoginSucceed(loginResponseDTO);
+        loginView.succededToLogin(loginResponseDTO);
 
     }
 

@@ -6,7 +6,9 @@ import com.madroid.moxtraapp.dtos.LoginRequestDTO;
 import com.madroid.moxtraapp.dtos.LoginResponseDTO;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 
@@ -32,9 +34,9 @@ public class LoginInteractorImpl implements LoginInteractor{
         Observable<LoginResponseDTO> observable = accountManagement.loginUser(loginRequestDTO);
 
         compositeSubscription.add(observable
-                .subscribeOn(rx.schedulers.Schedulers.newThread())
+                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new rx.Subscriber<LoginResponseDTO>() {
+                .subscribe(new Subscriber<LoginResponseDTO>() {
                     @Override
                     public void onCompleted() {
 

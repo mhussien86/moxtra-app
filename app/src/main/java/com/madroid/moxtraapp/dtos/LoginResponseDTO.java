@@ -3,79 +3,98 @@ package com.madroid.moxtraapp.dtos;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
 /**
  * Created by mohamed on 13/01/17.
  */
+@Parcel
 public class LoginResponseDTO {
 
-    @SerializedName("accessExpiresAfter")
+
+    @SerializedName("response")
     @Expose
-    private Integer accessExpiresAfter;
-    @SerializedName("accessToken")
-    @Expose
-    private String accessToken;
-    @SerializedName("dataVersion")
-    @Expose
-    private String dataVersion;
-    @SerializedName("userData")
-    @Expose
-    private UserData userData;
+    public Response response;
 
-    public Integer getAccessExpiresAfter() {
-        return accessExpiresAfter;
+    public Response getResponse() {
+        return response;
     }
 
-    public void setAccessExpiresAfter(Integer accessExpiresAfter) {
-        this.accessExpiresAfter = accessExpiresAfter;
+    public void setResponse(Response response) {
+        this.response = response;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    @Parcel
+    public static class Response {
+
+        @SerializedName("accessExpiresAfter")
+        @Expose
+        public Integer accessExpiresAfter;
+        @SerializedName("accessToken")
+        @Expose
+        public String accessToken;
+        @SerializedName("dataVersion")
+        @Expose
+        public String dataVersion;
+        @SerializedName("userData")
+        @Expose
+        public UserData userData;
+
+        public Integer getAccessExpiresAfter() {
+            return accessExpiresAfter;
+        }
+
+        public void setAccessExpiresAfter(Integer accessExpiresAfter) {
+            this.accessExpiresAfter = accessExpiresAfter;
+        }
+
+        public String getAccessToken() {
+            return accessToken;
+        }
+
+        public void setAccessToken(String accessToken) {
+            this.accessToken = accessToken;
+        }
+
+        public String getDataVersion() {
+            return dataVersion;
+        }
+
+        public void setDataVersion(String dataVersion) {
+            this.dataVersion = dataVersion;
+        }
+
+        public UserData getUserData() {
+            return userData;
+        }
+
+        public void setUserData(UserData userData) {
+            this.userData = userData;
+        }
     }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public String getDataVersion() {
-        return dataVersion;
-    }
-
-    public void setDataVersion(String dataVersion) {
-        this.dataVersion = dataVersion;
-    }
-
-    public UserData getUserData() {
-        return userData;
-    }
-
-    public void setUserData(UserData userData) {
-        this.userData = userData;
-    }
-
-
-    public class Contact {
+    @Parcel
+    public static class Contact {
 
         @SerializedName("firstName")
         @Expose
-        private String firstName;
+        public String firstName;
         @SerializedName("lastName")
         @Expose
-        private String lastName;
+        public String lastName;
         @SerializedName("phone")
         @Expose
-        private Object phone;
+        public String phone;
         @SerializedName("email")
         @Expose
-        private String email;
+        public String email;
         @SerializedName("role")
         @Expose
-        private String role;
+        public String role;
         @SerializedName("contacts")
         @Expose
-        private Object contacts;
+        public List<Contact> contacts = null;
 
         public String getFirstName() {
             return firstName;
@@ -93,11 +112,11 @@ public class LoginResponseDTO {
             this.lastName = lastName;
         }
 
-        public Object getPhone() {
+        public String getPhone() {
             return phone;
         }
 
-        public void setPhone(Object phone) {
+        public void setPhone(String phone) {
             this.phone = phone;
         }
 
@@ -117,38 +136,38 @@ public class LoginResponseDTO {
             this.role = role;
         }
 
-        public Object getContacts() {
+        public List<Contact> getContacts() {
             return contacts;
         }
 
-        public void setContacts(Object contacts) {
+        public void setContacts(List<Contact> contacts) {
             this.contacts = contacts;
         }
 
     }
 
 
-
-    public class UserData {
+    @Parcel
+    public static class UserData {
 
         @SerializedName("firstName")
         @Expose
-        private String firstName;
+        public String firstName;
         @SerializedName("lastName")
         @Expose
-        private String lastName;
+        public String lastName;
         @SerializedName("phone")
         @Expose
-        private String phone;
+        public String phone;
         @SerializedName("email")
         @Expose
-        private String email;
+        public String email;
         @SerializedName("role")
         @Expose
-        private String role;
+        public String role;
         @SerializedName("contacts")
         @Expose
-        private List<Contact> contacts = null;
+        public List<Contact> contacts = null;
 
         public String getFirstName() {
             return firstName;
