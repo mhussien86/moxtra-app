@@ -1,13 +1,14 @@
 package com.madroid.moxtraapp.ui.login;
 
 import com.madroid.moxtraapp.dtos.LoginRequestDTO;
+import com.madroid.moxtraapp.dtos.LoginResponseDTO;
 import com.madroid.moxtraapp.interactors.LoginInteractor;
 import com.madroid.moxtraapp.interactors.LoginInteractorImpl;
 
 /**
  * Created by mohamed on 15/01/17.
  */
-public class LoginPresenterImpl implements LoginPresenter{
+public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnLoginFinished {
 
     private LoginView loginView;
     private LoginInteractor loginInteractor ;
@@ -23,7 +24,9 @@ public class LoginPresenterImpl implements LoginPresenter{
     public void login(LoginRequestDTO loginRequestDTO) {
 
 
+        loginView.showProgress();
 
+        loginInteractor.login(loginRequestDTO,this);
 
     }
 
@@ -31,6 +34,23 @@ public class LoginPresenterImpl implements LoginPresenter{
     public void onDestroy() {
 
 
+        loginView.hideProgress();
+        loginInteractor.unsubscribe();
 
+    }
+
+    @Override
+    public void onLoginSucceed(LoginResponseDTO loginResponseDTO) {
+
+        loginView.hideProgress();
+        onLoginSucceed(loginResponseDTO);
+
+    }
+
+    @Override
+    public void onLoginFailed(String message) {
+
+        loginView.hideProgress();
+        loginView.showError(message);
     }
 }

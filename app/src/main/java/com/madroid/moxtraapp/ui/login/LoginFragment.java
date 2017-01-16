@@ -6,13 +6,17 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
+import com.madroid.moxtraapp.dtos.LoginRequestDTO;
 import com.madroid.moxtraapp.dtos.LoginResponseDTO;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by mohamed on 15/01/17.
@@ -29,12 +33,16 @@ public class LoginFragment extends BaseFragment implements LoginView{
     @Bind(R.id.layout_loading)
     View loadingLayout ;
 
+    @Bind(R.id.login_button)
+    Button loginButton ;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.activity_login,container,false);
+        ButterKnife.bind(this,rootView);
+
         loginPresenter = new LoginPresenterImpl(this);
 
         return rootView;
@@ -45,6 +53,12 @@ public class LoginFragment extends BaseFragment implements LoginView{
     public void onDestroy() {
         super.onDestroy();
 
+    }
+
+    @OnClick(R.id.login_button)
+    protected void onLoginButtonClicked(View view){
+
+        loginPresenter.login(new LoginRequestDTO(emailEditText.getText().toString(),passwordEditText.getText().toString()));
     }
 
     @Override
