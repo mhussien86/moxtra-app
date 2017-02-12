@@ -1,6 +1,8 @@
 package com.madroid.moxtraapp.ui.login;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
@@ -18,9 +21,12 @@ import com.madroid.moxtraapp.dtos.LoginRequestDTO;
 import com.madroid.moxtraapp.dtos.LoginResponseDTO;
 import com.madroid.moxtraapp.ui.contactslist.ContactsListActivity;
 import com.moxtra.sdk.MXAccountManager;
+import com.moxtra.sdk.MXSDKConfig;
 import com.moxtra.sdk.MXSDKException;
 
 import org.parceler.Parcels;
+
+import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,7 +35,7 @@ import butterknife.OnClick;
 /**
  * Created by mohamed on 15/01/17.
  */
-public class LoginFragment extends BaseFragment implements LoginView{
+public class LoginFragment extends BaseFragment implements LoginView, MXAccountManager.MXAccountLinkListener {
 
     LoginPresenter loginPresenter ;
     @Bind(R.id.username)
@@ -108,9 +114,33 @@ public class LoginFragment extends BaseFragment implements LoginView{
             Log.e(TAG, "Error when creating MXAccountManager instance.", invalidParameter);
         }
 
+        try {
+
+            LoginResponseDTO.UserData user = loginResponseDTO.getResponse().getUserData();
+            Bitmap avatar = BitmapFactory.decodeStream(getActivity().getAssets().open(String.valueOf(R.drawable.wifi_state4)));
+            final MXSDKConfig.MXUserInfo mxUserInfo = new MXSDKConfig.MXUserInfo(user.email, MXSDKConfig.MXUserIdentityType.IdentityUniqueId);
+            final MXSDKConfig.MXProfileInfo mxProfileInfo = new MXSDKConfig.MXProfileInfo(user.firstName, user.lastName, avatar);
+            MXAccountManager.getInstance().setupUser(mxUserInfo, mxProfileInfo, null, null, this);
+        } catch (IOException e) {
+            Log.e(TAG, "Can't decode avatar.", e);
+        }
         Intent intent = new Intent(getActivity(), ContactsListActivity.class);
         intent.putExtra("data", Parcels.wrap(loginResponseDTO));
         startActivity(intent);
         getActivity().finish();
+    }
+
+    @Override
+    public void onLinkAccountDone(boolean success) {
+
+
+        if (success) {
+            Log.i(TAG, "Linked to moxtra account successfully.");
+//            startChatListActivity();
+        } else {
+            Toast.makeText(getActivity(), "Failed to setup moxtra user.", Toast.LENGTH_LONG).show();
+            Log.e(TAG, "Failed to setup moxtra user.");
+//            showProgress(false);
+        }
     }
 }
