@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.LoginRequestDTO;
 import com.madroid.moxtraapp.dtos.LoginResponseDTO;
 import com.madroid.moxtraapp.ui.contactslist.ContactsListActivity;
+import com.moxtra.sdk.MXAccountManager;
+import com.moxtra.sdk.MXSDKException;
 
 import org.parceler.Parcels;
 
@@ -91,8 +94,19 @@ public class LoginFragment extends BaseFragment implements LoginView{
         Snackbar.make(getView(),""+message,Snackbar.LENGTH_LONG).show();
     }
 
+    private static final String TAG = "MoxieChatApplication";
+
     @Override
     public void succededToLogin(LoginResponseDTO loginResponseDTO) {
+
+        try {
+            MXAccountManager.createInstance(getActivity(), loginResponseDTO.getResponse().getClientId(), loginResponseDTO.getResponse().clientSecret, true);
+            Log.e(TAG,  MXAccountManager.getInstance().getMyToken()+ MXAccountManager.getInstance().getMyUserID());
+            Log.e(TAG,  "Logged in and integrated with the client id and client secret new");
+
+        } catch (MXSDKException.InvalidParameter invalidParameter) {
+            Log.e(TAG, "Error when creating MXAccountManager instance.", invalidParameter);
+        }
 
         Intent intent = new Intent(getActivity(), ContactsListActivity.class);
         intent.putExtra("data", Parcels.wrap(loginResponseDTO));
