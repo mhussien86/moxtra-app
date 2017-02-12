@@ -117,9 +117,9 @@ public class LoginFragment extends BaseFragment implements LoginView, MXAccountM
         try {
 
             LoginResponseDTO.UserData user = loginResponseDTO.getResponse().getUserData();
-            Bitmap avatar = BitmapFactory.decodeStream(getActivity().getAssets().open(String.valueOf(R.drawable.wifi_state4)));
+            Bitmap avatar = BitmapFactory.decodeStream(getActivity().getAssets().open("A01.png"));
             final MXSDKConfig.MXUserInfo mxUserInfo = new MXSDKConfig.MXUserInfo(user.email, MXSDKConfig.MXUserIdentityType.IdentityUniqueId);
-            final MXSDKConfig.MXProfileInfo mxProfileInfo = new MXSDKConfig.MXProfileInfo(user.firstName, user.lastName, avatar);
+            final MXSDKConfig.MXProfileInfo mxProfileInfo = new MXSDKConfig.MXProfileInfo(user.firstName, user.lastName,avatar);
             MXAccountManager.getInstance().setupUser(mxUserInfo, mxProfileInfo, null, null, this);
         } catch (IOException e) {
             Log.e(TAG, "Can't decode avatar.", e);
