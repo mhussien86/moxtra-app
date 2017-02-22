@@ -2,38 +2,38 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_favorites"
+        android:id="@+id/action_timeline"
         android:enabled="true"
         android:icon="@android:drawable/btn_star"
-        android:title="@string/text_favorites"
+        android:title="@string/text_timeline"
         app:showAsAction="ifRoom"
         android:visible="true" />
     <item
-        android:id="@+id/action_schedules"
+        android:id="@+id/action_meet"
         android:enabled="true"
         android:icon="@android:drawable/btn_star"
-        android:title="@string/text_schedules"
+        android:title="@string/text_meet"
         app:showAsAction="ifRoom"
         android:visible="true" />
     <item
-        android:id="@+id/action_music"
+        android:id="@+id/action_contacts"
         android:enabled="true"
         android:icon="@android:drawable/sym_call_missed"
-        android:title="@string/text_music"
+        android:title="@string/text_Contacts"
         app:showAsAction="ifRoom"
         android:visible="true" />
     <item
-        android:id="@+id/action_whatever"
+        android:id="@+id/action_categories"
         android:enabled="true"
         android:icon="@android:drawable/sym_call_missed"
-        android:title="@string/text_music"
+        android:title="@string/text_Categories"
         app:showAsAction="ifRoom"
         android:visible="true" />
     <item
-        android:id="@+id/action_whenever"
+        android:id="@+id/action_settings"
         android:enabled="true"
         android:icon="@android:drawable/sym_call_missed"
-        android:title="@string/text_music"
+        android:title="@string/text_Settings"
         app:showAsAction="ifRoom"
         android:visible="true" />
 </menu>

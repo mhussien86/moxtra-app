@@ -12,11 +12,13 @@ import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.ui.contactslist.ContactsListFragment;
 import com.madroid.moxtraapp.ui.helper.BottomNavigationViewHelper;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
 
+    @Bind(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
 
     ButterKnife binder;
@@ -27,12 +29,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        binder.bind(this);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-
-
 
     }
 
@@ -41,19 +40,37 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Log.e("Hello ", "Favorite clicked");
         switch (item.getItemId()) {
-            case R.id.action_favorites:
+            case R.id.action_timeline:
                 BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
-                ContactsListFragment contactsListFragment = new ContactsListFragment();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container,contactsListFragment).commit();
+                startContactsFragment();
                 break;
-            case R.id.action_schedules:
+            case R.id.action_meet:
                 BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
                 break;
-            case R.id.action_music:
+            case R.id.action_contacts:
+                BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+                break;
+            case R.id.action_categories:
+                BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+                break;
+            case R.id.action_settings:
                 BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
                 break;
         }
         return true;
+    }
+
+
+    void startContactsFragment(){
+        ContactsListFragment contactsListFragment = new ContactsListFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container,contactsListFragment).commit();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binder.unbind(this);
     }
 }
