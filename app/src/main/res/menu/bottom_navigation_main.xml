@@ -18,21 +18,21 @@
     <item
         android:id="@+id/action_contacts"
         android:enabled="true"
-        android:icon="@android:drawable/sym_call_missed"
+        android:icon="@android:drawable/btn_star"
         android:title="@string/text_Contacts"
         app:showAsAction="ifRoom"
         android:visible="true" />
     <item
         android:id="@+id/action_categories"
         android:enabled="true"
-        android:icon="@android:drawable/sym_call_missed"
+        android:icon="@android:drawable/btn_star"
         android:title="@string/text_Categories"
         app:showAsAction="ifRoom"
         android:visible="true" />
     <item
         android:id="@+id/action_settings"
         android:enabled="true"
-        android:icon="@android:drawable/sym_call_missed"
+        android:icon="@android:drawable/btn_star"
         android:title="@string/text_Settings"
         app:showAsAction="ifRoom"
         android:visible="true" />

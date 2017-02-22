@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.madroid.moxtraapp.BaseActivity;
@@ -15,14 +14,13 @@ import com.madroid.moxtraapp.ui.helper.BottomNavigationViewHelper;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
 
     @Bind(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
 
     ButterKnife binder;
-
 
 
     @Override
@@ -33,12 +31,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
+        startContactsFragment();
     }
 
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Log.e("Hello ", "Favorite clicked");
         switch (item.getItemId()) {
             case R.id.action_timeline:
                 BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
@@ -61,12 +59,32 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
 
-    void startContactsFragment(){
+    void startContactsFragment() {
         ContactsListFragment contactsListFragment = new ContactsListFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.container,contactsListFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.container, contactsListFragment).commit();
     }
 
+
+    void startTimelineFragment() {
+
+
+    }
+
+    void startMeetFragment() {
+
+
+    }
+
+    void startCategoriesFragment() {
+
+
+    }
+
+    void startSettingsFragment() {
+
+
+    }
 
     @Override
     protected void onDestroy() {
