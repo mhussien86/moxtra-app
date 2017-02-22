@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_favorites"
+        android:enabled="true"
+        android:icon="@android:drawable/btn_star"
+        android:title="@string/text_favorites"
+        app:showAsAction="ifRoom"
+        android:visible="true" />
+    <item
+        android:id="@+id/action_schedules"
+        android:enabled="true"
+        android:icon="@android:drawable/btn_star"
+        android:title="@string/text_schedules"
+        app:showAsAction="ifRoom"
+        android:visible="true" />
+    <item
+        android:id="@+id/action_music"
+        android:enabled="true"
+        android:icon="@android:drawable/sym_call_missed"
+        android:title="@string/text_music"
+        app:showAsAction="ifRoom"
+        android:visible="true" />
+    <item
+        android:id="@+id/action_whatever"
+        android:enabled="true"
+        android:icon="@android:drawable/sym_call_missed"
+        android:title="@string/text_music"
+        app:showAsAction="ifRoom"
+        android:visible="true" />
+    <item
+        android:id="@+id/action_whenever"
+        android:enabled="true"
+        android:icon="@android:drawable/sym_call_missed"
+        android:title="@string/text_music"
+        app:showAsAction="ifRoom"
+        android:visible="true" />
+</menu>

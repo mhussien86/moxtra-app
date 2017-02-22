@@ -19,7 +19,7 @@ import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.LoginRequestDTO;
 import com.madroid.moxtraapp.dtos.LoginResponseDTO;
-import com.madroid.moxtraapp.ui.contactslist.ContactsListActivity;
+import com.madroid.moxtraapp.ui.MainActivity;
 import com.moxtra.sdk.MXAccountManager;
 import com.moxtra.sdk.MXSDKConfig;
 import com.moxtra.sdk.MXSDKException;
@@ -115,7 +115,6 @@ public class LoginFragment extends BaseFragment implements LoginView, MXAccountM
         }
 
         try {
-
             LoginResponseDTO.UserData user = loginResponseDTO.getResponse().getUserData();
             Bitmap avatar = BitmapFactory.decodeStream(getActivity().getAssets().open("A01.png"));
             final MXSDKConfig.MXUserInfo mxUserInfo = new MXSDKConfig.MXUserInfo(user.email, MXSDKConfig.MXUserIdentityType.IdentityUniqueId);
@@ -124,7 +123,7 @@ public class LoginFragment extends BaseFragment implements LoginView, MXAccountM
         } catch (IOException e) {
             Log.e(TAG, "Can't decode avatar.", e);
         }
-        Intent intent = new Intent(getActivity(), ContactsListActivity.class);
+        Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("data", Parcels.wrap(loginResponseDTO));
         startActivity(intent);
         getActivity().finish();
