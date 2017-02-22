@@ -10,6 +10,7 @@ import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.ui.contactslist.ContactsListFragment;
 import com.madroid.moxtraapp.ui.helper.BottomNavigationViewHelper;
+import com.madroid.moxtraapp.ui.timeline.TimelineListFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,7 +32,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
-        startContactsFragment();
+        startTimelineFragment();
     }
 
 
@@ -40,13 +41,14 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         switch (item.getItemId()) {
             case R.id.action_timeline:
                 BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
-                startContactsFragment();
+                startTimelineFragment();
                 break;
             case R.id.action_meet:
                 BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
                 break;
             case R.id.action_contacts:
                 BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+                startContactsFragment();
                 break;
             case R.id.action_categories:
                 BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
@@ -68,7 +70,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     void startTimelineFragment() {
 
-
+        TimelineListFragment timelineListFragment = new TimelineListFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, timelineListFragment).commit();
     }
 
     void startMeetFragment() {

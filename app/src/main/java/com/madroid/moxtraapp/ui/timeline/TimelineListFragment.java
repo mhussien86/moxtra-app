@@ -4,11 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
@@ -16,7 +14,6 @@ import com.moxtra.binder.sdk.MXException;
 import com.moxtra.sdk.MXChatManager;
 import com.moxtra.sdk.MXGroupChatSession;
 
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
@@ -69,22 +66,21 @@ public class TimelineListFragment extends BaseFragment {
             @Override
             public void onItemClick(MXGroupChatSession session) {
                 try {
-                    MXChatManager.getInstance().createChat("Hello", Arrays.asList(new String[]{session.getMeetID()}), new MXChatManager.OnCreateChatListener() {
+                    MXChatManager.getInstance().openChat(session.getSessionID(), new MXChatManager.OnOpenChatListener() {
                         @Override
-                        public void onCreateChatSuccess(String binderId) {
-                            Log.i("Create", "Create Chat Success. The binderId = " + binderId);
+                        public void onOpenChatSuccess() {
+
                         }
 
                         @Override
-                        public void onCreateChatFailed(int i, String s) {
-                            Log.e("create", "Failed to create chat with code: " + i + ", msg: " + s);
-                            Toast.makeText(getActivity(), "Failed to create chat: " + s, Toast.LENGTH_LONG).show();
+                        public void onOpenChatFailed(int i, String s) {
+
                         }
                     });
-
-                } catch (MXException.AccountManagerIsNotValid accountManagerIsNotValid) {
+                }catch (MXException.AccountManagerIsNotValid accountManagerIsNotValid){
 
                 }
+
             }
         });
 

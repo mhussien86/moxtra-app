@@ -48,7 +48,7 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
 
         holder.bind(sessions.get(position), listener);
         MXGroupChatSession session  = sessions.get(position);
-        holder.contactName.setText(session.getHostName());
+        holder.contactName.setText(session.getTopic());
         holder.contactMail.setText(""+session.getLastFeedContent());
     }
 
