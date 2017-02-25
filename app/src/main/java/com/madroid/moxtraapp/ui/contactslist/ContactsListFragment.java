@@ -1,25 +1,22 @@
 package com.madroid.moxtraapp.ui.contactslist;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.LoginResponseDTO;
-import com.moxtra.binder.sdk.MXException;
-import com.moxtra.sdk.MXChatManager;
+import com.madroid.moxtraapp.ui.contactdetails.ContactDetailsActivity;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,7 +45,7 @@ public class ContactsListFragment extends BaseFragment {
 
         ButterKnife.bind(this, rootView);
         try {
-            responseDTO = ((LoginResponseDTO) Parcels.unwrap(getActivity().getIntent().getParcelableExtra("data")));
+            responseDTO = Parcels.unwrap(getActivity().getIntent().getParcelableExtra("data"));
         } catch (Exception e) {
 
         }
@@ -68,23 +65,11 @@ public class ContactsListFragment extends BaseFragment {
         contactsListAdapter = new ContactsListAdapter((ArrayList<LoginResponseDTO.Contact>) responseDTO.getResponse().getUserData().getContacts(), new ContactsListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(LoginResponseDTO.Contact contact) {
-                try {
-                    MXChatManager.getInstance().createChat("Hello", Arrays.asList(new String[]{contact.email}), new MXChatManager.OnCreateChatListener() {
-                        @Override
-                        public void onCreateChatSuccess(String binderId) {
-                            Log.i("Create", "Create Chat Success. The binderId = " + binderId);
-                        }
 
-                        @Override
-                        public void onCreateChatFailed(int i, String s) {
-                            Log.e("create", "Failed to create chat with code: " + i + ", msg: " + s);
-                            Toast.makeText(getActivity(), "Failed to create chat: " + s, Toast.LENGTH_LONG).show();
-                        }
-                    });
+                Intent intent = new Intent(getActivity(), ContactDetailsActivity.class);
+                intent.putExtra("data", Parcels.wrap(contact));
+                startActivity(intent);
 
-                } catch (MXException.AccountManagerIsNotValid accountManagerIsNotValid) {
-
-                }
             }
         });
         recyclerView.setAdapter(contactsListAdapter);

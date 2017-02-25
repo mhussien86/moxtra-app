@@ -25,6 +25,9 @@
         </activity>
 
         <activity android:name=".ui.contactslist.ContactsListActivity" />
+
+        <activity android:name=".ui.contactdetails.ContactDetailsActivity" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
