@@ -35,7 +35,7 @@ import butterknife.OnClick;
 /**
  * Created by mohamed on 15/01/17.
  */
-public class LoginFragment extends BaseFragment implements LoginView, MXAccountManager.MXAccountLinkListener {
+public class LoginFragment extends BaseFragment implements LoginView{
 
     LoginPresenter loginPresenter ;
     @Bind(R.id.username)
@@ -103,11 +103,11 @@ public class LoginFragment extends BaseFragment implements LoginView, MXAccountM
     private static final String TAG = "MoxieChatApplication";
 
     @Override
-    public void succededToLogin(LoginResponseDTO loginResponseDTO) {
+    public void succededToLogin(final LoginResponseDTO loginResponseDTO) {
 
         try {
             MXAccountManager.createInstance(getActivity(), loginResponseDTO.getResponse().getClientId(), loginResponseDTO.getResponse().clientSecret, true);
-            Log.e(TAG,  MXAccountManager.getInstance().getMyToken()+ MXAccountManager.getInstance().getMyUserID());
+//            Log.e(TAG,  MXAccountManager.getInstance().getMyToken()+ MXAccountManager.getInstance().getMyUserID());
             Log.e(TAG,  "Logged in and integrated with the client id and client secret new");
 
         } catch (MXSDKException.InvalidParameter invalidParameter) {
@@ -119,27 +119,29 @@ public class LoginFragment extends BaseFragment implements LoginView, MXAccountM
             Bitmap avatar = BitmapFactory.decodeStream(getActivity().getAssets().open("A01.png"));
             final MXSDKConfig.MXUserInfo mxUserInfo = new MXSDKConfig.MXUserInfo(user.email, MXSDKConfig.MXUserIdentityType.IdentityUniqueId);
             final MXSDKConfig.MXProfileInfo mxProfileInfo = new MXSDKConfig.MXProfileInfo(user.firstName, user.lastName,avatar);
-            MXAccountManager.getInstance().setupUser(mxUserInfo, mxProfileInfo, null, null, this);
+            showProgress();
+            MXAccountManager.getInstance().setupUser(mxUserInfo, mxProfileInfo, null, null, new MXAccountManager.MXAccountLinkListener() {
+                @Override
+                public void onLinkAccountDone(boolean success) {
+                    if (success) {
+                        hideProgress();
+                        Log.i(TAG, "Linked to moxtra account successfully.");
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        intent.putExtra("data", Parcels.wrap(loginResponseDTO));
+                        startActivity(intent);
+                        getActivity().finish();
+                    } else {
+                        hideProgress();
+                        Toast.makeText(getActivity(), "Failed to setup moxtra user.", Toast.LENGTH_LONG).show();
+                        Log.e(TAG, "Failed to setup moxtra user.");
+                    }
+                }
+            });
         } catch (IOException e) {
             Log.e(TAG, "Can't decode avatar.", e);
         }
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        intent.putExtra("data", Parcels.wrap(loginResponseDTO));
-        startActivity(intent);
-        getActivity().finish();
+
     }
 
-    @Override
-    public void onLinkAccountDone(boolean success) {
 
-
-        if (success) {
-            Log.i(TAG, "Linked to moxtra account successfully.");
-//            startChatListActivity();
-        } else {
-            Toast.makeText(getActivity(), "Failed to setup moxtra user.", Toast.LENGTH_LONG).show();
-            Log.e(TAG, "Failed to setup moxtra user.");
-//            showProgress(false);
-        }
-    }
 }

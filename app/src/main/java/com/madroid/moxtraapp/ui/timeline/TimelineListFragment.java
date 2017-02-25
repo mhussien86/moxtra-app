@@ -28,26 +28,15 @@ public class TimelineListFragment extends BaseFragment {
     @Bind(R.id.recycle_view)
     RecyclerView recyclerView;
 
-    RecyclerView.Adapter contactsListAdapter;
+     TimelineListAdapter contactsListAdapter;
 
-
-//    ArrayList<LoginResponseDTO.Contact> contactList ;
-
-//    LoginResponseDTO responseDTO;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_contact_list, container, false);
-
         ButterKnife.bind(this, rootView);
-//        try {
-//            responseDTO = ((LoginResponseDTO) Parcels.unwrap(getActivity().getIntent().getParcelableExtra("data")));
-//        } catch (Exception e) {
-//
-//        }
-
         return rootView;
     }
 
@@ -88,6 +77,33 @@ public class TimelineListFragment extends BaseFragment {
 
         recyclerView.setAdapter(contactsListAdapter);
 
+//        MXChatCustomizer.setOnMeetEndListener(new OnEndMeetListener() {
+//            @Override
+//            public void onMeetEnded(String meetId) {
+//                contactsListAdapter.refreshData();
+//            }
+//
+//            @Override
+//            public void onMeetEndFailed(int errorCode, String errorMessage) {
+//                Log.e("On meet end", "onMeetEndFailed() called with: " + "errorCode = [" + errorCode + "], errorMessage = [" + errorMessage + "]");
+//            }
+//        });
+//        MXChatManager.getInstance().setGroupChatSessionCallback(new MXGroupChatSessionCallback() {
+//            @Override
+//            public void onGroupChatSessionCreated(MXGroupChatSession session) {
+//                contactsListAdapter.refreshData();
+//            }
+//
+//            @Override
+//            public void onGroupChatSessionUpdated(MXGroupChatSession session) {
+//                contactsListAdapter.refreshData();
+//            }
+//
+//            @Override
+//            public void onGroupChatSessionDeleted(MXGroupChatSession session) {
+//                contactsListAdapter.refreshData();
+//            }
+//        });
     }
 
     @Override

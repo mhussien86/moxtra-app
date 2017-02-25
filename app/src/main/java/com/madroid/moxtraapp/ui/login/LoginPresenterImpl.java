@@ -8,13 +8,13 @@ import com.madroid.moxtraapp.interactors.LoginInteractorImpl;
 /**
  * Created by mohamed on 15/01/17.
  */
-public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnLoginFinished {
+public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnLoginFinished{
 
     private LoginView loginView;
-    private LoginInteractor loginInteractor ;
+    private LoginInteractor loginInteractor;
 
-    public LoginPresenterImpl(LoginView loginView){
-        this.loginView = loginView ;
+    public LoginPresenterImpl(LoginView loginView) {
+        this.loginView = loginView;
         loginInteractor = new LoginInteractorImpl();
 
     }
@@ -26,7 +26,7 @@ public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnLog
 
         loginView.showProgress();
 
-        loginInteractor.login(loginRequestDTO,this);
+        loginInteractor.login(loginRequestDTO, this);
 
     }
 
@@ -53,4 +53,7 @@ public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnLog
         loginView.hideProgress();
         loginView.showError(message);
     }
+
+
+
 }

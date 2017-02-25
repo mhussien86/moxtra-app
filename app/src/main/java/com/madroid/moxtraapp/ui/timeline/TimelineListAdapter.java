@@ -7,8 +7,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.madroid.moxtraapp.R;
+import com.moxtra.sdk.MXChatManager;
 import com.moxtra.sdk.MXGroupChatSession;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -82,5 +85,23 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
                 }
             });
         }
+    }
+
+    private void sortData() {
+        Collections.sort(sessions, new Comparator<MXGroupChatSession>() {
+            @Override
+            public int compare(MXGroupChatSession lhs, MXGroupChatSession rhs) {
+                if (lhs.isAMeet()) return -1;
+                if (rhs.isAMeet()) return 1;
+                if (lhs.getLastFeedTimeStamp() > rhs.getLastFeedTimeStamp()) return -1;
+                return 0;
+            }
+        });
+    }
+
+    public void refreshData() {
+        sessions = MXChatManager.getInstance().getGroupChatSessions();
+        sortData();
+        notifyDataSetChanged();
     }
 }

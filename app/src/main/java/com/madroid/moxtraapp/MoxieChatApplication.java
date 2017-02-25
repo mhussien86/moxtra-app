@@ -7,7 +7,6 @@ import android.support.multidex.MultiDexApplication;
  */
 public class MoxieChatApplication  extends MultiDexApplication {
 
-
     @Override
     public void onCreate() {
         super.onCreate();

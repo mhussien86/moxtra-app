@@ -10,6 +10,7 @@ import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.ui.contactslist.ContactsListFragment;
 import com.madroid.moxtraapp.ui.helper.BottomNavigationViewHelper;
+import com.madroid.moxtraapp.ui.settings.SettingsFragment;
 import com.madroid.moxtraapp.ui.timeline.TimelineListFragment;
 
 import butterknife.Bind;
@@ -55,6 +56,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 break;
             case R.id.action_settings:
                 BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+                startSettingsFragment();
                 break;
         }
         return true;
@@ -86,7 +88,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     void startSettingsFragment() {
-
+        SettingsFragment settingsFragment = new SettingsFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, settingsFragment).commit();
 
     }
 
