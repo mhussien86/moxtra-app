@@ -126,6 +126,8 @@ public class LoginFragment extends BaseFragment implements LoginView{
                     if (success) {
                         hideProgress();
                         Log.i(TAG, "Linked to moxtra account successfully.");
+                        Log.e("Accecss token", loginResponseDTO.getResponse().getAccessToken());
+
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         intent.putExtra("data", Parcels.wrap(loginResponseDTO));
                         startActivity(intent);

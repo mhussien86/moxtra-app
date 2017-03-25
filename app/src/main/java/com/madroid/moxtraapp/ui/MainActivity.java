@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.R;
+import com.madroid.moxtraapp.ui.categories.CategoriesFragment;
 import com.madroid.moxtraapp.ui.contactslist.ContactsListFragment;
 import com.madroid.moxtraapp.ui.helper.BottomNavigationViewHelper;
 import com.madroid.moxtraapp.ui.settings.SettingsFragment;
@@ -53,6 +54,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 break;
             case R.id.action_categories:
                 BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+                startCategoriesFragment();
                 break;
             case R.id.action_settings:
                 BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
@@ -84,8 +86,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     void startCategoriesFragment() {
 
-
+        CategoriesFragment categoriesFragment = new CategoriesFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, categoriesFragment).commit();
     }
+
 
     void startSettingsFragment() {
         SettingsFragment settingsFragment = new SettingsFragment();

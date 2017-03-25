@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">MoxtraApp</string>
-    <string name="text_timeline">Timeline</string>
-    <string name="text_meet">Meet</string>
+    <string name="text_timeline">Conversations</string>
+    <string name="text_meet">Meetings</string>
     <string name="text_Contacts">Contacts</string>
-    <string name="text_Categories">Categories</string>
+    <string name="text_Categories">Groups</string>
     <string name="text_Settings">Settings</string>
     <string name="contact_name_text">Name</string>
     <string name="contact_email_text">Email</string>
