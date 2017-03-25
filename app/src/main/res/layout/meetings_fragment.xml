@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <devs.mulham.horizontalcalendar.HorizontalCalendarView
@@ -11,37 +11,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        app:textColorSelected="#FFFF"/>
+        app:textColorSelected="#FFFF" />
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="3">
-
-
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:id="@+id/meet_now"
-        android:text="@string/meet_now"
-        android:drawableBottom="@drawable/add_binder_shape"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:id="@+id/join_meet"
-        android:text="@string/join_meet"
-        android:drawableBottom="@drawable/add_binder_shape"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:id="@+id/join_now"
-        android:text="@string/scedual_meet"
-        android:drawableBottom="@drawable/add_binder_shape"/>
-</LinearLayout>
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+
+        <Button
+            android:id="@+id/meet_now"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableBottom="@drawable/add_binder_shape"
+            android:text="@string/meet_now" />
+
+        <Button
+            android:id="@+id/join_meet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableBottom="@drawable/add_binder_shape"
+            android:text="@string/join_meet" />
+
+        <Button
+            android:id="@+id/join_now"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableBottom="@drawable/add_binder_shape"
+            android:text="@string/scedual_meet" />
+    </LinearLayout>
 
 
 </LinearLayout>

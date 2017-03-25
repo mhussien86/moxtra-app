@@ -17,28 +17,27 @@ import butterknife.ButterKnife;
 /**
  * Created by mohamed on 16/01/17.
  */
-public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactViewHolder>{
+public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactViewHolder> {
 
     private final OnItemClickListener listener;
 
-    private ArrayList<LoginResponseDTO.Contact> contactsList ;
+    private ArrayList<LoginResponseDTO.Contact> contactsList;
 
     public interface OnItemClickListener {
         void onItemClick(LoginResponseDTO.Contact contact);
     }
 
-    public ContactsListAdapter(ArrayList<LoginResponseDTO.Contact> contactsList,OnItemClickListener onItemClickListener){
+    public ContactsListAdapter(ArrayList<LoginResponseDTO.Contact> contactsList, OnItemClickListener onItemClickListener) {
 
-        this.listener = onItemClickListener ;
-        this.contactsList = contactsList ;
+        this.listener = onItemClickListener;
+        this.contactsList = contactsList;
     }
-
 
 
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_list_item,parent,false);
+        View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_list_item, parent, false);
 
         return new ContactViewHolder(listItem);
     }
@@ -47,9 +46,9 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     public void onBindViewHolder(ContactViewHolder holder, int position) {
 
         holder.bind(this.contactsList.get(position), listener);
-        LoginResponseDTO.Contact contact  = this.contactsList.get(position);
-        holder.contactName.setText(contact.getFirstName()+" "+ contact.getLastName());
-        holder.contactMail.setText(""+contact.getEmail());
+        LoginResponseDTO.Contact contact = this.contactsList.get(position);
+        holder.contactName.setText(contact.getFirstName() + " " + contact.getLastName());
+        holder.contactMail.setText("" + contact.getEmail());
     }
 
     @Override
@@ -58,19 +57,17 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     }
 
 
-
-
-    public class ContactViewHolder extends RecyclerView.ViewHolder{
+    public class ContactViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.contactName)
-        TextView contactName ;
+        TextView contactName;
 
         @Bind(R.id.contactMail)
-        TextView contactMail ;
+        TextView contactMail;
 
         public ContactViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         public void bind(final LoginResponseDTO.Contact contact, final ContactsListAdapter.OnItemClickListener listener) {

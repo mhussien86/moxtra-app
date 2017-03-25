@@ -1,74 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:background="@color/colorPrimary"
         android:gravity="center"
-        android:background="@color/colorPrimary">
+        android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/user_default_avatar"
-            android:layout_gravity="center_vertical|center_horizontal"/>
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:src="@drawable/user_default_avatar" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/contact_name"
-            android:layout_gravity="center_horizontal"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:gravity="center"/>
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/contact_email"
             android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:textColor="@color/white"
-            android:gravity="center"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/contact_phone"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/white"
-            android:gravity="center"/>
-    </LinearLayout>
+            android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/contact_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/contact_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:textColor="@color/white" />
+    </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:orientation="vertical"
-        android:weightSum="2"
-        android:layout_margin="16dp">
+        android:weightSum="2">
 
         <Button
-            android:text="@string/contact_chat_text"
+            android:id="@+id/chat_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/chat_button"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
-            android:textColor="@color/white"/>
+            android:text="@string/contact_chat_text"
+            android:textColor="@color/white" />
 
         <Button
+            android:id="@+id/meet_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/meet_button"
-            android:text="@string/contact_meet_text"
-            android:layout_weight="1"
             android:layout_marginTop="16dp"
+            android:layout_weight="1"
             android:background="@color/yellow_900"
-            android:textColor="@color/white"/>
+            android:text="@string/contact_meet_text"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 </LinearLayout>
