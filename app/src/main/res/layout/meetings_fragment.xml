@@ -13,7 +13,35 @@
         android:background="@color/colorPrimary"
         app:textColorSelected="#FFFF"/>
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="3">
 
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/meet_now"
+        android:text="@string/meet_now"
+        android:drawableBottom="@drawable/add_binder_shape"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/join_meet"
+        android:text="@string/join_meet"
+        android:drawableBottom="@drawable/add_binder_shape"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/join_now"
+        android:text="@string/scedual_meet"
+        android:drawableBottom="@drawable/add_binder_shape"/>
+</LinearLayout>
 
 
 </LinearLayout>

@@ -43,7 +43,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:cardview-v7:$SUPPORT_LIBRARY_VERSION"
 
-    compile ('com.moxtra:chat-sdk:3.4.4') {
+    compile ("com.moxtra:chat-sdk:$CHAT_SDK_VERSION") {
         exclude group: 'com.google.android'
     }
     compile 'com.jakewharton:butterknife:7.0.1'
