@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.madroid.moxtraapp.R;
@@ -70,12 +69,12 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView itemImage;
+//        public ImageView itemImage;
         public TextView itemText;
 
         public MyViewHolder(View view) {
             super(view);
-            itemImage = (ImageView) view.findViewById(R.id.imageView);
+//            itemImage = (ImageView) view.findViewById(R.id.imageView);
             itemText = (TextView) view.findViewById(R.id.item_text);
         }
 

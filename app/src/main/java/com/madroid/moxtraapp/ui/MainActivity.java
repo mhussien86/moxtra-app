@@ -11,6 +11,7 @@ import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.ui.categories.CategoriesFragment;
 import com.madroid.moxtraapp.ui.contactslist.ContactsListFragment;
 import com.madroid.moxtraapp.ui.helper.BottomNavigationViewHelper;
+import com.madroid.moxtraapp.ui.meet.MeetingsFragment;
 import com.madroid.moxtraapp.ui.settings.SettingsFragment;
 import com.madroid.moxtraapp.ui.timeline.TimelineListFragment;
 
@@ -47,6 +48,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 break;
             case R.id.action_meet:
                 BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+                startMeetFragment();
                 break;
             case R.id.action_contacts:
                 BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
@@ -80,7 +82,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     void startMeetFragment() {
-
+        MeetingsFragment meetingsFragment = new MeetingsFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, meetingsFragment).commit();
 
     }
 

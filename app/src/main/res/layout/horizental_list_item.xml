@@ -4,13 +4,13 @@
     android:layout_height="wrap_content">
 
 
-    <ImageView
+<!--    <ImageView
         android:layout_width="120dp"
         android:layout_height="150dp"
         android:id="@+id/imageView"
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
-        android:paddingRight="10dp"/>
+        android:paddingRight="10dp"/>-->
 
     <TextView
         android:layout_height="wrap_content"
