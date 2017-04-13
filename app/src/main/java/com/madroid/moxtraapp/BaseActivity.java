@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.madroid.moxtraapp.ui.login.LoginActivity;
 import com.moxtra.sdk.MXAccountManager;
 import com.moxtra.sdk.MXSDKConfig;
@@ -31,4 +30,7 @@ public class BaseActivity extends AppCompatActivity implements MXAccountManager.
             finish();
         }
     }
+
+
+
 }

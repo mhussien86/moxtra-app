@@ -2,8 +2,8 @@ package com.madroid.moxtraapp.ui.login;
 
 import com.madroid.moxtraapp.dtos.LoginRequestDTO;
 import com.madroid.moxtraapp.dtos.LoginResponseDTO;
-import com.madroid.moxtraapp.interactors.LoginInteractor;
-import com.madroid.moxtraapp.interactors.LoginInteractorImpl;
+import com.madroid.moxtraapp.interactors.logininteractors.LoginInteractor;
+import com.madroid.moxtraapp.interactors.logininteractors.LoginInteractorImpl;
 
 /**
  * Created by mohamed on 15/01/17.

@@ -1,4 +1,4 @@
-package com.madroid.moxtraapp.interactors;
+package com.madroid.moxtraapp.interactors.logininteractors;
 
 import com.madroid.moxtraapp.dtos.LoginRequestDTO;
 import com.madroid.moxtraapp.dtos.LoginResponseDTO;

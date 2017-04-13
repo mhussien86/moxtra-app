@@ -1,4 +1,4 @@
-package com.madroid.moxtraapp.interactors;
+package com.madroid.moxtraapp.interactors.logininteractors;
 
 import com.madroid.moxtraapp.data.ServiceGenerator;
 import com.madroid.moxtraapp.data.api.AccountManagement;
