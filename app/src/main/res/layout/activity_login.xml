@@ -55,6 +55,16 @@
             android:textColorHint="@color/pastelgray"
             android:textSize="18sp" />
 
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Remember me"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/activity_vertical_margin"
+            android:textColor="@color/dimgray"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,6 +76,8 @@
             android:text="FORGOT YOUR PASSWORD ?"
             android:textColor="@color/dimgray"
             android:textSize="12sp" />
+
+
 
         <Button
             android:id="@+id/login_button"

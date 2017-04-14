@@ -6,12 +6,14 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -50,6 +52,9 @@ public class LoginFragment extends BaseFragment implements LoginView{
     @Bind(R.id.login_button)
     Button loginButton ;
 
+    @Bind(R.id.checkBox)
+    CheckBox checkBox ;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -69,18 +74,24 @@ public class LoginFragment extends BaseFragment implements LoginView{
 
     }
 
-    @OnClick(R.id.login_button)
+    @OnClick({R.id.login_button, R.id.checkBox})
     protected void onLoginButtonClicked(View view){
 
-        if(TextUtils.isEmpty(emailEditText.getText())){
-            emailEditText.setError("Please enter your email address");
-        }else if(TextUtils.isEmpty(passwordEditText.getText())){
-            passwordEditText.setError("Please enter your password");
-        }else {
-            loginPresenter.login(new LoginRequestDTO(emailEditText.getText().toString(),passwordEditText.getText().toString()));
+        if(view.getId()==R.id.login_button) {
+            if (TextUtils.isEmpty(emailEditText.getText())) {
+                emailEditText.setError("Please enter your email address");
+            } else if (TextUtils.isEmpty(passwordEditText.getText())) {
+                passwordEditText.setError("Please enter your password");
+            } else {
+                loginPresenter.login(new LoginRequestDTO(emailEditText.getText().toString(), passwordEditText.getText().toString()));
+            }
+        }else if (view.getId()==R.id.checkBox){
+
+
         }
 
     }
+
 
     @Override
     public void showProgress() {
@@ -109,6 +120,9 @@ public class LoginFragment extends BaseFragment implements LoginView{
             MXAccountManager.createInstance(getActivity(), loginResponseDTO.getResponse().getClientId(), loginResponseDTO.getResponse().clientSecret, true);
 //            Log.e(TAG,  MXAccountManager.getInstance().getMyToken()+ MXAccountManager.getInstance().getMyUserID());
             Log.e(TAG,  "Logged in and integrated with the client id and client secret new");
+            if(checkBox.isChecked()){
+                saveUserData(emailEditText.getText(), passwordEditText.getText());
+            }
 
         } catch (MXSDKException.InvalidParameter invalidParameter) {
             Log.e(TAG, "Error when creating MXAccountManager instance.", invalidParameter);
@@ -142,6 +156,11 @@ public class LoginFragment extends BaseFragment implements LoginView{
         } catch (IOException e) {
             Log.e(TAG, "Can't decode avatar.", e);
         }
+
+    }
+
+    private void saveUserData(Editable text, Editable text1) {
+
 
     }
 

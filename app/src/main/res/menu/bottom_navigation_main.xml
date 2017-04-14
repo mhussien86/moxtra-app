@@ -4,36 +4,36 @@
     <item
         android:id="@+id/action_timeline"
         android:enabled="true"
-        android:icon="@android:drawable/btn_star"
+        android:icon="@drawable/stateful_tabbar_timeline"
         android:title="@string/text_timeline"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:visible="true" />
     <item
         android:id="@+id/action_meet"
         android:enabled="true"
-        android:icon="@android:drawable/btn_star"
+        android:icon="@drawable/stateful_tabbar_meet"
         android:title="@string/text_meet"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:visible="true" />
     <item
         android:id="@+id/action_contacts"
         android:enabled="true"
-        android:icon="@android:drawable/btn_star"
+        android:icon="@drawable/stateful_tabbar_contacts"
         android:title="@string/text_Contacts"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:visible="true" />
     <item
         android:id="@+id/action_categories"
         android:enabled="true"
-        android:icon="@android:drawable/btn_star"
+        android:icon="@drawable/stateful_tabbar_categories"
         android:title="@string/text_Categories"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:visible="true" />
     <item
         android:id="@+id/action_settings"
         android:enabled="true"
-        android:icon="@android:drawable/btn_star"
+        android:icon="@drawable/stateful_tabbar_profile"
         android:title="@string/text_Settings"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:visible="true" />
 </menu>
