@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+    <string name="google_maps_api" translatable="false" templateMergeStrategy="preserve">
+
+        <!--AIzaSyAGeEYfitpdIJL5TDPLXdtEDk9WaFgPzQM-->
+        <!--AIzaSyBvj1rlQGVl6D2UC0Xn3uwmP3_Y_gxMJDE-->
+        <!--AIzaSyBvj1rlQGVl6D2UC0Xn3uwmP3_Y_gxMJDE-->
+        AIzaSyAH2KLI5GqitesKPIWRzF8wUnfK-Y_TOx4
+    </string>
+
+</resources>
