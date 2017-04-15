@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import com.madroid.moxtraapp.AppConstants;
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.LoginRequestDTO;
@@ -25,14 +24,12 @@ import com.madroid.moxtraapp.ui.MainActivity;
 import com.moxtra.sdk.MXAccountManager;
 import com.moxtra.sdk.MXSDKConfig;
 import com.moxtra.sdk.MXSDKException;
-
 import org.parceler.Parcels;
-
 import java.io.IOException;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import utils.PreferencesUtils;
 
 /**
  * Created by mohamed on 15/01/17.
@@ -63,7 +60,9 @@ public class LoginFragment extends BaseFragment implements LoginView{
         ButterKnife.bind(this,rootView);
 
         loginPresenter = new LoginPresenterImpl(this);
-
+        if(PreferencesUtils.getInstance(getActivity()).getBoolean(AppConstants.IS_LOGGED_IN)){
+         loginWithSavedData();
+        }
         return rootView;
     }
 
@@ -116,12 +115,13 @@ public class LoginFragment extends BaseFragment implements LoginView{
     @Override
     public void succededToLogin(final LoginResponseDTO loginResponseDTO) {
 
+
         try {
             MXAccountManager.createInstance(getActivity(), loginResponseDTO.getResponse().getClientId(), loginResponseDTO.getResponse().clientSecret, true);
 //            Log.e(TAG,  MXAccountManager.getInstance().getMyToken()+ MXAccountManager.getInstance().getMyUserID());
             Log.e(TAG,  "Logged in and integrated with the client id and client secret new");
             if(checkBox.isChecked()){
-                saveUserData(emailEditText.getText(), passwordEditText.getText());
+                saveUserData(emailEditText.getText().toString(), passwordEditText.getText().toString());
             }
 
         } catch (MXSDKException.InvalidParameter invalidParameter) {
@@ -159,8 +159,18 @@ public class LoginFragment extends BaseFragment implements LoginView{
 
     }
 
-    private void saveUserData(Editable text, Editable text1) {
+    private void saveUserData(String email, String password) {
 
+        PreferencesUtils preferencesUtils = PreferencesUtils.getInstance(getContext());
+        preferencesUtils.setBoolean(AppConstants.IS_LOGGED_IN,true);
+        preferencesUtils.setString(AppConstants.USER_EMAIL,email);
+        preferencesUtils.setString(AppConstants.USER_PASSWORD,password);
+
+    }
+
+    private void loginWithSavedData(){
+
+        loginPresenter.login(new LoginRequestDTO(PreferencesUtils.getInstance(getActivity()).getString(AppConstants.USER_EMAIL),PreferencesUtils.getInstance(getActivity()).getString(AppConstants.USER_PASSWORD)));
 
     }
 
