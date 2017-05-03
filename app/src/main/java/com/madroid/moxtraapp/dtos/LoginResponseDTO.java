@@ -116,6 +116,27 @@ public class LoginResponseDTO {
         @Expose
         public List<Contact> contacts = null;
 
+        public String profilePictureURL ;
+
+        public String moxtraOrgId ;
+
+        public String getProfilePictureURL() {
+            return profilePictureURL;
+        }
+
+        public void setProfilePictureURL(String profilePictureURL) {
+            this.profilePictureURL = profilePictureURL;
+        }
+
+        public String getMoxtraOrgId() {
+            return moxtraOrgId;
+        }
+
+        public void setMoxtraOrgId(String moxtraOrgId) {
+            this.moxtraOrgId = moxtraOrgId;
+        }
+
+
         public String getFirstName() {
             return firstName;
         }
@@ -188,6 +209,28 @@ public class LoginResponseDTO {
         @SerializedName("contacts")
         @Expose
         public List<Contact> contacts = null;
+
+        public String profilePictureURL ;
+
+        public String moxtraOrgId ;
+
+        public String getProfilePictureURL() {
+            return profilePictureURL;
+        }
+
+        public void setProfilePictureURL(String profilePictureURL) {
+            this.profilePictureURL = profilePictureURL;
+        }
+
+        public String getMoxtraOrgId() {
+            return moxtraOrgId;
+        }
+
+        public void setMoxtraOrgId(String moxtraOrgId) {
+            this.moxtraOrgId = moxtraOrgId;
+        }
+
+
 
         public String getFirstName() {
             return firstName;

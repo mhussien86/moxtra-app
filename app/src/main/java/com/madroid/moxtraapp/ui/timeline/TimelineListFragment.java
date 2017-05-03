@@ -1,5 +1,6 @@
 package com.madroid.moxtraapp.ui.timeline;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.PopupWindow;
 
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
@@ -104,6 +107,22 @@ public class TimelineListFragment extends BaseFragment {
 //                contactsListAdapter.refreshData();
 //            }
 //        });
+    }
+
+
+    private void displayPopupWindow(View anchorView) {
+        PopupWindow popup = new PopupWindow(getActivity());
+        View layout = getActivity().getLayoutInflater().inflate(R.layout.activity_login, null);
+        popup.setContentView(layout);
+        // Set content width and height
+        popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+        // Closes the popup window when touch outside of it - when looses focus
+        popup.setOutsideTouchable(true);
+        popup.setFocusable(true);
+        // Show anchored to button
+        popup.setBackgroundDrawable(new BitmapDrawable());
+        popup.showAsDropDown(anchorView);
     }
 
     @Override

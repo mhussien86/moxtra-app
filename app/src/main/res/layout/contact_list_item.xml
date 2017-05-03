@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -10,7 +9,7 @@
         android:id="@+id/cv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        card_view:cardBackgroundColor="@color/brown_50"
+        card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="5dp"
         card_view:cardElevation="2dp"
         card_view:cardUseCompatPadding="true">
@@ -19,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_margin="10dp">
+            android:padding="@dimen/action_bar_margin_left">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/logo"
@@ -41,16 +40,16 @@
                     android:id="@+id/contactName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="sdkljfsdlkfjklsjf"
-                    android:textColor="@color/colorPrimaryDark" />
+                    android:textColor="@color/liver"
+                    android:textSize="14sp"/>
 
 
                 <TextView
                     android:id="@+id/contactMail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="nlkxvnlkcxvl"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/liver"
+                    android:textSize="12sp"/>
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
