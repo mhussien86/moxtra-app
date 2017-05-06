@@ -18,9 +18,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
-            <!--            <include android:layout_height="wrap_content"
-                            android:layout_width="fill_parent"
-                            layout="@layout/timeline_toolbar" />-->
+
         </android.support.v7.widget.Toolbar>
 
 

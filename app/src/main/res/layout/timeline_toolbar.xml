@@ -17,7 +17,10 @@
         android:layout_toRightOf="@+id/imgUser"
         android:drawableLeft="@drawable/icon_menutip_copy"
         android:paddingLeft="10dp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:id="@+id/filter"
+        android:textStyle="bold"
+        android:textSize="20.0sp"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

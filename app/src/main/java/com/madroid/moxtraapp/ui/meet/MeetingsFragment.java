@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.BaseFragment;
@@ -36,7 +37,7 @@ public class MeetingsFragment extends BaseFragment {
         view = inflater.inflate(R.layout.meetings_fragment, container, false);
 
         ButterKnife.bind(this,view);
-        setUpToolBar();
+        setUpToolBar("Meetings");
         return view;
     }
 
@@ -69,15 +70,16 @@ public class MeetingsFragment extends BaseFragment {
 
 
 
-    private void setUpToolBar(){
+    private void setUpToolBar(String pageTitle){
         //add the Toolbar
         //Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
 
         LayoutInflater mInflater=LayoutInflater.from(getActivity());
         View mCustomView = mInflater.inflate(R.layout.categories_toolbar, null);
         toolbar.addView(mCustomView);
-//        ImageView imgImpression=((ImageView)toolbar.findViewById(R.id.imgImpression));
+        TextView title =((TextView)toolbar.findViewById(R.id.title));
 
+        title.setText(pageTitle);
         ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
         ((BaseActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ((BaseActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);

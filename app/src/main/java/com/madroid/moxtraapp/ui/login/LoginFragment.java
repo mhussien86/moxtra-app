@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.madroid.moxtraapp.AppConstants;
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
@@ -24,8 +25,11 @@ import com.madroid.moxtraapp.ui.MainActivity;
 import com.moxtra.sdk.MXAccountManager;
 import com.moxtra.sdk.MXSDKConfig;
 import com.moxtra.sdk.MXSDKException;
+
 import org.parceler.Parcels;
+
 import java.io.IOException;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -112,6 +116,8 @@ public class LoginFragment extends BaseFragment implements LoginView{
 
     private static final String TAG = "MoxieChatApplication";
 
+    private String regid;
+
     @Override
     public void succededToLogin(final LoginResponseDTO loginResponseDTO) {
 
@@ -134,6 +140,7 @@ public class LoginFragment extends BaseFragment implements LoginView{
             final MXSDKConfig.MXUserInfo mxUserInfo = new MXSDKConfig.MXUserInfo(user.email, MXSDKConfig.MXUserIdentityType.IdentityUniqueId);
             final MXSDKConfig.MXProfileInfo mxProfileInfo = new MXSDKConfig.MXProfileInfo(user.firstName, user.lastName,avatar);
             showProgress();
+
             MXAccountManager.getInstance().setupUser(mxUserInfo, mxProfileInfo, user.getMoxtraOrgId(), null, new MXAccountManager.MXAccountLinkListener() {
                 @Override
                 public void onLinkAccountDone(boolean success) {

@@ -16,7 +16,10 @@
         android:text="@string/Categories"
         android:layout_toRightOf="@+id/imgUser"
         android:paddingLeft="10dp"
-        android:textColor="@color/white"/>
+        android:id="@+id/title"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="20.0sp"/>
 
     <ImageView
         android:layout_width="wrap_content"

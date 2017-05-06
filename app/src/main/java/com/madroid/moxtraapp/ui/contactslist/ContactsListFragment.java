@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.LoginResponseDTO;
@@ -36,7 +40,8 @@ public class ContactsListFragment extends BaseFragment {
 //    ArrayList<LoginResponseDTO.Contact> contactList ;
 
     LoginResponseDTO responseDTO;
-
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,6 +49,7 @@ public class ContactsListFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_contact_list, container, false);
 
         ButterKnife.bind(this, rootView);
+        setUpToolBar("Contacts");
         try {
             responseDTO = Parcels.unwrap(getActivity().getIntent().getParcelableExtra("data"));
         } catch (Exception e) {
@@ -75,7 +81,23 @@ public class ContactsListFragment extends BaseFragment {
         recyclerView.setAdapter(contactsListAdapter);
 
     }
+    private void setUpToolBar(String pageTitle){
+        //add the Toolbar
 
+        LayoutInflater mInflater=LayoutInflater.from(getActivity());
+        View mCustomView = mInflater.inflate(R.layout.categories_toolbar, null);
+        toolbar.addView(mCustomView);
+        TextView title =((TextView)toolbar.findViewById(R.id.title));
+        title.setText(pageTitle);
+
+        ImageView add = (ImageView)toolbar.findViewById(R.id.icon_add);
+        add.setVisibility(View.INVISIBLE);
+
+        ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
+        ((BaseActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((BaseActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
+
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

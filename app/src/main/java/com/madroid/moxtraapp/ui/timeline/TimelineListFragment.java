@@ -3,21 +3,31 @@ package com.madroid.moxtraapp.ui.timeline;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
+
 import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
 import com.moxtra.binder.sdk.MXException;
 import com.moxtra.sdk.MXChatManager;
 import com.moxtra.sdk.MXGroupChatSession;
+
 import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -39,7 +49,7 @@ public class TimelineListFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_contact_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_timeline_list, container, false);
         ButterKnife.bind(this, rootView);
         setUpToolBar();
         return rootView;
@@ -112,6 +122,7 @@ public class TimelineListFragment extends BaseFragment {
     }
 
 
+    // display popup window with custom view
     private void displayPopupWindow(View anchorView) {
         PopupWindow popup = new PopupWindow(getActivity());
         View layout = getActivity().getLayoutInflater().inflate(R.layout.activity_login, null);
@@ -135,12 +146,57 @@ public class TimelineListFragment extends BaseFragment {
         LayoutInflater mInflater=LayoutInflater.from(getActivity());
         View mCustomView = mInflater.inflate(R.layout.timeline_toolbar, null);
         toolbar.addView(mCustomView);
-//        ImageView imgImpression=((ImageView)toolbar.findViewById(R.id.imgImpression));
+        TextView filter =((TextView) toolbar.findViewById(R.id.filter));
+
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showFilterPopup(view);
+            }
+        });
+
+        ImageView add = (ImageView)toolbar.findViewById(R.id.icon_add);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+              showFilterPopup(view);
+            }
+        });
 
         ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
         ((BaseActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ((BaseActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+    }
+
+    // Display anchored popup menu based on view selected
+    private void showFilterPopup(View v) {
+        PopupMenu popup = new PopupMenu(getActivity(), v);
+        // Inflate the menu from xml
+        popup.getMenuInflater().inflate(R.menu.popup_filters, popup.getMenu());
+        // Setup menu item selection
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+//                    case R.id.menu_keyword:
+//                        Toast.makeText(getActivity(), "Keyword!", Toast.LENGTH_SHORT).show();
+//                        return true;
+//                    case R.id.menu_popularity:
+//                        Toast.makeText(getActivity(), "Popularity!", Toast.LENGTH_SHORT).show();
+//                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+        MenuPopupHelper menuHelper = new MenuPopupHelper(getActivity(), (MenuBuilder) popup.getMenu(), v);
+        menuHelper.setForceShowIcon(true);
+        menuHelper.setGravity(Gravity.CENTER);
+        menuHelper.show();
+        // Handle dismissal with: popup.setOnDismissListener(...);
+        // Show the menu
+//        popup.show();
     }
     @Override
     public void onDestroy() {
