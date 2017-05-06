@@ -5,20 +5,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
-
+import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
 import com.moxtra.binder.sdk.MXException;
 import com.moxtra.sdk.MXChatManager;
 import com.moxtra.sdk.MXGroupChatSession;
-
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -31,8 +30,10 @@ public class TimelineListFragment extends BaseFragment {
     @Bind(R.id.recycle_view)
     RecyclerView recyclerView;
 
-     TimelineListAdapter contactsListAdapter;
+    TimelineListAdapter contactsListAdapter;
 
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     @Nullable
     @Override
@@ -40,6 +41,7 @@ public class TimelineListFragment extends BaseFragment {
 
         View rootView = inflater.inflate(R.layout.fragment_contact_list, container, false);
         ButterKnife.bind(this, rootView);
+        setUpToolBar();
         return rootView;
     }
 
@@ -125,6 +127,21 @@ public class TimelineListFragment extends BaseFragment {
         popup.showAsDropDown(anchorView);
     }
 
+
+    private void setUpToolBar(){
+        //add the Toolbar
+        //Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+
+        LayoutInflater mInflater=LayoutInflater.from(getActivity());
+        View mCustomView = mInflater.inflate(R.layout.timeline_toolbar, null);
+        toolbar.addView(mCustomView);
+//        ImageView imgImpression=((ImageView)toolbar.findViewById(R.id.imgImpression));
+
+        ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
+        ((BaseActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((BaseActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

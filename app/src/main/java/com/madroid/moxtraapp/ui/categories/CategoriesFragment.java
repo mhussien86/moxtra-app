@@ -5,11 +5,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.LoginResponseDTO;
@@ -32,12 +34,15 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
     CategoriesPresenter categoriesPresenter;
     LinearLayout layout;
     LayoutInflater inflater;
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.categories_fragment, container, false);
         ButterKnife.bind(this,rootView);
-
+        setUpToolBar();
         this.inflater = inflater ;
         LoginResponseDTO loginResponseDTO = Parcels.unwrap(getActivity().getIntent().getParcelableExtra("data"));
         categoriesPresenter = new CategoriesPresenterImpl(this);
@@ -91,6 +96,22 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
 
         recycleView.setAdapter(categoriesAdapter);
         layout.addView(categoriesList);
+
+    }
+
+
+    private void setUpToolBar(){
+        //add the Toolbar
+        //Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+
+        LayoutInflater mInflater=LayoutInflater.from(getActivity());
+        View mCustomView = mInflater.inflate(R.layout.categories_toolbar, null);
+        toolbar.addView(mCustomView);
+//        ImageView imgImpression=((ImageView)toolbar.findViewById(R.id.imgImpression));
+
+        ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
+        ((BaseActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((BaseActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
     }
 }

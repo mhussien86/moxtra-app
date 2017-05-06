@@ -134,7 +134,7 @@ public class LoginFragment extends BaseFragment implements LoginView{
             final MXSDKConfig.MXUserInfo mxUserInfo = new MXSDKConfig.MXUserInfo(user.email, MXSDKConfig.MXUserIdentityType.IdentityUniqueId);
             final MXSDKConfig.MXProfileInfo mxProfileInfo = new MXSDKConfig.MXProfileInfo(user.firstName, user.lastName,avatar);
             showProgress();
-            MXAccountManager.getInstance().setupUser(mxUserInfo, mxProfileInfo, null, null, new MXAccountManager.MXAccountLinkListener() {
+            MXAccountManager.getInstance().setupUser(mxUserInfo, mxProfileInfo, user.getMoxtraOrgId(), null, new MXAccountManager.MXAccountLinkListener() {
                 @Override
                 public void onLinkAccountDone(boolean success) {
                     if (success) {
