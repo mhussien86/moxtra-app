@@ -151,7 +151,7 @@ public class TimelineListFragment extends BaseFragment {
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showFilterPopup(view);
+                showFilterPopup(view,R.menu.popup_filters);
             }
         });
 
@@ -160,7 +160,7 @@ public class TimelineListFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
 
-              showFilterPopup(view);
+              showFilterPopup(view, R.menu.popup_new_action);
             }
         });
 
@@ -171,10 +171,10 @@ public class TimelineListFragment extends BaseFragment {
     }
 
     // Display anchored popup menu based on view selected
-    private void showFilterPopup(View v) {
+    private void showFilterPopup(View v, int resource) {
         PopupMenu popup = new PopupMenu(getActivity(), v);
         // Inflate the menu from xml
-        popup.getMenuInflater().inflate(R.menu.popup_filters, popup.getMenu());
+        popup.getMenuInflater().inflate(resource, popup.getMenu());
         // Setup menu item selection
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
