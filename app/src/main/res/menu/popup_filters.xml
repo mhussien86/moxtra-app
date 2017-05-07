@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_conversation"
-        android:title="@string/All"
-        android:icon="@drawable/icon_menu_converation_normal"/>
+    <item
+        android:id="@+id/menu_conversation"
+        android:icon="@drawable/icon_menu_converation_normal"
+        android:title="@string/All" />
 
-    <item android:id="@+id/menu_favorite"
-        android:title="@string/Favorite"
-        android:icon="@drawable/icon_menu_favorite_normal" />
+    <item
+        android:id="@+id/menu_favorite"
+        android:icon="@drawable/icon_menu_favorite_normal"
+        android:title="@string/Favorite" />
 
-    <item android:id="@+id/menu_unread"
-        android:title="Popularity"
-        android:icon="@drawable/icon_menu_unread_normal" />
+    <item
+        android:id="@+id/menu_unread"
+        android:icon="@drawable/icon_menu_unread_normal"
+        android:title="@string/Unread" />
 
-    <item android:id="@+id/menu_groups"
-        android:title="Popularity"
-        android:icon="@drawable/icon_menu_groups_normal"/>
+    <item
+        android:id="@+id/menu_groups"
+        android:icon="@drawable/icon_menu_groups_normal"
+        android:title="@string/sblox" />
 
-    <item android:id="@+id/menu_development"
-        android:title="Popularity"
-        android:icon="@drawable/icon_menu_developement_normal"/>
-
-
+    <item
+        android:id="@+id/menu_development"
+        android:icon="@drawable/icon_menu_developement_normal"
+        android:title="@string/development" />
 </menu>

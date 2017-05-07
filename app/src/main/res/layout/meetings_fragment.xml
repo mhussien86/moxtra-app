@@ -42,7 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableBottom="@drawable/add_binder_shape"
+            android:background="@drawable/bg_botton_med_down"
+            android:drawableTop="@drawable/icon_tb_meet_normal"
             android:text="@string/meet_now" />
 
         <Button
@@ -50,7 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableBottom="@drawable/add_binder_shape"
+            android:background="@drawable/bg_botton_med_down"
+            android:drawableTop="@drawable/icon_join_meeting"
             android:text="@string/join_meet" />
 
         <Button
@@ -58,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableBottom="@drawable/add_binder_shape"
+            android:background="@drawable/bg_botton_med_down"
+            android:drawableTop="@drawable/icon_join_meeting"
             android:text="@string/scedual_meet" />
     </LinearLayout>
 

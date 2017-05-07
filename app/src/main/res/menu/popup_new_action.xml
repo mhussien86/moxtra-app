@@ -9,7 +9,7 @@
         android:icon="@drawable/icon_menu_directmsg_normal" />
 
     <item android:id="@+id/menu_unread"
-        android:title="@string/Meet_Now"
+        android:title="@string/meet_now"
         android:icon="@drawable/icon_menu_meetnow_normal" />
 
 </menu>
