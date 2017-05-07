@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.view.MenuItem;
+
 import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.ui.categories.CategoriesFragment;
@@ -13,6 +14,7 @@ import com.madroid.moxtraapp.ui.helper.BottomNavigationViewHelper;
 import com.madroid.moxtraapp.ui.meet.MeetingsFragment;
 import com.madroid.moxtraapp.ui.settings.SettingsFragment;
 import com.madroid.moxtraapp.ui.timeline.TimelineListFragment;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -80,6 +82,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     void startMeetFragment() {
+
+//        JoinMeetingFragment joinMeetingFragment = new JoinMeetingFragment();
         MeetingsFragment meetingsFragment = new MeetingsFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.container, meetingsFragment).commit();
