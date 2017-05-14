@@ -31,6 +31,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import utils.PreferencesUtils;
 
+import static com.madroid.moxtraapp.AppConstants.LOGIN_RESPONSE;
+
 /**
  * Created by mohamed on 15/01/17.
  */
@@ -146,7 +148,7 @@ public class LoginFragment extends BaseFragment implements LoginView{
                         Log.e("Accecss token", loginResponseDTO.getResponse().getAccessToken());
 
                         Intent intent = new Intent(getActivity(), MainActivity.class);
-                        intent.putExtra("data", Parcels.wrap(loginResponseDTO));
+                        intent.putExtra(AppConstants.LOGIN_RESPONSE, Parcels.wrap(loginResponseDTO));
                         startActivity(intent);
                         getActivity().finish();
                     } else {
