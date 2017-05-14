@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.madroid.moxtraapp.AppConstants;
 import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
@@ -44,7 +45,8 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
         ButterKnife.bind(this,rootView);
         setUpToolBar();
         this.inflater = inflater ;
-        LoginResponseDTO loginResponseDTO = Parcels.unwrap(getActivity().getIntent().getParcelableExtra("data"));
+        Bundle b = getActivity().getIntent().getBundleExtra("bundle");
+        LoginResponseDTO loginResponseDTO = Parcels.unwrap(b.getParcelable(AppConstants.LOGIN_RESPONSE));
         categoriesPresenter = new CategoriesPresenterImpl(this);
         categoriesPresenter.getAllCategories(loginResponseDTO.getResponse().getAccessToken());
         layout = (LinearLayout) rootView.findViewById(R.id.layout);
