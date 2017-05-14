@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.madroid.moxtraapp.AppConstants;
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
@@ -24,14 +25,15 @@ import com.madroid.moxtraapp.ui.MainActivity;
 import com.moxtra.sdk.MXAccountManager;
 import com.moxtra.sdk.MXSDKConfig;
 import com.moxtra.sdk.MXSDKException;
+
 import org.parceler.Parcels;
+
 import java.io.IOException;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import utils.PreferencesUtils;
-
-import static com.madroid.moxtraapp.AppConstants.LOGIN_RESPONSE;
 
 /**
  * Created by mohamed on 15/01/17.
@@ -62,9 +64,7 @@ public class LoginFragment extends BaseFragment implements LoginView{
         ButterKnife.bind(this,rootView);
 
         loginPresenter = new LoginPresenterImpl(this);
-        if(PreferencesUtils.getInstance(getActivity()).getBoolean(AppConstants.IS_LOGGED_IN)){
-         loginWithSavedData();
-        }
+
         return rootView;
     }
 
@@ -173,11 +173,7 @@ public class LoginFragment extends BaseFragment implements LoginView{
 
     }
 
-    private void loginWithSavedData(){
 
-        loginPresenter.login(new LoginRequestDTO(PreferencesUtils.getInstance(getActivity()).getString(AppConstants.USER_EMAIL),PreferencesUtils.getInstance(getActivity()).getString(AppConstants.USER_PASSWORD)));
-
-    }
 
 
 }
