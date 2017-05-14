@@ -139,7 +139,7 @@ public class LoginFragment extends BaseFragment implements LoginView{
             final MXSDKConfig.MXProfileInfo mxProfileInfo = new MXSDKConfig.MXProfileInfo(user.firstName, user.lastName,avatar);
             showProgress();
 
-            MXAccountManager.getInstance().setupUser(mxUserInfo, mxProfileInfo, null, null, new MXAccountManager.MXAccountLinkListener() {
+            MXAccountManager.getInstance().setupUser(mxUserInfo, mxProfileInfo, user.getMoxtraOrgId(), null, new MXAccountManager.MXAccountLinkListener() {
                 @Override
                 public void onLinkAccountDone(boolean success) {
                     if (success) {
@@ -148,7 +148,9 @@ public class LoginFragment extends BaseFragment implements LoginView{
                         Log.e("Accecss token", loginResponseDTO.getResponse().getAccessToken());
 
                         Intent intent = new Intent(getActivity(), MainActivity.class);
-                        intent.putExtra(AppConstants.LOGIN_RESPONSE, Parcels.wrap(loginResponseDTO));
+                        Bundle b = new Bundle();
+                        b.putParcelable(AppConstants.LOGIN_RESPONSE, Parcels.wrap(loginResponseDTO));
+                        intent.putExtra("bundle", b);
                         startActivity(intent);
                         getActivity().finish();
                     } else {

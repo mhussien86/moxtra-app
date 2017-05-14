@@ -31,6 +31,10 @@
         <activity android:name=".ui.contactdetails.ContactDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name=".ui.meet.MeetingsContainerActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

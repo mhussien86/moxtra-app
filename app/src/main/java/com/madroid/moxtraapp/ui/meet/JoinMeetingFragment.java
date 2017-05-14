@@ -6,10 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
 import com.moxtra.binder.ui.branding.widget.BrandingStateButton;
 import com.moxtra.binder.ui.branding.widget.BrandingSwitch;
+import com.moxtra.isdk.util.Log;
+import com.moxtra.sdk.MXChatManager;
+import com.moxtra.sdk.MXSDKException;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -50,7 +55,24 @@ public class JoinMeetingFragment extends BaseFragment {
     @OnClick(R.id.btn_action)
     public void startMeeting(View view){
 
+        try {
+            MXChatManager.getInstance().startMeet(meetingName.getText() + "'s meet", null,
+                    null, new MXChatManager.OnStartMeetListener() {
+                        @Override
+                        public void onStartMeetDone(String meetId, String meetUrl) {
+                            Log.d("Meeting", "Meet started: " + meetId);
+                        }
 
+                        @Override
+                        public void onStartMeetFailed(int i, String s) {
+                            Log.e("Meeting", "onStartMeetFailed: " + s);
+                        }
+                    });
+        } catch (MXSDKException.Unauthorized unauthorized) {
+            Log.e("Meeting", "Error when start meet" + unauthorized);
+        } catch (MXSDKException.MeetIsInProgress meetIsInProgress) {
+            Log.e("Meeting", "Error when start meet"+ meetIsInProgress);
+        }
 
     }
 

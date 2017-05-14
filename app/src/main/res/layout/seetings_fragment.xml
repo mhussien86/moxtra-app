@@ -48,7 +48,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:textSize="@dimen/calendar_text_size_medium" />
+        android:textSize="@dimen/calendar_text_size_medium"
+        android:text="@string/Logout"
+        android:textColor="@color/white"
+        android:background="@color/red"/>
 
 
 

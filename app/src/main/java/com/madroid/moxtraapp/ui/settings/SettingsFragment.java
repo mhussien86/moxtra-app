@@ -48,15 +48,14 @@ public class SettingsFragment extends BaseFragment{
         View view = inflater.inflate(R.layout.seetings_fragment,container,false);
         ButterKnife.bind(this,view);
 
-        LoginResponseDTO loginResponseDTO = Parcels.unwrap(getActivity().getIntent().getParcelableExtra(AppConstants.LOGIN_RESPONSE));
-
+        Bundle b = getActivity().getIntent().getBundleExtra("bundle");
+        LoginResponseDTO loginResponseDTO = Parcels.unwrap(b.getParcelable(AppConstants.LOGIN_RESPONSE));
         contactName.setText(loginResponseDTO.getResponse().getUserData().getFirstName()+loginResponseDTO.getResponse().getUserData().getLastName());
         contactEmail.setText(loginResponseDTO.getResponse().getUserData().getEmail());
         contactPhone.setText(loginResponseDTO.getResponse().getUserData().getPhone());
 
         return view;
     }
-
 
 
     @OnClick(R.id.logout_button)

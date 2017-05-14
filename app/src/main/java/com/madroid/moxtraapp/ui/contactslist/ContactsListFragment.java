@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.madroid.moxtraapp.AppConstants;
 import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
@@ -51,7 +52,8 @@ public class ContactsListFragment extends BaseFragment {
         ButterKnife.bind(this, rootView);
         setUpToolBar("Contacts");
         try {
-            responseDTO = Parcels.unwrap(getActivity().getIntent().getParcelableExtra("data"));
+            Bundle b = getActivity().getIntent().getBundleExtra("bundle");
+            responseDTO = Parcels.unwrap(b.getParcelable(AppConstants.LOGIN_RESPONSE));
         } catch (Exception e) {
 
         }
