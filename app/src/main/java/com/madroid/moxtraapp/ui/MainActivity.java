@@ -24,14 +24,14 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @Bind(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
 
-    ButterKnife binder;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        binder.bind(this);
+        ButterKnife.bind(this);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
@@ -108,6 +108,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        binder.unbind(this);
+        ButterKnife.unbind(this);
     }
 }
