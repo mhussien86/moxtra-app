@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import com.moxtra.sdk.MXSDKException;
 
 import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.BaseFragment;
@@ -67,26 +68,34 @@ public class TimelineListFragment extends BaseFragment {
 
         List<MXGroupChatSession> sessions = MXChatManager.getInstance().getGroupChatSessions();
 
-        contactsListAdapter = new TimelineListAdapter(sessions, new TimelineListAdapter.OnItemClickListener() {
+        contactsListAdapter = new TimelineListAdapter(getContext(),sessions, new TimelineListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(MXGroupChatSession session) {
-                try {
-                    MXChatManager.getInstance().openChat(session.getSessionID(), new MXChatManager.OnOpenChatListener() {
-                        @Override
-                        public void onOpenChatSuccess() {
 
-                            Log.e("open chat","open moxtra chat success");
-                        }
+                if (session.isAChat()) {
+                    try {
+                        MXChatManager.getInstance().openChat(session.getSessionID(), new MXChatManager.OnOpenChatListener() {
+                            @Override
+                            public void onOpenChatSuccess() {
 
-                        @Override
-                        public void onOpenChatFailed(int i, String s) {
-                            Log.e("open chat",s);
-                        }
-                    });
-                }catch (MXException.AccountManagerIsNotValid accountManagerIsNotValid){
+                                Log.e("open chat","open moxtra chat success");
 
 
+                            }
+
+                            @Override
+                            public void onOpenChatFailed(int i, String s) {
+                                Log.e("open chat",s);
+                            }
+                        });
+                    }catch (MXException.AccountManagerIsNotValid accountManagerIsNotValid){
+
+
+                    }
+                } else if (session.isAMeet()) {
+                    joinMeet(session);
                 }
+
 
             }
         });
@@ -124,6 +133,29 @@ public class TimelineListFragment extends BaseFragment {
 //        });
     }
 
+    String TAG = "MXGroupChatSession" ;
+    private void joinMeet(MXGroupChatSession session) {
+        if (!MXChatManager.getInstance().isAMeetingInProgress()) {
+            try {
+
+                //TODO add user name
+                MXChatManager.getInstance().joinMeet(session.getMeetID(), "Hello",
+                        new MXChatManager.OnJoinMeetListener() {
+                            @Override
+                            public void onJoinMeetDone(String meetId, String meetUrl) {
+                                Log.d(TAG, "Joined meet: " + meetId);
+                            }
+
+                            @Override
+                            public void onJoinMeetFailed() {
+                                Log.e(TAG, "Unable to join meet.");
+                            }
+                        });
+            } catch (MXSDKException.MeetIsInProgress meetIsInProgress) {
+                Log.e(TAG, "Error when join meet", meetIsInProgress);
+            }
+        }
+    }
 
     // display popup window with custom view
     private void displayPopupWindow(View anchorView) {
