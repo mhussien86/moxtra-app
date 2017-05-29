@@ -178,21 +178,24 @@ public class TimelineListFragment extends BaseFragment {
         PopupMenu popup = new PopupMenu(getActivity(), v);
         // Inflate the menu from xml
         popup.getMenuInflater().inflate(resource, popup.getMenu());
-        // Setup menu item selection
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
+
+        if(resource == R.menu.popup_filters ) {
+            // Setup menu item selection
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
 //                    case R.id.menu_keyword:
 //                        Toast.makeText(getActivity(), "Keyword!", Toast.LENGTH_SHORT).show();
 //                        return true;
 //                    case R.id.menu_popularity:
 //                        Toast.makeText(getActivity(), "Popularity!", Toast.LENGTH_SHORT).show();
 //                        return true;
-                    default:
-                        return false;
+                        default:
+                            return false;
+                    }
                 }
-            }
-        });
+            });
+        }
         MenuPopupHelper menuHelper = new MenuPopupHelper(getActivity(), (MenuBuilder) popup.getMenu(), v);
         menuHelper.setForceShowIcon(true);
         menuHelper.setGravity(Gravity.CENTER);

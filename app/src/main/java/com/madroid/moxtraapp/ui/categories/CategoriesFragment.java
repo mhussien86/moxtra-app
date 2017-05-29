@@ -104,13 +104,10 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
 
     private void setUpToolBar(){
         //add the Toolbar
-        //Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
 
         LayoutInflater mInflater=LayoutInflater.from(getActivity());
         View mCustomView = mInflater.inflate(R.layout.categories_toolbar, null);
         toolbar.addView(mCustomView);
-//        ImageView imgImpression=((ImageView)toolbar.findViewById(R.id.imgImpression));
-
         ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
         ((BaseActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ((BaseActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);

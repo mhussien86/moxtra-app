@@ -24,7 +24,6 @@ import com.madroid.moxtraapp.dtos.LoginResponseDTO;
 import com.madroid.moxtraapp.ui.MainActivity;
 import com.moxtra.sdk.MXAccountManager;
 import com.moxtra.sdk.MXSDKConfig;
-import com.moxtra.sdk.MXSDKException;
 
 import org.parceler.Parcels;
 
@@ -120,49 +119,55 @@ public class LoginFragment extends BaseFragment implements LoginView{
     public void succededToLogin(final LoginResponseDTO loginResponseDTO) {
 
 
-        try {
-            MXAccountManager.createInstance(getActivity(), loginResponseDTO.getResponse().getClientId(), loginResponseDTO.getResponse().clientSecret, true);
+
+//        try {
+//            MXAccountManager.createInstance(getActivity(), loginResponseDTO.getResponse().getClientId(), loginResponseDTO.getResponse().clientSecret, true);
 //            Log.e(TAG,  MXAccountManager.getInstance().getMyToken()+ MXAccountManager.getInstance().getMyUserID());
             Log.e(TAG,  "Logged in and integrated with the client id and client secret new");
             if(checkBox.isChecked()){
                 saveUserData(emailEditText.getText().toString(), passwordEditText.getText().toString());
             }
 
-        } catch (MXSDKException.InvalidParameter invalidParameter) {
-            Log.e(TAG, "Error when creating MXAccountManager instance.", invalidParameter);
-        }
+//        } catch (MXSDKException.InvalidParameter invalidParameter) {
+//            Log.e(TAG, "Error when creating MXAccountManager instance.", invalidParameter);
+//        }
 
-        try {
-            LoginResponseDTO.UserData user = loginResponseDTO.getResponse().getUserData();
-            Bitmap avatar = BitmapFactory.decodeStream(getActivity().getAssets().open("A01.png"));
-            final MXSDKConfig.MXUserInfo mxUserInfo = new MXSDKConfig.MXUserInfo(user.email, MXSDKConfig.MXUserIdentityType.IdentityUniqueId);
-            final MXSDKConfig.MXProfileInfo mxProfileInfo = new MXSDKConfig.MXProfileInfo(user.firstName, user.lastName,avatar);
-            showProgress();
+            try {
+                LoginResponseDTO.UserData user = loginResponseDTO.getResponse().getUserData();
+                Bitmap avatar = BitmapFactory.decodeStream(getActivity().getAssets().open("A01.png"));
+                final MXSDKConfig.MXUserInfo mxUserInfo = new MXSDKConfig.MXUserInfo(loginResponseDTO.getResponse().accessToken, MXSDKConfig.MXUserIdentityType.IdentityTypeSSOAccessToken);
+                final MXSDKConfig.MXProfileInfo mxProfileInfo = new MXSDKConfig.MXProfileInfo(user.firstName, user.lastName, avatar);
+                showProgress();
 
-            MXAccountManager.getInstance().setupUser(mxUserInfo, mxProfileInfo, user.getMoxtraOrgId(), null, new MXAccountManager.MXAccountLinkListener() {
-                @Override
-                public void onLinkAccountDone(boolean success) {
-                    if (success) {
-                        hideProgress();
-                        Log.i(TAG, "Linked to moxtra account successfully.");
-                        Log.e("Accecss token", loginResponseDTO.getResponse().getAccessToken());
+                MXAccountManager.getInstance().setupUser(mxUserInfo, mxProfileInfo, user.getMoxtraOrgId(), null, new MXAccountManager.MXAccountLinkListener() {
+                    @Override
+                    public void onLinkAccountDone(boolean success) {
+                        if (success) {
+                            hideProgress();
+                            Log.i(TAG, "Linked to moxtra account successfully.");
+                            Log.e("Accecss token", loginResponseDTO.getResponse().getAccessToken());
 
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
-                        Bundle b = new Bundle();
-                        b.putParcelable(AppConstants.LOGIN_RESPONSE, Parcels.wrap(loginResponseDTO));
-                        intent.putExtra("bundle", b);
-                        startActivity(intent);
-                        getActivity().finish();
-                    } else {
-                        hideProgress();
-                        Toast.makeText(getActivity(), "Failed to setup moxtra user.", Toast.LENGTH_LONG).show();
-                        Log.e(TAG, "Failed to setup moxtra user.");
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            Bundle b = new Bundle();
+                            b.putParcelable(AppConstants.LOGIN_RESPONSE, Parcels.wrap(loginResponseDTO));
+                            intent.putExtra("bundle", b);
+                            startActivity(intent);
+                            getActivity().finish();
+                        } else {
+                            hideProgress();
+
+                            // When the user is already linked ?
+                            // Call back
+                            //
+
+                            Toast.makeText(getActivity(), "Failed to setup moxtra user.", Toast.LENGTH_LONG).show();
+                            Log.e(TAG, "Failed to setup moxtra user.");
+                        }
                     }
-                }
-            });
-        } catch (IOException e) {
-            Log.e(TAG, "Can't decode avatar.", e);
-        }
+                });
+            } catch (IOException e) {
+                Log.e(TAG, "Can't decode avatar.", e);
+            }
 
     }
 
