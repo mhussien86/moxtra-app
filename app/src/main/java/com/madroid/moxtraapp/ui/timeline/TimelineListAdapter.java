@@ -1,20 +1,22 @@
 package com.madroid.moxtraapp.ui.timeline;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import java.io.File;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.madroid.moxtraapp.R;
 import com.moxtra.isdk.util.TextUtils;
 import com.moxtra.sdk.MXChatManager;
+import com.moxtra.sdk.MXGroupChatMember;
 import com.moxtra.sdk.MXGroupChatSession;
-import android.net.Uri;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -37,9 +39,6 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
         void onItemClick(MXGroupChatSession session);
     }
 
-    public TimelineListAdapter(){
-        super();
-    }
 
     public TimelineListAdapter(Context ctx , List<MXGroupChatSession> sessions, OnItemClickListener onItemClickListener){
 
@@ -67,6 +66,19 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
         holder.contactMail.setText(""+session.getLastFeedContent());
         if (!TextUtils.isEmpty(session.getCoverImagePath())) {
             holder.userImage.setImageURI(Uri.fromFile(new File(session.getCoverImagePath())));
+        } else {
+            // Get other member's avatar
+            if (session.isAChat()) {
+                List<MXGroupChatMember> members = session.getMembers();
+                if (members != null && members.size() > 0) {
+                    String avatarPath = members.get(0).getAvatarPath();
+                    if (!TextUtils.isEmpty(avatarPath)) {
+                        Glide.with(context).load(new File(avatarPath)).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.user_default_avatar).centerCrop().into(holder.userImage);
+
+//                        Picasso.with(ChatListActivity.this).load(new File(avatarPath)).transform(new CircleTransform(getResources().getColor(R.color.blue_300))).into(theHolder.ivCover);
+                    }
+                }
+            }
         }
     }
 
@@ -74,8 +86,6 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
     public int getItemCount() {
         return sessions.size();
     }
-
-
 
 
     public class ContactViewHolder extends RecyclerView.ViewHolder{

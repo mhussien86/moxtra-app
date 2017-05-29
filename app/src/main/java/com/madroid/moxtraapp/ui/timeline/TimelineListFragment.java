@@ -19,14 +19,18 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import com.moxtra.sdk.MXSDKException;
 
 import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
+import com.moxtra.binder.sdk.InviteToChatCallback;
 import com.moxtra.binder.sdk.MXException;
+import com.moxtra.binder.sdk.OnEndMeetListener;
+import com.moxtra.sdk.MXChatCustomizer;
 import com.moxtra.sdk.MXChatManager;
 import com.moxtra.sdk.MXGroupChatSession;
+import com.moxtra.sdk.MXGroupChatSessionCallback;
+import com.moxtra.sdk.MXSDKException;
 
 import java.util.List;
 
@@ -68,7 +72,7 @@ public class TimelineListFragment extends BaseFragment {
 
         List<MXGroupChatSession> sessions = MXChatManager.getInstance().getGroupChatSessions();
 
-        contactsListAdapter = new TimelineListAdapter(getContext(),sessions, new TimelineListAdapter.OnItemClickListener() {
+        contactsListAdapter = new TimelineListAdapter(getContext(), sessions, new TimelineListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(MXGroupChatSession session) {
 
@@ -78,17 +82,16 @@ public class TimelineListFragment extends BaseFragment {
                             @Override
                             public void onOpenChatSuccess() {
 
-                                Log.e("open chat","open moxtra chat success");
-
+                                Log.e("open chat", "open moxtra chat success");
 
                             }
 
                             @Override
                             public void onOpenChatFailed(int i, String s) {
-                                Log.e("open chat",s);
+                                Log.e("open chat", s);
                             }
                         });
-                    }catch (MXException.AccountManagerIsNotValid accountManagerIsNotValid){
+                    } catch (MXException.AccountManagerIsNotValid accountManagerIsNotValid) {
 
 
                     }
@@ -100,40 +103,48 @@ public class TimelineListFragment extends BaseFragment {
             }
         });
 
-
-
         recyclerView.setAdapter(contactsListAdapter);
 
-//        MXChatCustomizer.setOnMeetEndListener(new OnEndMeetListener() {
-//            @Override
-//            public void onMeetEnded(String meetId) {
-//                contactsListAdapter.refreshData();
-//            }
-//
-//            @Override
-//            public void onMeetEndFailed(int errorCode, String errorMessage) {
-//                Log.e("On meet end", "onMeetEndFailed() called with: " + "errorCode = [" + errorCode + "], errorMessage = [" + errorMessage + "]");
-//            }
-//        });
-//        MXChatManager.getInstance().setGroupChatSessionCallback(new MXGroupChatSessionCallback() {
-//            @Override
-//            public void onGroupChatSessionCreated(MXGroupChatSession session) {
-//                contactsListAdapter.refreshData();
-//            }
-//
-//            @Override
-//            public void onGroupChatSessionUpdated(MXGroupChatSession session) {
-//                contactsListAdapter.refreshData();
-//            }
-//
-//            @Override
-//            public void onGroupChatSessionDeleted(MXGroupChatSession session) {
-//                contactsListAdapter.refreshData();
-//            }
-//        });
+
+        MXChatCustomizer.setOnMeetEndListener(new OnEndMeetListener() {
+            @Override
+            public void onMeetEnded(String meetId) {
+                contactsListAdapter.refreshData();
+            }
+
+            @Override
+            public void onMeetEndFailed(int errorCode, String errorMessage) {
+                Log.e(TAG, "onMeetEndFailed() called with: " + "errorCode = [" + errorCode + "], errorMessage = [" + errorMessage + "]");
+            }
+        });
+
+        MXChatManager.getInstance().setGroupChatSessionCallback(new MXGroupChatSessionCallback() {
+            @Override
+            public void onGroupChatSessionCreated(MXGroupChatSession session) {
+                contactsListAdapter.refreshData();
+            }
+
+            @Override
+            public void onGroupChatSessionUpdated(MXGroupChatSession session) {
+                contactsListAdapter.refreshData();
+            }
+
+            @Override
+            public void onGroupChatSessionDeleted(MXGroupChatSession session) {
+                contactsListAdapter.refreshData();
+            }
+        });
+
+        MXChatCustomizer.setChatInviteCallback(new InviteToChatCallback() {
+            @Override
+            public void onInviteToChat(String binderID, Bundle extras) {
+                Log.d(TAG, "Invite to binder: " + binderID);
+            }
+        });
     }
 
-    String TAG = "MXGroupChatSession" ;
+    String TAG = "MXGroupChatSession";
+
     private void joinMeet(MXGroupChatSession session) {
         if (!MXChatManager.getInstance().isAMeetingInProgress()) {
             try {
@@ -157,6 +168,12 @@ public class TimelineListFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        contactsListAdapter.refreshData();
+    }
+
     // display popup window with custom view
     private void displayPopupWindow(View anchorView) {
         PopupWindow popup = new PopupWindow(getActivity());
@@ -174,34 +191,34 @@ public class TimelineListFragment extends BaseFragment {
     }
 
 
-    private void setUpToolBar(){
+    private void setUpToolBar() {
         //add the Toolbar
         //Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
 
-        LayoutInflater mInflater=LayoutInflater.from(getActivity());
+        LayoutInflater mInflater = LayoutInflater.from(getActivity());
         View mCustomView = mInflater.inflate(R.layout.timeline_toolbar, null);
         toolbar.addView(mCustomView);
-        TextView filter =((TextView) toolbar.findViewById(R.id.filter));
+        TextView filter = ((TextView) toolbar.findViewById(R.id.filter));
 
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showFilterPopup(view,R.menu.popup_filters);
+                showFilterPopup(view, R.menu.popup_filters);
             }
         });
 
-        ImageView add = (ImageView)toolbar.findViewById(R.id.icon_add);
+        ImageView add = (ImageView) toolbar.findViewById(R.id.icon_add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-              showFilterPopup(view, R.menu.popup_new_action);
+                showFilterPopup(view, R.menu.popup_new_action);
             }
         });
 
-        ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
-        ((BaseActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((BaseActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((BaseActivity) getActivity()).setSupportActionBar(toolbar);
+        ((BaseActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((BaseActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
     }
 
@@ -211,7 +228,7 @@ public class TimelineListFragment extends BaseFragment {
         // Inflate the menu from xml
         popup.getMenuInflater().inflate(resource, popup.getMenu());
 
-        if(resource == R.menu.popup_filters ) {
+        if (resource == R.menu.popup_filters) {
             // Setup menu item selection
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 public boolean onMenuItemClick(MenuItem item) {
@@ -232,10 +249,9 @@ public class TimelineListFragment extends BaseFragment {
         menuHelper.setForceShowIcon(true);
         menuHelper.setGravity(Gravity.CENTER);
         menuHelper.show();
-        // Handle dismissal with: popup.setOnDismissListener(...);
-        // Show the menu
-//        popup.show();
+
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
