@@ -74,7 +74,6 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
                     String avatarPath = members.get(0).getAvatarPath();
                     if (!TextUtils.isEmpty(avatarPath)) {
                         Glide.with(context).load(new File(avatarPath)).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.user_default_avatar).centerCrop().into(holder.userImage);
-
 //                        Picasso.with(ChatListActivity.this).load(new File(avatarPath)).transform(new CircleTransform(getResources().getColor(R.color.blue_300))).into(theHolder.ivCover);
                     }
                 }

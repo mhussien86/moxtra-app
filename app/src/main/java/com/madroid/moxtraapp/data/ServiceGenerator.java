@@ -69,6 +69,7 @@ public class ServiceGenerator {
     }
 
 
+    // Special method for custom body request post method
     public  <T> T createServiceWithRequestBody(Class<T> serviceClass, final String value) {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         // set your desired log level

@@ -63,7 +63,7 @@ public class LoginInteractorImpl implements LoginInteractor{
     @Override
     public void unsubscribe() {
 
-        if(compositeSubscription!=null && compositeSubscription.isUnsubscribed()){
+        if(compositeSubscription!=null && compositeSubscription.hasSubscriptions()){
             compositeSubscription.unsubscribe();
         }
 

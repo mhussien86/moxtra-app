@@ -71,11 +71,31 @@ public class MeetingsFragment extends BaseFragment {
     }
 
 
-    @OnClick(R.id.meet_now)
+    String TAG = "MXChatManager" ;
+    @OnClick({R.id.meet_now,R.id.join_meet})
     public void meetNowButton(View view){
 
-        getActivity().startActivity(new Intent(getActivity(),MeetingsContainerActivity.class));
+        if(view.getId()== R.id.meet_now) {
+            getActivity().startActivity(new Intent(getActivity(), MeetingsContainerActivity.class));
+        }else if(view.getId()==R.id.join_meet){
 
+//            try {
+//                MXChatManager.getInstance().joinMeet(session.getMeetID(), currentLoginUser.firstName,
+//                        new MXChatManager.OnJoinMeetListener() {
+//                            @Override
+//                            public void onJoinMeetDone(String meetId, String meetUrl) {
+//                                Log.d(TAG, "Joined meet: " + meetId);
+//                            }
+//
+//                            @Override
+//                            public void onJoinMeetFailed() {
+//                                Log.e(TAG, "Unable to join meet.");
+//                            }
+//                        });
+//            } catch (MXSDKException.MeetIsInProgress meetIsInProgress) {
+//                Log.e(TAG, "Error when join meet", meetIsInProgress);
+//            }
+        }
     }
 
     private void setUpToolBar(String pageTitle){

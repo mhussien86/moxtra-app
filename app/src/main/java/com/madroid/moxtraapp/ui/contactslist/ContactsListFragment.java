@@ -22,9 +22,11 @@ import com.madroid.moxtraapp.ui.contactdetails.ContactDetailsActivity;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 /**
  * Created by mohamed on 16/01/17.
@@ -35,10 +37,7 @@ public class ContactsListFragment extends BaseFragment {
     @Bind(R.id.recycle_view)
     RecyclerView recyclerView;
 
-    RecyclerView.Adapter contactsListAdapter;
-
-
-//    ArrayList<LoginResponseDTO.Contact> contactList ;
+    private SectionedRecyclerViewAdapter sectionAdapter;
 
     LoginResponseDTO responseDTO;
     @Bind(R.id.toolbar)
@@ -57,6 +56,7 @@ public class ContactsListFragment extends BaseFragment {
         } catch (Exception e) {
 
         }
+        sectionAdapter = new SectionedRecyclerViewAdapter();
 
         return rootView;
     }
@@ -70,18 +70,35 @@ public class ContactsListFragment extends BaseFragment {
         recyclerView.setLayoutManager(llm);
         recyclerView.setHasFixedSize(true);
 
-        contactsListAdapter = new ContactsListAdapter((ArrayList<LoginResponseDTO.Contact>) responseDTO.getResponse().getUserData().getContacts(), new ContactsListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(LoginResponseDTO.Contact contact) {
+        for(char alphabet = 'A'; alphabet <= 'Z';alphabet++) {
+            List<LoginResponseDTO.Contact> contacts = getContactsWithLetter(alphabet);
 
-                Intent intent = new Intent(getActivity(), ContactDetailsActivity.class);
-                intent.putExtra("data", Parcels.wrap(contact));
-                startActivity(intent);
-
+            if (contacts.size() > 0) {
+                sectionAdapter.addSection(new ContactsSection((ArrayList<LoginResponseDTO.Contact>) contacts, String.valueOf(alphabet), new ContactsListAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(LoginResponseDTO.Contact contact) {
+                        Intent intent = new Intent(getActivity(), ContactDetailsActivity.class);
+                        intent.putExtra("data", Parcels.wrap(contact));
+                        startActivity(intent);
+                    }
+                }));
             }
-        });
-        recyclerView.setAdapter(contactsListAdapter);
+        }
 
+        recyclerView.setAdapter(sectionAdapter);
+
+    }
+
+    private List<LoginResponseDTO.Contact> getContactsWithLetter(char letter) {
+        List<LoginResponseDTO.Contact> contacts = new ArrayList<>();
+
+        for (LoginResponseDTO.Contact contact : responseDTO.getResponse().getUserData().getContacts()) {
+                if (contact.getFirstName().charAt(0) == letter) {
+                    contacts.add(contact);
+                }
+        }
+
+        return contacts;
     }
     private void setUpToolBar(String pageTitle){
         //add the Toolbar
