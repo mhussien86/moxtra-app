@@ -83,6 +83,7 @@ public class MeetNowFragment extends BaseFragment {
             Log.e("Meeting", "Error when start meet"+ meetIsInProgress);
         }
 
+        getActivity().finish();
     }
 
     private void setUpToolBar(String pageTitle){

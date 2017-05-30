@@ -1,5 +1,6 @@
 package com.madroid.moxtraapp.ui.timeline;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
+import com.madroid.moxtraapp.ui.meet.MeetingsContainerActivity;
 import com.moxtra.binder.sdk.InviteToChatCallback;
 import com.moxtra.binder.sdk.MXException;
 import com.moxtra.binder.sdk.OnEndMeetListener;
@@ -244,6 +246,24 @@ public class TimelineListFragment extends BaseFragment {
                     }
                 }
             });
+        } else if (resource == R.menu.popup_new_action) {
+            // Setup menu item selection
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                    case R.id.menu_meet_now:
+                        getActivity().startActivity(new Intent(getActivity(), MeetingsContainerActivity.class));
+                        return true;
+//                    case R.id.menu_popularity:
+//                        Toast.makeText(getActivity(), "Popularity!", Toast.LENGTH_SHORT).show();
+//                        return true;
+                        default:
+                            return false;
+                    }
+                }
+            });
+
+
         }
         MenuPopupHelper menuHelper = new MenuPopupHelper(getActivity(), (MenuBuilder) popup.getMenu(), v);
         menuHelper.setForceShowIcon(true);

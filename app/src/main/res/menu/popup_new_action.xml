@@ -8,7 +8,7 @@
         android:title="@string/direct_message"
         android:icon="@drawable/icon_menu_directmsg_normal" />
 
-    <item android:id="@+id/menu_unread"
+    <item android:id="@+id/menu_meet_now"
         android:title="@string/meet_now"
         android:icon="@drawable/icon_menu_meetnow_normal" />
 
