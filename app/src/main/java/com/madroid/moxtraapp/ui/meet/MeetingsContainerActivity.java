@@ -34,9 +34,9 @@ public class MeetingsContainerActivity extends BaseActivity{
 
     private void startJoinMeetFragment() {
 
-        JoinMeetingFragment joinMeetingFragment = new JoinMeetingFragment();
+        MeetNowFragment meetNowFragment = new MeetNowFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.layCommonActivity, joinMeetingFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.layCommonActivity, meetNowFragment).commit();
     }
     @Override
     protected void onDestroy() {

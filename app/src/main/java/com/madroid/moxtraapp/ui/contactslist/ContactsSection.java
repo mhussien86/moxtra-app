@@ -68,7 +68,6 @@ public class ContactsSection extends StatelessSection {
         headerHolder.tvTitle.setText(title);
     }
 
-
     class HeaderViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView tvTitle;

@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     void startMeetFragment() {
 
-//        JoinMeetingFragment joinMeetingFragment = new JoinMeetingFragment();
+//        MeetNowFragment joinMeetingFragment = new MeetNowFragment();
         MeetingsFragment meetingsFragment = new MeetingsFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.container, meetingsFragment).commit();

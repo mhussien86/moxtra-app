@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.madroid.moxtraapp.BaseActivity;
@@ -106,8 +107,8 @@ public class MeetingsFragment extends BaseFragment {
         View mCustomView = mInflater.inflate(R.layout.categories_toolbar, null);
         toolbar.addView(mCustomView);
         TextView title =((TextView)toolbar.findViewById(R.id.title));
-
         title.setText(pageTitle);
+        ((ImageView) toolbar.findViewById(R.id.icon_add)).setVisibility(View.INVISIBLE);
         ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
         ((BaseActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ((BaseActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);

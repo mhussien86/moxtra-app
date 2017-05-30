@@ -74,7 +74,7 @@ public class ContactsListFragment extends BaseFragment {
             List<LoginResponseDTO.Contact> contacts = getContactsWithLetter(alphabet);
 
             if (contacts.size() > 0) {
-                sectionAdapter.addSection(new ContactsSection((ArrayList<LoginResponseDTO.Contact>) contacts, String.valueOf(alphabet), new ContactsListAdapter.OnItemClickListener() {
+                sectionAdapter.addSection(new ContactsSection((ArrayList<LoginResponseDTO.Contact>) contacts, String.valueOf(alphabet), new ContactsSection.OnItemClickListener() {
                     @Override
                     public void onItemClick(LoginResponseDTO.Contact contact) {
                         Intent intent = new Intent(getActivity(), ContactDetailsActivity.class);

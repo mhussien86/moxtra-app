@@ -125,7 +125,7 @@ public class LoginFragment extends BaseFragment implements LoginView{
 //            Log.e(TAG,  MXAccountManager.getInstance().getMyToken()+ MXAccountManager.getInstance().getMyUserID());
             Log.e(TAG,  "Logged in and integrated with the client id and client secret new");
             if(checkBox.isChecked()){
-                saveUserData(emailEditText.getText().toString(), passwordEditText.getText().toString());
+                saveUserData(emailEditText.getText().toString(), passwordEditText.getText().toString(),loginResponseDTO.getResponse().getUserData().getFirstName()+" "+loginResponseDTO.getResponse().getUserData().getLastName());
             }
 
 //        } catch (MXSDKException.InvalidParameter invalidParameter) {
@@ -171,12 +171,14 @@ public class LoginFragment extends BaseFragment implements LoginView{
 
     }
 
-    private void saveUserData(String email, String password) {
+    private void saveUserData(String userName, String email, String password) {
 
         PreferencesUtils preferencesUtils = PreferencesUtils.getInstance(getContext());
         preferencesUtils.setBoolean(AppConstants.IS_LOGGED_IN,true);
         preferencesUtils.setString(AppConstants.USER_EMAIL,email);
         preferencesUtils.setString(AppConstants.USER_PASSWORD,password);
+        preferencesUtils.setString(AppConstants.USER_NAME,userName);
+
 
     }
 
