@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_conversation"
+    <item android:id="@+id/menu_group_conversation"
         android:title="@string/group_conversation"
         android:icon="@drawable/icon_groups_normal"/>
 
-    <item android:id="@+id/menu_favorite"
+    <item android:id="@+id/menu_direct_message"
         android:title="@string/direct_message"
         android:icon="@drawable/icon_menu_directmsg_normal" />
 

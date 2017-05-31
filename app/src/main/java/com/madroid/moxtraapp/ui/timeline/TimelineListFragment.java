@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.BaseFragment;
@@ -71,6 +72,11 @@ public class TimelineListFragment extends BaseFragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
         recyclerView.setHasFixedSize(true);
+
+        showAllConversations();
+    }
+
+    private void showAllConversations() {
 
         List<MXGroupChatSession> sessions = MXChatManager.getInstance().getGroupChatSessions();
 
@@ -235,12 +241,15 @@ public class TimelineListFragment extends BaseFragment {
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 public boolean onMenuItemClick(MenuItem item) {
                     switch (item.getItemId()) {
-//                    case R.id.menu_keyword:
-//                        Toast.makeText(getActivity(), "Keyword!", Toast.LENGTH_SHORT).show();
-//                        return true;
-//                    case R.id.menu_popularity:
-//                        Toast.makeText(getActivity(), "Popularity!", Toast.LENGTH_SHORT).show();
-//                        return true;
+                        case R.id.menu_all:
+                            showAllConversations();
+                            return true;
+                        case R.id.menu_favorite:
+                            Toast.makeText(getActivity(), "Popularity!", Toast.LENGTH_SHORT).show();
+                            return true;
+                        case R.id.menu_unread:
+                            Toast.makeText(getActivity(), "menu_unread!", Toast.LENGTH_SHORT).show();
+                            return true;
                         default:
                             return false;
                     }
@@ -251,12 +260,15 @@ public class TimelineListFragment extends BaseFragment {
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 public boolean onMenuItemClick(MenuItem item) {
                     switch (item.getItemId()) {
-                    case R.id.menu_meet_now:
-                        getActivity().startActivity(new Intent(getActivity(), MeetingsContainerActivity.class));
-                        return true;
-//                    case R.id.menu_popularity:
-//                        Toast.makeText(getActivity(), "Popularity!", Toast.LENGTH_SHORT).show();
-//                        return true;
+                        case R.id.menu_meet_now:
+                            getActivity().startActivity(new Intent(getActivity(), MeetingsContainerActivity.class));
+                            return true;
+                        case R.id.menu_group_conversation:
+                            Toast.makeText(getActivity(), "menu_group_conversation!", Toast.LENGTH_SHORT).show();
+                            return true;
+                        case R.id.menu_direct_message:
+                            Toast.makeText(getActivity(), "menu_direct_message!", Toast.LENGTH_SHORT).show();
+                            return true;
                         default:
                             return false;
                     }

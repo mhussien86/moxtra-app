@@ -37,9 +37,9 @@ import utils.PreferencesUtils;
 /**
  * Created by mohamed on 15/01/17.
  */
-public class LoginFragment extends BaseFragment implements LoginView{
+public class LoginFragment extends BaseFragment implements LoginView {
 
-    LoginPresenter loginPresenter ;
+    LoginPresenter loginPresenter;
     @Bind(R.id.username)
     EditText emailEditText;
 
@@ -47,20 +47,20 @@ public class LoginFragment extends BaseFragment implements LoginView{
     EditText passwordEditText;
 
     @Bind(R.id.layout_loading)
-    View loadingLayout ;
+    View loadingLayout;
 
     @Bind(R.id.login_button)
-    Button loginButton ;
+    Button loginButton;
 
     @Bind(R.id.checkBox)
-    CheckBox checkBox ;
+    CheckBox checkBox;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.activity_login,container,false);
-        ButterKnife.bind(this,rootView);
+        View rootView = inflater.inflate(R.layout.activity_login, container, false);
+        ButterKnife.bind(this, rootView);
 
         loginPresenter = new LoginPresenterImpl(this);
 
@@ -75,9 +75,9 @@ public class LoginFragment extends BaseFragment implements LoginView{
     }
 
     @OnClick({R.id.login_button, R.id.checkBox})
-    protected void onLoginButtonClicked(View view){
+    protected void onLoginButtonClicked(View view) {
 
-        if(view.getId()==R.id.login_button) {
+        if (view.getId() == R.id.login_button) {
             if (TextUtils.isEmpty(emailEditText.getText())) {
                 emailEditText.setError("Please enter your email address");
             } else if (TextUtils.isEmpty(passwordEditText.getText())) {
@@ -85,7 +85,7 @@ public class LoginFragment extends BaseFragment implements LoginView{
             } else {
                 loginPresenter.login(new LoginRequestDTO(emailEditText.getText().toString(), passwordEditText.getText().toString()));
             }
-        }else if (view.getId()==R.id.checkBox){
+        } else if (view.getId() == R.id.checkBox) {
 
 
         }
@@ -108,81 +108,65 @@ public class LoginFragment extends BaseFragment implements LoginView{
     @Override
     public void showError(String message) {
 
-        Snackbar.make(getView(),""+message,Snackbar.LENGTH_LONG).show();
+        Snackbar.make(getView(), "" + message, Snackbar.LENGTH_LONG).show();
     }
 
     private static final String TAG = "MoxieChatApplication";
-
-    private String regid;
 
     @Override
     public void succededToLogin(final LoginResponseDTO loginResponseDTO) {
 
 
+        Log.e(TAG, "Logged in and integrated with the client id and client secret new");
+        if (checkBox.isChecked()) {
+            String userName = loginResponseDTO.getResponse().getUserData().getFirstName() + " " + loginResponseDTO.getResponse().getUserData().getLastName();
+            saveUserData(emailEditText.getText().toString(), passwordEditText.getText().toString(), userName);
+        }
 
-//        try {
-//            MXAccountManager.createInstance(getActivity(), loginResponseDTO.getResponse().getClientId(), loginResponseDTO.getResponse().clientSecret, true);
-//            Log.e(TAG,  MXAccountManager.getInstance().getMyToken()+ MXAccountManager.getInstance().getMyUserID());
-            Log.e(TAG,  "Logged in and integrated with the client id and client secret new");
-            if(checkBox.isChecked()){
-                saveUserData(emailEditText.getText().toString(), passwordEditText.getText().toString(),loginResponseDTO.getResponse().getUserData().getFirstName()+" "+loginResponseDTO.getResponse().getUserData().getLastName());
-            }
+        try {
+            LoginResponseDTO.UserData user = loginResponseDTO.getResponse().getUserData();
+            Bitmap avatar = BitmapFactory.decodeStream(getActivity().getAssets().open("A01.png"));
+            final MXSDKConfig.MXUserInfo mxUserInfo = new MXSDKConfig.MXUserInfo(loginResponseDTO.getResponse().accessToken, MXSDKConfig.MXUserIdentityType.IdentityTypeSSOAccessToken);
+            final MXSDKConfig.MXProfileInfo mxProfileInfo = new MXSDKConfig.MXProfileInfo(user.firstName, user.lastName, avatar);
+            showProgress();
 
-//        } catch (MXSDKException.InvalidParameter invalidParameter) {
-//            Log.e(TAG, "Error when creating MXAccountManager instance.", invalidParameter);
-//        }
+            MXAccountManager.getInstance().setupUser(mxUserInfo, mxProfileInfo, user.getMoxtraOrgId(), null, new MXAccountManager.MXAccountLinkListener() {
+                @Override
+                public void onLinkAccountDone(boolean success) {
+                    if (success) {
+                        hideProgress();
+                        Log.i(TAG, "Linked to moxtra account successfully.");
+                        Log.e("Accecss token", loginResponseDTO.getResponse().getAccessToken());
 
-            try {
-                LoginResponseDTO.UserData user = loginResponseDTO.getResponse().getUserData();
-                Bitmap avatar = BitmapFactory.decodeStream(getActivity().getAssets().open("A01.png"));
-                final MXSDKConfig.MXUserInfo mxUserInfo = new MXSDKConfig.MXUserInfo(loginResponseDTO.getResponse().accessToken, MXSDKConfig.MXUserIdentityType.IdentityTypeSSOAccessToken);
-                final MXSDKConfig.MXProfileInfo mxProfileInfo = new MXSDKConfig.MXProfileInfo(user.firstName, user.lastName, avatar);
-                showProgress();
-
-                MXAccountManager.getInstance().setupUser(mxUserInfo, mxProfileInfo, user.getMoxtraOrgId(), null, new MXAccountManager.MXAccountLinkListener() {
-                    @Override
-                    public void onLinkAccountDone(boolean success) {
-                        if (success) {
-                            hideProgress();
-                            Log.i(TAG, "Linked to moxtra account successfully.");
-                            Log.e("Accecss token", loginResponseDTO.getResponse().getAccessToken());
-
-                            Intent intent = new Intent(getActivity(), MainActivity.class);
-                            Bundle b = new Bundle();
-                            b.putParcelable(AppConstants.LOGIN_RESPONSE, Parcels.wrap(loginResponseDTO));
-                            intent.putExtra("bundle", b);
-                            startActivity(intent);
-                            getActivity().finish();
-                        } else {
-                            hideProgress();
-
-                            // When the user is already linked ?
-                            // Call back
-                            //
-
-                            Toast.makeText(getActivity(), "Failed to setup moxtra user.", Toast.LENGTH_LONG).show();
-                            Log.e(TAG, "Failed to setup moxtra user.");
-                        }
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        Bundle b = new Bundle();
+                        b.putParcelable(AppConstants.LOGIN_RESPONSE, Parcels.wrap(loginResponseDTO));
+                        intent.putExtra("bundle", b);
+                        startActivity(intent);
+                        getActivity().finish();
+                    } else {
+                        hideProgress();
+                        Toast.makeText(getActivity(), "Failed to setup moxtra user.", Toast.LENGTH_LONG).show();
+                        Log.e(TAG, "Failed to setup moxtra user.");
                     }
-                });
-            } catch (IOException e) {
-                Log.e(TAG, "Can't decode avatar.", e);
-            }
+                }
+            });
+        } catch (IOException e) {
+            Log.e(TAG, "Can't decode avatar.", e);
+        }
 
     }
 
-    private void saveUserData(String userName, String email, String password) {
+    private void saveUserData(String email, String password,String userName) {
 
         PreferencesUtils preferencesUtils = PreferencesUtils.getInstance(getContext());
-        preferencesUtils.setBoolean(AppConstants.IS_LOGGED_IN,true);
-        preferencesUtils.setString(AppConstants.USER_EMAIL,email);
-        preferencesUtils.setString(AppConstants.USER_PASSWORD,password);
-        preferencesUtils.setString(AppConstants.USER_NAME,userName);
+        preferencesUtils.setBoolean(AppConstants.IS_LOGGED_IN, true);
+        preferencesUtils.setString(AppConstants.USER_EMAIL, email);
+        preferencesUtils.setString(AppConstants.USER_PASSWORD, password);
+        preferencesUtils.setString(AppConstants.USER_NAME, userName);
 
 
     }
-
-
 
 
 }

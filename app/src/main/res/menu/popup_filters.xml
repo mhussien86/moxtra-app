@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_conversation"
+        android:id="@+id/menu_all"
         android:icon="@drawable/icon_menu_converation_normal"
         android:title="@string/All" />
 
@@ -15,7 +15,7 @@
         android:icon="@drawable/icon_menu_unread_normal"
         android:title="@string/Unread" />
 
-    <item
+<!--    <item
         android:id="@+id/menu_groups"
         android:icon="@drawable/icon_menu_groups_normal"
         android:title="@string/sblox" />
@@ -23,5 +23,5 @@
     <item
         android:id="@+id/menu_development"
         android:icon="@drawable/icon_menu_developement_normal"
-        android:title="@string/development" />
+        android:title="@string/development" />-->
 </menu>

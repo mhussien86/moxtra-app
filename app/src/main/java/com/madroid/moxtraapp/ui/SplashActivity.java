@@ -42,10 +42,10 @@ public class SplashActivity extends BaseActivity implements LoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_splash);
         loginPresenter = new LoginPresenterImpl(this);
-        if(PreferencesUtils.getInstance(SplashActivity.this).getBoolean(AppConstants.IS_LOGGED_IN)){
+        if (PreferencesUtils.getInstance(SplashActivity.this).getBoolean(AppConstants.IS_LOGGED_IN)) {
             loginWithSavedData();
 
-        }else {
+        } else {
 
             new Timer().schedule(new TimerTask() {
                 @Override
@@ -62,9 +62,9 @@ public class SplashActivity extends BaseActivity implements LoginView {
     }
 
 
-    private void loginWithSavedData(){
+    private void loginWithSavedData() {
 
-        loginPresenter.login(new LoginRequestDTO(PreferencesUtils.getInstance(SplashActivity.this).getString(AppConstants.USER_EMAIL),PreferencesUtils.getInstance(SplashActivity.this).getString(AppConstants.USER_PASSWORD)));
+        loginPresenter.login(new LoginRequestDTO(PreferencesUtils.getInstance(SplashActivity.this).getString(AppConstants.USER_EMAIL), PreferencesUtils.getInstance(SplashActivity.this).getString(AppConstants.USER_PASSWORD)));
 
     }
 
@@ -90,8 +90,6 @@ public class SplashActivity extends BaseActivity implements LoginView {
     public void succededToLogin(final LoginResponseDTO loginResponseDTO) {
         try {
             MXAccountManager.createInstance(SplashActivity.this, loginResponseDTO.getResponse().getClientId(), loginResponseDTO.getResponse().clientSecret, true);
-
-
 
         } catch (MXSDKException.InvalidParameter invalidParameter) {
             Log.e(TAG, "Error when creating MXAccountManager instance.", invalidParameter);
