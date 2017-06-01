@@ -21,10 +21,11 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.madroid.moxtraapp.AppConstants;
 import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
+import com.madroid.moxtraapp.dtos.LoginResponseDTO;
 import com.madroid.moxtraapp.ui.meet.MeetingsContainerActivity;
 import com.moxtra.binder.sdk.InviteToChatCallback;
 import com.moxtra.binder.sdk.MXException;
@@ -34,6 +35,8 @@ import com.moxtra.sdk.MXChatManager;
 import com.moxtra.sdk.MXGroupChatSession;
 import com.moxtra.sdk.MXGroupChatSessionCallback;
 import com.moxtra.sdk.MXSDKException;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -91,7 +94,6 @@ public class TimelineListFragment extends BaseFragment {
                             public void onOpenChatSuccess() {
 
                                 Log.e("open chat", "open moxtra chat success");
-
                             }
 
                             @Override
@@ -267,7 +269,16 @@ public class TimelineListFragment extends BaseFragment {
                             Toast.makeText(getActivity(), "menu_group_conversation!", Toast.LENGTH_SHORT).show();
                             return true;
                         case R.id.menu_direct_message:
-                            Toast.makeText(getActivity(), "menu_direct_message!", Toast.LENGTH_SHORT).show();
+                            try {
+                                Bundle b = getActivity().getIntent().getBundleExtra("bundle");
+                                LoginResponseDTO loginResponseDTO = Parcels.unwrap(b.getParcelable(AppConstants.LOGIN_RESPONSE));
+                                Intent intent = new Intent(getActivity(), ContactsListActivity.class);
+                                b.putParcelable(AppConstants.LOGIN_RESPONSE, Parcels.wrap(loginResponseDTO));
+                                intent.putExtra("bundle", b);
+                                startActivity(intent);
+                            }catch(Exception e){
+
+                            }
                             return true;
                         default:
                             return false;
