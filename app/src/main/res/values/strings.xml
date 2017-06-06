@@ -15,4 +15,6 @@
     <string name="scedual_meet">Schedule</string>
     <string name="development">Development</string>
     <string name="sblox">S-Blox(Business)</string>
+    <string name="s_blox">S-Blox</string>
+    <string name="google_contacts">Google Contacts</string>
 </resources>
