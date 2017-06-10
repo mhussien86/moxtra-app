@@ -5,5 +5,9 @@ package com.madroid.moxtraapp.ui.timeline;
  */
 public interface TimelineListView {
 
+    void updateListWithFavorites();
+    void updateListWithUnread();
+    void updateListWithAll();
+
 
 }

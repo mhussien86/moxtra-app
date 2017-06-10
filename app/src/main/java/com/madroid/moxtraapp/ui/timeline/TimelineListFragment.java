@@ -35,11 +35,8 @@ import com.moxtra.sdk.MXChatManager;
 import com.moxtra.sdk.MXGroupChatSession;
 import com.moxtra.sdk.MXGroupChatSessionCallback;
 import com.moxtra.sdk.MXSDKException;
-
 import org.parceler.Parcels;
-
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -108,7 +105,6 @@ public class TimelineListFragment extends BaseFragment {
                 } else if (session.isAMeet()) {
                     joinMeet(session);
                 }
-
 
             }
         });
