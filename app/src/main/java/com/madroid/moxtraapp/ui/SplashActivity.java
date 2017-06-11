@@ -13,7 +13,7 @@ import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.LoginRequestDTO;
 import com.madroid.moxtraapp.dtos.LoginResponseDTO;
-import com.madroid.moxtraapp.ui.login.LoginActivity;
+import com.madroid.moxtraapp.ui.intro.AppIntroActivity;
 import com.madroid.moxtraapp.ui.login.LoginPresenter;
 import com.madroid.moxtraapp.ui.login.LoginPresenterImpl;
 import com.madroid.moxtraapp.ui.login.LoginView;
@@ -51,7 +51,10 @@ public class SplashActivity extends BaseActivity implements LoginView {
                 @Override
                 public void run() {
 
-                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+//                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+
+                    Intent intent = new Intent(SplashActivity.this, AppIntroActivity.class);
+
                     startActivity(intent);
 
                     finish();

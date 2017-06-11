@@ -17,4 +17,7 @@
     <string name="sblox">S-Blox(Business)</string>
     <string name="s_blox">S-Blox</string>
     <string name="google_contacts">Google Contacts</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
