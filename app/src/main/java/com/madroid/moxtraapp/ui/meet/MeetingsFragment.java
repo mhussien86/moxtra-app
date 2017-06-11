@@ -77,25 +77,14 @@ public class MeetingsFragment extends BaseFragment {
     public void meetNowButton(View view){
 
         if(view.getId()== R.id.meet_now) {
-            getActivity().startActivity(new Intent(getActivity(), MeetingsContainerActivity.class));
-        }else if(view.getId()==R.id.join_meet){
+            Intent intent = new Intent(new Intent(getActivity(), MeetingsContainerActivity.class));
+            intent.putExtra("data","start");
+            startActivity(intent);
 
-//            try {
-//                MXChatManager.getInstance().joinMeet(session.getMeetID(), currentLoginUser.firstName,
-//                        new MXChatManager.OnJoinMeetListener() {
-//                            @Override
-//                            public void onJoinMeetDone(String meetId, String meetUrl) {
-//                                Log.d(TAG, "Joined meet: " + meetId);
-//                            }
-//
-//                            @Override
-//                            public void onJoinMeetFailed() {
-//                                Log.e(TAG, "Unable to join meet.");
-//                            }
-//                        });
-//            } catch (MXSDKException.MeetIsInProgress meetIsInProgress) {
-//                Log.e(TAG, "Error when join meet", meetIsInProgress);
-//            }
+        }else if(view.getId()==R.id.join_meet){
+            Intent intent = new Intent(new Intent(getActivity(), MeetingsContainerActivity.class));
+            intent.putExtra("data","join");
+            startActivity(intent);
         }
     }
 
