@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.madroid.moxtraapp.AppConstants;
 import com.madroid.moxtraapp.BaseActivity;
@@ -72,18 +73,21 @@ public class JoinMeetFragment extends BaseFragment {
                         @Override
                         public void onJoinMeetDone(String meetId, String meetUrl) {
                             Log.d("Meeting", "Joined meet: " + meetId);
+                            getActivity().finish();
                         }
 
                         @Override
                         public void onJoinMeetFailed() {
                             Log.e("Meeting", "Unable to join meet.");
+                            Toast.makeText(getActivity(),"Unable to join meet.",Toast.LENGTH_LONG).show();
                         }
                     });
+
         } catch (MXSDKException.MeetIsInProgress meetIsInProgress) {
             Log.e("Meeting", "Error when join meet"+ meetIsInProgress.getMessage());
         }
 
-        getActivity().finish();
+
     }
 
     private void setUpToolBar(String pageTitle) {
