@@ -11,4 +11,5 @@ public class AppConstants {
     public static final String USER_PASSWORD = "user_password";
     public static final String LOGIN_RESPONSE = "login_data";
     public static final String USER_NAME = "user_name";
+    public static final String ACCESS_TOKEN = "access_token";
 }

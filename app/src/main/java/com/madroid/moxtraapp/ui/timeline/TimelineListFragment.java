@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.madroid.moxtraapp.AppConstants;
 import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.BaseFragment;
@@ -35,21 +36,27 @@ import com.moxtra.sdk.MXChatManager;
 import com.moxtra.sdk.MXGroupChatSession;
 import com.moxtra.sdk.MXGroupChatSessionCallback;
 import com.moxtra.sdk.MXSDKException;
+
 import org.parceler.Parcels;
+
 import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import utils.PreferencesUtils;
 
 /**
  * Created by mohamed on 16/01/17.
  */
-public class TimelineListFragment extends BaseFragment {
+public class TimelineListFragment extends BaseFragment implements TimelineListView {
 
 
     @Bind(R.id.recycle_view)
     RecyclerView recyclerView;
 
     TimelineListAdapter contactsListAdapter;
+
+    TimeLinePresenter timelinePresenter ;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -61,6 +68,9 @@ public class TimelineListFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_timeline_list, container, false);
         ButterKnife.bind(this, rootView);
         setUpToolBar();
+        timelinePresenter = new com.madroid.moxtraapp.ui.timeline.TimelinePresenterImpl(this);
+        String accessToken = PreferencesUtils.getInstance(getActivity()).getString(AppConstants.ACCESS_TOKEN);
+        timelinePresenter.getAllBinders(accessToken,"all");
         return rootView;
     }
 
@@ -295,5 +305,35 @@ public class TimelineListFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void updateListWithFavorites() {
+
+    }
+
+    @Override
+    public void updateListWithUnread() {
+
+    }
+
+    @Override
+    public void updateListWithAll() {
+
     }
 }

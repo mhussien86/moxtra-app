@@ -21,17 +21,22 @@ public class TimelinePresenterImpl implements TimeLinePresenter {
 
 
     @Override
-    public void getAllBinders() {
+    public void getAllBinders(String access_token, String filter) {
 
     }
 
     @Override
-    public void getUnReadBinders() {
+    public void getUnReadBinders(String access_token, String filter) {
 
     }
 
     @Override
-    public void getFavoriteBinders() {
+    public void getFavoriteBinders(String access_token, String filter) {
+
+    }
+
+    @Override
+    public void onDestroy() {
 
     }
 }

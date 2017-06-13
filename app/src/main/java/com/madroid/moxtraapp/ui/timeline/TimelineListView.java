@@ -5,6 +5,9 @@ package com.madroid.moxtraapp.ui.timeline;
  */
 public interface TimelineListView {
 
+    void showLoading();
+    void hideLoading();
+    void showError();
     void updateListWithFavorites();
     void updateListWithUnread();
     void updateListWithAll();

@@ -116,11 +116,10 @@ public class LoginFragment extends BaseFragment implements LoginView {
     @Override
     public void succededToLogin(final LoginResponseDTO loginResponseDTO) {
 
-
         Log.e(TAG, "Logged in and integrated with the client id and client secret new");
         if (checkBox.isChecked()) {
             String userName = loginResponseDTO.getResponse().getUserData().getFirstName() + " " + loginResponseDTO.getResponse().getUserData().getLastName();
-            saveUserData(emailEditText.getText().toString(), passwordEditText.getText().toString(), userName);
+            saveUserData(emailEditText.getText().toString(), passwordEditText.getText().toString(), userName , loginResponseDTO.getResponse().getAccessToken());
         }
 
         try {
@@ -157,13 +156,14 @@ public class LoginFragment extends BaseFragment implements LoginView {
 
     }
 
-    private void saveUserData(String email, String password,String userName) {
+    private void saveUserData(String email, String password,String userName, String accessToken) {
 
         PreferencesUtils preferencesUtils = PreferencesUtils.getInstance(getContext());
         preferencesUtils.setBoolean(AppConstants.IS_LOGGED_IN, true);
         preferencesUtils.setString(AppConstants.USER_EMAIL, email);
         preferencesUtils.setString(AppConstants.USER_PASSWORD, password);
         preferencesUtils.setString(AppConstants.USER_NAME, userName);
+        preferencesUtils.setString(AppConstants.ACCESS_TOKEN, accessToken);
 
 
     }
