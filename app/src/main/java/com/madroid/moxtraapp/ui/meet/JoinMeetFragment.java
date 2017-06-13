@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.madroid.moxtraapp.AppConstants;
 import com.madroid.moxtraapp.BaseActivity;
@@ -29,7 +30,7 @@ import utils.PreferencesUtils;
  * Created by mohamed on 08/05/17.
  */
 
-public class MeetNowFragment extends BaseFragment {
+public class JoinMeetFragment extends BaseFragment {
 
 
     @Bind(R.id.et_meet_number)
@@ -54,52 +55,54 @@ public class MeetNowFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_meet_now, container, false);
         ButterKnife.bind(this, view);
-        setUpToolBar("Meet Now");
-        meetingName.setText(PreferencesUtils.getInstance(getActivity()).getString(AppConstants.USER_NAME)+"'s Meet");
+        setUpToolBar("Join Meet");
+        meetingName.setText("Enter meet ID");
+        actionButton.setText("Join Meet");
 
         return view;
     }
 
 
     @OnClick(R.id.btn_action)
-    public void startMeeting(View view){
+    public void startMeeting(View view) {
 
+        String userName = PreferencesUtils.getInstance(getActivity()).getString(AppConstants.USER_NAME);
         try {
-            MXChatManager.getInstance().startMeet(meetingName.getText() + "'s meet", null,
-                    null, new MXChatManager.OnStartMeetListener() {
+            MXChatManager.getInstance().joinMeet(meetingName.getText().toString(), userName,
+                    new MXChatManager.OnJoinMeetListener() {
                         @Override
-                        public void onStartMeetDone(String meetId, String meetUrl) {
-                            Log.d("Meeting", "Meet started: " + meetId);
+                        public void onJoinMeetDone(String meetId, String meetUrl) {
+                            Log.d("Meeting", "Joined meet: " + meetId);
                             getActivity().finish();
-
                         }
 
                         @Override
-                        public void onStartMeetFailed(int i, String s) {
-                            Log.e("Meeting", "onStartMeetFailed: " + s);
+                        public void onJoinMeetFailed() {
+                            Log.e("Meeting", "Unable to join meet.");
+                            Toast.makeText(getActivity(),"Unable to join meet.",Toast.LENGTH_LONG).show();
                         }
                     });
-        } catch (MXSDKException.Unauthorized unauthorized) {
-            Log.e("Meeting", "Error when start meet" + unauthorized);
+
         } catch (MXSDKException.MeetIsInProgress meetIsInProgress) {
-            Log.e("Meeting", "Error when start meet"+ meetIsInProgress);
+            Log.e("Meeting", "Error when join meet"+ meetIsInProgress.getMessage());
         }
+
 
     }
 
-    private void setUpToolBar(String pageTitle){
+    private void setUpToolBar(String pageTitle) {
         //add the Toolbar
         //Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
 
-        LayoutInflater mInflater=LayoutInflater.from(getActivity());
+        LayoutInflater mInflater = LayoutInflater.from(getActivity());
         View mCustomView = mInflater.inflate(R.layout.categories_toolbar, null);
         toolbar.addView(mCustomView);
-        TextView title =((TextView)toolbar.findViewById(R.id.title));
+        TextView title = ((TextView) toolbar.findViewById(R.id.title));
         title.setText(pageTitle);
         ((ImageView) toolbar.findViewById(R.id.icon_add)).setVisibility(View.INVISIBLE);
-        ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
-        ((BaseActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((BaseActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((BaseActivity) getActivity()).setSupportActionBar(toolbar);
+        ((BaseActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((BaseActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
     }
 
