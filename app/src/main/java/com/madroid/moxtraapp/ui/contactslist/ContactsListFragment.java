@@ -18,6 +18,7 @@ import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.LoginResponseDTO;
 import com.madroid.moxtraapp.ui.contactdetails.ContactDetailsActivity;
+import com.madroid.moxtraapp.ui.mobilecontacts.MobileContactContainerActivity;
 
 import org.parceler.Parcels;
 
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import butterknife.ButterKnife;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
@@ -117,9 +119,17 @@ public class ContactsListFragment extends BaseFragment {
         ((BaseActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
 
     }
+
+    @OnClick(R.id.contact_mobile)
+    public void openMobileContact(View view) {
+        getActivity().startActivity(new Intent(getActivity(), MobileContactContainerActivity.class));
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
     }
+
+
 }

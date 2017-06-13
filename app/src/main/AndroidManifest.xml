@@ -51,6 +51,9 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".ui.mobilecontacts.MobileContactContainerActivity" />
+        <activity android:name=".ui.intro.AppIntroActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
