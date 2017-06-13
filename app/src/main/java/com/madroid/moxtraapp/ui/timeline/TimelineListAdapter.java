@@ -11,14 +11,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.madroid.moxtraapp.R;
+import com.madroid.moxtraapp.dtos.binders.BindersResponseDTO;
 import com.moxtra.isdk.util.TextUtils;
-import com.moxtra.sdk.MXChatManager;
-import com.moxtra.sdk.MXGroupChatMember;
-import com.moxtra.sdk.MXGroupChatSession;
 
 import java.io.File;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -33,19 +29,25 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
     private final OnItemClickListener listener;
     private final Context context;
 
-    private List<MXGroupChatSession> sessions ;
+    private List<BindersResponseDTO.Binder> sessions ;
 
-    public interface OnItemClickListener {
-        void onItemClick(MXGroupChatSession session);
-    }
-
-
-    public TimelineListAdapter(Context ctx , List<MXGroupChatSession> sessions, OnItemClickListener onItemClickListener){
-
+    public TimelineListAdapter(Context context, List<BindersResponseDTO.Binder> sessions, OnItemClickListener onItemClickListener) {
         this.listener = onItemClickListener ;
         this.sessions = sessions ;
-        this.context = ctx ;
+        this.context = context ;
     }
+
+    public interface OnItemClickListener {
+        void onItemClick(BindersResponseDTO.Binder session);
+    }
+
+
+//    public TimelineListAdapter(Context ctx , List<MXGroupChatSession> sessions, OnItemClickListener onItemClickListener){
+//
+//        this.listener = onItemClickListener ;
+//        this.sessions = sessions ;
+//        this.context = ctx ;
+//    }
 
 
 
@@ -61,24 +63,24 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
     public void onBindViewHolder(ContactViewHolder holder, int position) {
 
         holder.bind(sessions.get(position), listener);
-        MXGroupChatSession session  = sessions.get(position);
-        holder.contactName.setText(session.getTopic());
-        holder.contactMail.setText(""+session.getLastFeedContent());
-        if (!TextUtils.isEmpty(session.getCoverImagePath())) {
-            holder.userImage.setImageURI(Uri.fromFile(new File(session.getCoverImagePath())));
+        BindersResponseDTO.Binder session  = sessions.get(position);
+        holder.contactName.setText(session.getBinder().getName());
+        holder.contactMail.setText(""+session.getBinder().getBinderEmail());
+        if (!TextUtils.isEmpty(session.getBinder().getThumbnailUri())) {
+            holder.userImage.setImageURI(Uri.fromFile(new File(session.getBinder().getThumbnailUri())));
         } else {
             // Get other member's avatar
-            if (session.isAChat()) {
-                List<MXGroupChatMember> members = session.getMembers();
-                if (members != null && members.size() > 0) {
-                    String avatarPath = members.get(0).getAvatarPath();
-                    if (!TextUtils.isEmpty(avatarPath)) {
-                        Glide.with(context).load(new File(avatarPath)).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.user_default_avatar).centerCrop().into(holder.userImage);
+//            if (session.getBinder().getRevision().) {
+//                List<MXGroupChatMember> members = session.getMembers();
+//                if (members != null && members.size() > 0) {
+//                    String avatarPath = members.get(0).getAvatarPath();
+                    if (!TextUtils.isEmpty(session.getBinder().getThumbnailUri())) {
+                        Glide.with(context).load(new File(session.getBinder().getThumbnailUri())).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.user_default_avatar).centerCrop().into(holder.userImage);
 //                        Picasso.with(ChatListActivity.this).load(new File(avatarPath)).transform(new CircleTransform(getResources().getColor(R.color.blue_300))).into(theHolder.ivCover);
                     }
                 }
-            }
-        }
+//            }
+//        }
     }
 
     @Override
@@ -103,7 +105,7 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
             ButterKnife.bind(this,itemView);
         }
 
-        public void bind(final MXGroupChatSession session, final TimelineListAdapter.OnItemClickListener listener) {
+        public void bind(final BindersResponseDTO.Binder session, final TimelineListAdapter.OnItemClickListener listener) {
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -114,21 +116,21 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
         }
     }
 
-    private void sortData() {
-        Collections.sort(sessions, new Comparator<MXGroupChatSession>() {
-            @Override
-            public int compare(MXGroupChatSession lhs, MXGroupChatSession rhs) {
-                if (lhs.isAMeet()) return -1;
-                if (rhs.isAMeet()) return 1;
-                if (lhs.getLastFeedTimeStamp() > rhs.getLastFeedTimeStamp()) return -1;
-                return 0;
-            }
-        });
-    }
-
-    public void refreshData() {
-        sessions = MXChatManager.getInstance().getGroupChatSessions();
-        sortData();
-        notifyDataSetChanged();
-    }
+//    private void sortData() {
+//        Collections.sort(sessions, new Comparator<MXGroupChatSession>() {
+//            @Override
+//            public int compare(MXGroupChatSession lhs, MXGroupChatSession rhs) {
+//                if (lhs.isAMeet()) return -1;
+//                if (rhs.isAMeet()) return 1;
+//                if (lhs.getLastFeedTimeStamp() > rhs.getLastFeedTimeStamp()) return -1;
+//                return 0;
+//            }
+//        });
+//    }
+//
+//    public void refreshData() {
+//        sessions = MXChatManager.getInstance().getGroupChatSessions();
+//        sortData();
+//        notifyDataSetChanged();
+//    }
 }
