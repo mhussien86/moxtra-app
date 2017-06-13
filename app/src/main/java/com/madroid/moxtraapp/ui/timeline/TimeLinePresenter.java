@@ -5,4 +5,7 @@ package com.madroid.moxtraapp.ui.timeline;
  */
 
 public interface TimeLinePresenter {
+
+
+
 }

@@ -14,5 +14,5 @@ public interface CategoriesAPI {
 
 
     @GET("/me/categories?")
-    Observable<AllCategoriesResponseDTO> getAllCategories(@Query("access_token") String acccess_token);
+    Observable<AllCategoriesResponseDTO> getAllCategories(@Query("access_token") String access_token);
 }
