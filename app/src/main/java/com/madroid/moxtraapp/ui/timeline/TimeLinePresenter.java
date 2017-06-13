@@ -7,5 +7,8 @@ package com.madroid.moxtraapp.ui.timeline;
 public interface TimeLinePresenter {
 
 
+    void getAllBinders();
+    void getUnReadBinders();
+    void getFavoriteBinders();
 
 }
