@@ -19,4 +19,38 @@
         app:radius="5dp"
         android:layout_height="wrap_content" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingTop="28dp"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/intro_signup_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent_color"
+            android:src="@drawable/intro_sign_up_btn" />
+
+        <ImageButton
+            android:id="@+id/intro_login_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent_color"
+            android:src="@drawable/intro_sign_in_btn" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/picture"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/intro_logo"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_alignParentBottom="true"/>
+
 </LinearLayout>
