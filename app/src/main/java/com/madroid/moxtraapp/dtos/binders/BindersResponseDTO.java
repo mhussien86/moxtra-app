@@ -1,5 +1,8 @@
 package com.madroid.moxtraapp.dtos.binders;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -9,35 +12,56 @@ import java.util.List;
 public class BindersResponseDTO {
 
 
-    private Data data;
-    private String code;
+        @SerializedName("data")
+        @Expose
+        private Data data;
+        @SerializedName("code")
+        @Expose
+        private String code;
 
-    public Data getData() {
-        return data;
-    }
+        public Data getData() {
+            return data;
+        }
 
-    public void setData(Data data) {
-        this.data = data;
-    }
+        public void setData(Data data) {
+            this.data = data;
+        }
 
-    public String getCode() {
-        return code;
-    }
+        public String getCode() {
+            return code;
+        }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+        public void setCode(String code) {
+            this.code = code;
+        }
+
 
 
     public class Actor {
 
+        @SerializedName("published")
+        @Expose
         private String published;
+        @SerializedName("updated")
+        @Expose
         private String updated;
+        @SerializedName("objectType")
+        @Expose
         private String objectType;
+        @SerializedName("displayName")
+        @Expose
         private String displayName;
+        @SerializedName("id")
+        @Expose
         private String id;
+        @SerializedName("image")
+        @Expose
         private String image;
+        @SerializedName("unique_id")
+        @Expose
         private String uniqueId;
+        @SerializedName("email")
+        @Expose
         private String email;
 
         public String getPublished() {
@@ -108,7 +132,11 @@ public class BindersResponseDTO {
 
     public class Binder {
 
+        @SerializedName("category")
+        @Expose
         private Integer category;
+        @SerializedName("binder")
+        @Expose
         private Binder_ binder;
 
         public Integer getCategory() {
@@ -131,26 +159,68 @@ public class BindersResponseDTO {
 
     public class Binder_ {
 
+        @SerializedName("id")
+        @Expose
         private String id;
+        @SerializedName("name")
+        @Expose
         private String name;
+        @SerializedName("created_time")
+        @Expose
         private Integer createdTime;
+        @SerializedName("updated_time")
+        @Expose
         private Integer updatedTime;
+        @SerializedName("total_comments")
+        @Expose
         private Integer totalComments;
+        @SerializedName("total_members")
+        @Expose
         private Integer totalMembers;
+        @SerializedName("total_pages")
+        @Expose
         private Integer totalPages;
+        @SerializedName("total_todos")
+        @Expose
         private Integer totalTodos;
+        @SerializedName("revision")
+        @Expose
         private Integer revision;
+        @SerializedName("thumbnail_uri")
+        @Expose
         private String thumbnailUri;
+        @SerializedName("conversation")
+        @Expose
         private Boolean conversation;
+        @SerializedName("users")
+        @Expose
         private List<User> users = null;
+        @SerializedName("restricted")
+        @Expose
         private Boolean restricted;
+        @SerializedName("team")
+        @Expose
         private Boolean team;
+        @SerializedName("description")
+        @Expose
         private String description;
+        @SerializedName("feeds_timestamp")
+        @Expose
         private Integer feedsTimestamp;
+        @SerializedName("status")
+        @Expose
         private String status;
+        @SerializedName("last_feed")
+        @Expose
         private LastFeed lastFeed;
+        @SerializedName("binder_email")
+        @Expose
         private String binderEmail;
+        @SerializedName("tags")
+        @Expose
         private java.lang.Object tags;
+        @SerializedName("unread_feeds")
+        @Expose
         private Integer unreadFeeds;
 
         public String getId() {
@@ -323,10 +393,13 @@ public class BindersResponseDTO {
 
     }
 
-
     public class Data {
 
+        @SerializedName("unread_feeds")
+        @Expose
         private Integer unreadFeeds;
+        @SerializedName("binders")
+        @Expose
         private List<Binder> binders = null;
 
         public Integer getUnreadFeeds() {
@@ -345,11 +418,14 @@ public class BindersResponseDTO {
             this.binders = binders;
         }
 
-
     }
+
+
 
     public class Generator {
 
+        @SerializedName("id")
+        @Expose
         private String id;
 
         public String getId() {
@@ -360,16 +436,30 @@ public class BindersResponseDTO {
             this.id = id;
         }
 
-
     }
 
     public class LastFeed {
 
+        @SerializedName("published")
+        @Expose
         private String published;
+        @SerializedName("actor")
+        @Expose
         private Actor actor;
+        @SerializedName("verb")
+        @Expose
         private String verb;
+        @SerializedName("object")
+        @Expose
+        private Object object;
+        @SerializedName("target")
+        @Expose
         private Target target;
+        @SerializedName("generator")
+        @Expose
         private Generator generator;
+        @SerializedName("id")
+        @Expose
         private Integer id;
 
         public String getPublished() {
@@ -394,6 +484,14 @@ public class BindersResponseDTO {
 
         public void setVerb(String verb) {
             this.verb = verb;
+        }
+
+        public Object getObject() {
+            return object;
+        }
+
+        public void setObject(Object object) {
+            this.object = object;
         }
 
         public Target getTarget() {
@@ -424,18 +522,44 @@ public class BindersResponseDTO {
 
     public class Object {
 
+        @SerializedName("published")
+        @Expose
         private String published;
+        @SerializedName("updated")
+        @Expose
         private String updated;
+        @SerializedName("objectType")
+        @Expose
         private String objectType;
+        @SerializedName("id")
+        @Expose
         private String id;
+        @SerializedName("displayName")
+        @Expose
         private String displayName;
+        @SerializedName("status")
+        @Expose
         private String status;
+        @SerializedName("recording_url")
+        @Expose
         private java.lang.Object recordingUrl;
+        @SerializedName("start_time")
+        @Expose
         private String startTime;
+        @SerializedName("end_time")
+        @Expose
         private String endTime;
+        @SerializedName("image")
+        @Expose
         private String image;
+        @SerializedName("unique_id")
+        @Expose
         private String uniqueId;
+        @SerializedName("email")
+        @Expose
         private String email;
+        @SerializedName("url")
+        @Expose
         private String url;
 
         public String getPublished() {
@@ -542,16 +666,28 @@ public class BindersResponseDTO {
             this.url = url;
         }
 
-
     }
+
 
     public class Target {
 
+        @SerializedName("published")
+        @Expose
         private String published;
+        @SerializedName("updated")
+        @Expose
         private String updated;
+        @SerializedName("objectType")
+        @Expose
         private String objectType;
+        @SerializedName("id")
+        @Expose
         private String id;
+        @SerializedName("displayName")
+        @Expose
         private String displayName;
+        @SerializedName("summary")
+        @Expose
         private String summary;
 
         public String getPublished() {
@@ -602,19 +738,34 @@ public class BindersResponseDTO {
             this.summary = summary;
         }
 
-
     }
 
 
     public class User {
 
+        @SerializedName("revision")
+        @Expose
         private Integer revision;
+        @SerializedName("status")
+        @Expose
         private String status;
+        @SerializedName("type")
+        @Expose
         private String type;
+        @SerializedName("updated_time")
+        @Expose
         private Integer updatedTime;
+        @SerializedName("created_time")
+        @Expose
         private Integer createdTime;
+        @SerializedName("user")
+        @Expose
         private User_ user;
+        @SerializedName("team")
+        @Expose
         private java.lang.Object team;
+        @SerializedName("notification_off")
+        @Expose
         private Boolean notificationOff;
 
         public Integer getRevision() {
@@ -681,17 +832,31 @@ public class BindersResponseDTO {
             this.notificationOff = notificationOff;
         }
 
-
     }
+
 
     public class User_ {
 
+        @SerializedName("id")
+        @Expose
         private String id;
+        @SerializedName("email")
+        @Expose
         private String email;
+        @SerializedName("name")
+        @Expose
         private String name;
+        @SerializedName("picture_uri")
+        @Expose
         private String pictureUri;
+        @SerializedName("phone_number")
+        @Expose
         private String phoneNumber;
+        @SerializedName("unique_id")
+        @Expose
         private String uniqueId;
+        @SerializedName("org_id")
+        @Expose
         private String orgId;
 
         public String getId() {
@@ -750,8 +915,5 @@ public class BindersResponseDTO {
             this.orgId = orgId;
         }
 
-
     }
-
-
 }
