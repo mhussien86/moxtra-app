@@ -21,11 +21,13 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.madroid.moxtraapp.AppConstants;
 import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.LoginResponseDTO;
+import com.madroid.moxtraapp.dtos.binders.BindersResponseDTO;
 import com.madroid.moxtraapp.ui.meet.MeetingsContainerActivity;
 import com.moxtra.binder.sdk.InviteToChatCallback;
 import com.moxtra.binder.sdk.MXException;
@@ -35,21 +37,27 @@ import com.moxtra.sdk.MXChatManager;
 import com.moxtra.sdk.MXGroupChatSession;
 import com.moxtra.sdk.MXGroupChatSessionCallback;
 import com.moxtra.sdk.MXSDKException;
+
 import org.parceler.Parcels;
+
 import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import utils.PreferencesUtils;
 
 /**
  * Created by mohamed on 16/01/17.
  */
-public class TimelineListFragment extends BaseFragment {
+public class TimelineListFragment extends BaseFragment implements TimelineListView {
 
 
     @Bind(R.id.recycle_view)
     RecyclerView recyclerView;
 
     TimelineListAdapter contactsListAdapter;
+
+    TimeLinePresenter timelinePresenter ;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -61,32 +69,33 @@ public class TimelineListFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_timeline_list, container, false);
         ButterKnife.bind(this, rootView);
         setUpToolBar();
+
         return rootView;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
         recyclerView.setHasFixedSize(true);
-
-        showAllConversations();
+        timelinePresenter = new com.madroid.moxtraapp.ui.timeline.TimelinePresenterImpl(this);
+        String accessToken = PreferencesUtils.getInstance(getActivity()).getString(AppConstants.ACCESS_TOKEN);
+        timelinePresenter.getAllBinders(accessToken,"all");
     }
 
-    private void showAllConversations() {
+    private void showAllConversations(List<BindersResponseDTO.Binder> sessions) {
 
-        List<MXGroupChatSession> sessions = MXChatManager.getInstance().getGroupChatSessions();
+//        List<MXGroupChatSession> sessions = MXChatManager.getInstance().getGroupChatSessions();
 
         contactsListAdapter = new TimelineListAdapter(getContext(), sessions, new TimelineListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(MXGroupChatSession session) {
+            public void onItemClick(BindersResponseDTO.Binder session) {
 
-                if (session.isAChat()) {
+//                if (session.isAChat()) {
                     try {
-                        MXChatManager.getInstance().openChat(session.getSessionID(), new MXChatManager.OnOpenChatListener() {
+                        MXChatManager.getInstance().openChat(session.getBinder().getId(), new MXChatManager.OnOpenChatListener() {
                             @Override
                             public void onOpenChatSuccess() {
 
@@ -102,9 +111,9 @@ public class TimelineListFragment extends BaseFragment {
 
 
                     }
-                } else if (session.isAMeet()) {
-                    joinMeet(session);
-                }
+//                } else if (session.isAMeet()) {
+//                    joinMeet(session);
+//                }
 
             }
         });
@@ -115,7 +124,7 @@ public class TimelineListFragment extends BaseFragment {
         MXChatCustomizer.setOnMeetEndListener(new OnEndMeetListener() {
             @Override
             public void onMeetEnded(String meetId) {
-                contactsListAdapter.refreshData();
+//                contactsListAdapter.refreshData();
             }
 
             @Override
@@ -127,17 +136,17 @@ public class TimelineListFragment extends BaseFragment {
         MXChatManager.getInstance().setGroupChatSessionCallback(new MXGroupChatSessionCallback() {
             @Override
             public void onGroupChatSessionCreated(MXGroupChatSession session) {
-                contactsListAdapter.refreshData();
+//                contactsListAdapter.refreshData();
             }
 
             @Override
             public void onGroupChatSessionUpdated(MXGroupChatSession session) {
-                contactsListAdapter.refreshData();
+//                contactsListAdapter.refreshData();
             }
 
             @Override
             public void onGroupChatSessionDeleted(MXGroupChatSession session) {
-                contactsListAdapter.refreshData();
+//                contactsListAdapter.refreshData();
             }
         });
 
@@ -177,7 +186,7 @@ public class TimelineListFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        contactsListAdapter.refreshData();
+//        contactsListAdapter.refreshData();
     }
 
     // display popup window with custom view
@@ -238,14 +247,19 @@ public class TimelineListFragment extends BaseFragment {
             // Setup menu item selection
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 public boolean onMenuItemClick(MenuItem item) {
+                    String accessToken = PreferencesUtils.getInstance(getActivity()).getString(AppConstants.ACCESS_TOKEN);
+
                     switch (item.getItemId()) {
                         case R.id.menu_all:
-                            showAllConversations();
+//                            showAllConversations();
+                            timelinePresenter.getAllBinders(accessToken,"all");
                             return true;
                         case R.id.menu_favorite:
+                            timelinePresenter.getFavoriteBinders(accessToken,"favorite");
                             Toast.makeText(getActivity(), "Popularity!", Toast.LENGTH_SHORT).show();
                             return true;
                         case R.id.menu_unread:
+                            timelinePresenter.getUnReadBinders(accessToken,"unread");
                             Toast.makeText(getActivity(), "menu_unread!", Toast.LENGTH_SHORT).show();
                             return true;
                         default:
@@ -296,4 +310,38 @@ public class TimelineListFragment extends BaseFragment {
         super.onDestroy();
         ButterKnife.unbind(this);
     }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    public void updateListWithFavorites(BindersResponseDTO bindersResponseDTO) {
+
+        showAllConversations(bindersResponseDTO.getData().getBinders());
+    }
+
+    @Override
+    public void updateListWithUnread(BindersResponseDTO bindersResponseDTO) {
+        showAllConversations(bindersResponseDTO.getData().getBinders());
+
+    }
+
+    @Override
+    public void updateListWithAll(BindersResponseDTO bindersResponseDTO) {
+        showAllConversations(bindersResponseDTO.getData().getBinders());
+
+    }
+
 }

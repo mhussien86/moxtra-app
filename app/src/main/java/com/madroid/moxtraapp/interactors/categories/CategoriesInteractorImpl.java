@@ -65,7 +65,7 @@ public class CategoriesInteractorImpl implements CategoriesInteractor{
     @Override
     public void unsubscribe() {
 
-        if(compositeSubscription!=null && compositeSubscription.isUnsubscribed()){
+        if(compositeSubscription!=null && compositeSubscription.hasSubscriptions()){
             compositeSubscription.unsubscribe();
         }
 
