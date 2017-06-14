@@ -1,7 +1,6 @@
 package com.madroid.moxtraapp.ui.timeline;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.binders.BindersResponseDTO;
 import com.moxtra.isdk.util.TextUtils;
 
-import java.io.File;
 import java.util.List;
 
 import butterknife.Bind;
@@ -63,22 +61,22 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
     public void onBindViewHolder(ContactViewHolder holder, int position) {
 
         holder.bind(sessions.get(position), listener);
-        BindersResponseDTO.Binder session  = sessions.get(position);
-        holder.contactName.setText(session.getBinder().getName());
-        holder.contactMail.setText(""+session.getBinder().getBinderEmail());
-        if (!TextUtils.isEmpty(session.getBinder().getThumbnailUri())) {
-            holder.userImage.setImageURI(Uri.fromFile(new File(session.getBinder().getThumbnailUri())));
-        } else {
+        BindersResponseDTO.Binder_ session  = sessions.get(position).getBinder();
+        holder.contactName.setText(session.getName());
+        holder.contactMail.setText(""+session.getBinderEmail());
+//        if (!TextUtils.isEmpty(session.getBinder().getThumbnailUri())) {
+//            holder.userImage.setImageURI(Uri.fromFile(new File(session.getBinder().getThumbnailUri())));
+//        } else {
             // Get other member's avatar
 //            if (session.getBinder().getRevision().) {
 //                List<MXGroupChatMember> members = session.getMembers();
 //                if (members != null && members.size() > 0) {
 //                    String avatarPath = members.get(0).getAvatarPath();
-                    if (!TextUtils.isEmpty(session.getBinder().getThumbnailUri())) {
-                        Glide.with(context).load(new File(session.getBinder().getThumbnailUri())).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.user_default_avatar).centerCrop().into(holder.userImage);
+                    if (!TextUtils.isEmpty(session.getThumbnailUri())) {
+                        Glide.with(context).load(session.getThumbnailUri()).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.user_default_avatar).centerCrop().into(holder.userImage);
 //                        Picasso.with(ChatListActivity.this).load(new File(avatarPath)).transform(new CircleTransform(getResources().getColor(R.color.blue_300))).into(theHolder.ivCover);
                     }
-                }
+//                }
 //            }
 //        }
     }

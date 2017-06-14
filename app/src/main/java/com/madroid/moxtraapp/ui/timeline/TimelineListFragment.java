@@ -273,7 +273,7 @@ public class TimelineListFragment extends BaseFragment implements TimelineListVi
                 public boolean onMenuItemClick(MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.menu_meet_now:
-                            getActivity().startActivity(new Intent(getActivity(), MeetingsContainerActivity.class));
+                            getActivity().startActivity(new Intent(new Intent(getActivity(), MeetingsContainerActivity.class)).putExtra("data","start"));
                             return true;
                         case R.id.menu_group_conversation:
                             Toast.makeText(getActivity(), "menu_group_conversation!", Toast.LENGTH_SHORT).show();
@@ -340,6 +340,8 @@ public class TimelineListFragment extends BaseFragment implements TimelineListVi
 
     @Override
     public void updateListWithAll(BindersResponseDTO bindersResponseDTO) {
+
+        Log.e("size",""+bindersResponseDTO.getData().getBinders().size());
         showAllConversations(bindersResponseDTO.getData().getBinders());
 
     }
