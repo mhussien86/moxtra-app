@@ -16,6 +16,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by mohamed on 25/03/17.
@@ -46,7 +47,6 @@ public class AppIntroFragment extends BaseFragment {
         _adapter = new IntroViewPagerAdapter(getActivity().getApplicationContext(),getChildFragmentManager());
         _mViewPager.setAdapter(_adapter);
         _mViewPager.setCurrentItem(0);
-//        mIndicator.setf(false);
         mIndicator.setViewPager(_mViewPager);
 
         introLogin.setOnClickListener(new View.OnClickListener() {
@@ -63,5 +63,20 @@ public class AppIntroFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
     }
+
+    @OnClick(R.id.intro_login_btn)
+     public void openLoginActivity(){
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+
+    }
+
+    @OnClick(R.id.intro_signup_btn)
+    public void openSignupActivity(){
+
+    }
+
+
 
 }
