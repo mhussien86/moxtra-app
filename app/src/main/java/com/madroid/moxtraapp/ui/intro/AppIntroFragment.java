@@ -1,5 +1,6 @@
 package com.madroid.moxtraapp.ui.intro;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -9,10 +10,12 @@ import android.view.ViewGroup;
 
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
+import com.madroid.moxtraapp.ui.login.LoginActivity;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by mohamed on 25/03/17.
@@ -40,7 +43,6 @@ public class AppIntroFragment extends BaseFragment {
         _adapter = new IntroViewPagerAdapter(getActivity().getApplicationContext(),getChildFragmentManager());
         _mViewPager.setAdapter(_adapter);
         _mViewPager.setCurrentItem(0);
-//        mIndicator.setf(false);
         mIndicator.setViewPager(_mViewPager);
     }
 
@@ -49,5 +51,20 @@ public class AppIntroFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
     }
+
+    @OnClick(R.id.intro_login_btn)
+     public void openLoginActivity(){
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+
+    }
+
+    @OnClick(R.id.intro_signup_btn)
+    public void openSignupActivity(){
+
+    }
+
+
 
 }
