@@ -91,11 +91,11 @@ public class TimelineListFragment extends BaseFragment implements TimelineListVi
 
         contactsListAdapter = new TimelineListAdapter(getContext(), sessions, new TimelineListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(BindersResponseDTO.Binder session) {
+            public void onItemClick(BindersResponseDTO.Binder_ session) {
 
 //                if (session.isAChat()) {
                     try {
-                        MXChatManager.getInstance().openChat(session.getBinder().getId(), new MXChatManager.OnOpenChatListener() {
+                        MXChatManager.getInstance().openChat(session.getId(), new MXChatManager.OnOpenChatListener() {
                             @Override
                             public void onOpenChatSuccess() {
 

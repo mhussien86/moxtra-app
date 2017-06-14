@@ -1,14 +1,17 @@
 package com.madroid.moxtraapp.ui.intro;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
+import com.madroid.moxtraapp.ui.login.LoginActivity;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import butterknife.Bind;
@@ -27,6 +30,9 @@ public class AppIntroFragment extends BaseFragment {
     @Bind(R.id.indicator)
     CirclePageIndicator mIndicator;
     private IntroViewPagerAdapter _adapter;
+
+    @Bind(R.id.intro_login_btn)
+    ImageButton introLogin;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,6 +48,14 @@ public class AppIntroFragment extends BaseFragment {
         _mViewPager.setCurrentItem(0);
 //        mIndicator.setf(false);
         mIndicator.setViewPager(_mViewPager);
+
+        introLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().finish();
+            }
+        });
     }
 
     @Override

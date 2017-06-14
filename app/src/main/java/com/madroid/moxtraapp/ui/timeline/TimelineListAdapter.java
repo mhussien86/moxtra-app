@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.binders.BindersResponseDTO;
 import com.moxtra.isdk.util.TextUtils;
@@ -29,24 +27,15 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
 
     private List<BindersResponseDTO.Binder> sessions ;
 
-    public TimelineListAdapter(Context context, List<BindersResponseDTO.Binder> sessions, OnItemClickListener onItemClickListener) {
+    public TimelineListAdapter(Context ctx, List<BindersResponseDTO.Binder> sessions, OnItemClickListener onItemClickListener) {
         this.listener = onItemClickListener ;
         this.sessions = sessions ;
-        this.context = context ;
+        this.context = ctx ;
     }
 
     public interface OnItemClickListener {
-        void onItemClick(BindersResponseDTO.Binder session);
+        void onItemClick(BindersResponseDTO.Binder_ session);
     }
-
-
-//    public TimelineListAdapter(Context ctx , List<MXGroupChatSession> sessions, OnItemClickListener onItemClickListener){
-//
-//        this.listener = onItemClickListener ;
-//        this.sessions = sessions ;
-//        this.context = ctx ;
-//    }
-
 
 
     @Override
@@ -60,10 +49,10 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
     @Override
     public void onBindViewHolder(ContactViewHolder holder, int position) {
 
-        holder.bind(sessions.get(position), listener);
-        BindersResponseDTO.Binder_ session  = sessions.get(position).getBinder();
+        holder.bind(sessions.get(position).getSubBinder(), listener);
+        BindersResponseDTO.Binder_ session  = sessions.get(position).getSubBinder();
         holder.contactName.setText(session.getName());
-        holder.contactMail.setText(""+session.getBinderEmail());
+        holder.contactMail.setText(""+session.getLastFeed().getPublished());
 //        if (!TextUtils.isEmpty(session.getBinder().getThumbnailUri())) {
 //            holder.userImage.setImageURI(Uri.fromFile(new File(session.getBinder().getThumbnailUri())));
 //        } else {
@@ -73,7 +62,8 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
 //                if (members != null && members.size() > 0) {
 //                    String avatarPath = members.get(0).getAvatarPath();
                     if (!TextUtils.isEmpty(session.getThumbnailUri())) {
-                        Glide.with(context).load(session.getThumbnailUri()).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.user_default_avatar).centerCrop().into(holder.userImage);
+//                        Glide.with(context).load(new File(session.getThumbnailUri())).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.user_default_avatar).centerCrop().into(holder.userImage);
+
 //                        Picasso.with(ChatListActivity.this).load(new File(avatarPath)).transform(new CircleTransform(getResources().getColor(R.color.blue_300))).into(theHolder.ivCover);
                     }
 //                }
@@ -103,7 +93,7 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
             ButterKnife.bind(this,itemView);
         }
 
-        public void bind(final BindersResponseDTO.Binder session, final TimelineListAdapter.OnItemClickListener listener) {
+        public void bind(final BindersResponseDTO.Binder_ session, final TimelineListAdapter.OnItemClickListener listener) {
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

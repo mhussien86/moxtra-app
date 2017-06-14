@@ -134,24 +134,24 @@ public class BindersResponseDTO {
 
         @SerializedName("category")
         @Expose
-        private Integer category;
+        private int category;
         @SerializedName("binder")
         @Expose
         private Binder_ binder;
 
-        public Integer getCategory() {
+        public int getCategory() {
             return category;
         }
 
-        public void setCategory(Integer category) {
+        public void setCategory(int category) {
             this.category = category;
         }
 
-        public Binder_ getBinder() {
+        public Binder_ getSubBinder() {
             return binder;
         }
 
-        public void setBinder(Binder_ binder) {
+        public void setSubBinder(Binder_ binder) {
             this.binder = binder;
         }
 
@@ -167,10 +167,10 @@ public class BindersResponseDTO {
         private String name;
         @SerializedName("created_time")
         @Expose
-        private Integer createdTime;
+        private long createdTime;
         @SerializedName("updated_time")
         @Expose
-        private Integer updatedTime;
+        private long updatedTime;
         @SerializedName("total_comments")
         @Expose
         private Integer totalComments;
@@ -206,7 +206,7 @@ public class BindersResponseDTO {
         private String description;
         @SerializedName("feeds_timestamp")
         @Expose
-        private Integer feedsTimestamp;
+        private long feedsTimestamp;
         @SerializedName("status")
         @Expose
         private String status;
@@ -239,15 +239,15 @@ public class BindersResponseDTO {
             this.name = name;
         }
 
-        public Integer getCreatedTime() {
+        public long getCreatedTime() {
             return createdTime;
         }
 
-        public void setCreatedTime(Integer createdTime) {
+        public void setCreatedTime(long createdTime) {
             this.createdTime = createdTime;
         }
 
-        public Integer getUpdatedTime() {
+        public long getUpdatedTime() {
             return updatedTime;
         }
 
@@ -343,11 +343,11 @@ public class BindersResponseDTO {
             this.description = description;
         }
 
-        public Integer getFeedsTimestamp() {
+        public long getFeedsTimestamp() {
             return feedsTimestamp;
         }
 
-        public void setFeedsTimestamp(Integer feedsTimestamp) {
+        public void setFeedsTimestamp(long feedsTimestamp) {
             this.feedsTimestamp = feedsTimestamp;
         }
 
@@ -754,10 +754,10 @@ public class BindersResponseDTO {
         private String type;
         @SerializedName("updated_time")
         @Expose
-        private Integer updatedTime;
+        private long updatedTime;
         @SerializedName("created_time")
         @Expose
-        private Integer createdTime;
+        private long createdTime;
         @SerializedName("user")
         @Expose
         private User_ user;
@@ -792,19 +792,19 @@ public class BindersResponseDTO {
             this.type = type;
         }
 
-        public Integer getUpdatedTime() {
+        public long getUpdatedTime() {
             return updatedTime;
         }
 
-        public void setUpdatedTime(Integer updatedTime) {
+        public void setUpdatedTime(long updatedTime) {
             this.updatedTime = updatedTime;
         }
 
-        public Integer getCreatedTime() {
+        public long getCreatedTime() {
             return createdTime;
         }
 
-        public void setCreatedTime(Integer createdTime) {
+        public void setCreatedTime(long createdTime) {
             this.createdTime = createdTime;
         }
 
