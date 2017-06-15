@@ -25,9 +25,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/layout"
-        android:orientation="vertical">
+        android:id="@+id/recentPeopleHolder"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:layout_below="@id/toolbar_holder">
 
+        <TextView
+            style="@style/text_view_7579000C39CD4C1390E1BF0F33A017E8_style"
+            android:id="@+id/text_view_7579000C39CD4C1390E1BF0F33A017E8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recent Categories"
+            android:layout_marginLeft="17.7dp"
+            android:layout_marginBottom="10dp"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recent_people_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
     </LinearLayout>
 

@@ -7,11 +7,11 @@ package com.madroid.moxtraapp.ui.timeline;
 public interface TimeLinePresenter {
 
 
-    void getAllBinders(String access_token, String filter);
+    void getAllBinders(String access_token, String filter, String sort);
 
-    void getUnReadBinders(String access_token, String filter);
+    void getUnReadBinders(String access_token, String filter, String sort);
 
-    void getFavoriteBinders(String access_token, String filter);
+    void getFavoriteBinders(String access_token, String filter, String sort);
 
     void onDestroy();
 

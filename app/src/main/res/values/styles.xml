@@ -64,5 +64,12 @@
 
     </style>
 
+    <style name="text_view_7579000C39CD4C1390E1BF0F33A017E8_style" parent="android:Widget.TextView">
+    <item name="fontPath">fonts/${FONT_FILE}</item>
+    <item name="android:textColor">@color/old_lavender</item>
+    <item name="android:textSize">@dimen/text_view_7579000C39CD4C1390E1BF0F33A017E8_size</item>
+    <item name="android:textStyle">normal</item>
+    </style>
+
 
 </resources>

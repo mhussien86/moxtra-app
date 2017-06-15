@@ -1,41 +1,39 @@
 package com.madroid.moxtraapp.ui.categories;
-import com.madroid.moxtraapp.dtos.categories.AllCategoriesResponseDTO;
-import com.madroid.moxtraapp.interactors.categories.CategoriesInteractor;
-import com.madroid.moxtraapp.interactors.categories.CategoriesInteractorImpl;
+
+import com.madroid.moxtraapp.dtos.catergoriesandbinders.CategoriesAndBindersDTO;
+import com.madroid.moxtraapp.interactors.categoriesbindersinteractors.CategoriesBindersInteractor;
+import com.madroid.moxtraapp.interactors.categoriesbindersinteractors.CategoriesBindersInteractorImpl;
 
 /**
  * Created by mohamed on 13/03/17.
  */
 
-public class CategoriesPresenterImpl implements CategoriesPresenter, CategoriesInteractor.OnGetAllCategoriesFinished {
+public class CategoriesPresenterImpl implements CategoriesPresenter, CategoriesBindersInteractor.OnFinished {
 
 
     private final CategoriesView categoriesView;
-    CategoriesInteractor categoriesInteractor ;
+    CategoriesBindersInteractor categoriesBindersInteractor ;
 
     public CategoriesPresenterImpl(CategoriesView categoriesView){
         this.categoriesView = categoriesView ;
-        categoriesInteractor = new CategoriesInteractorImpl();
+        categoriesBindersInteractor = new CategoriesBindersInteractorImpl();
     }
 
     @Override
-    public void getAllCategories(String access_token) {
-
+    public void getCategoriesAndBinders(String access_token, String filter, String sort) {
         categoriesView.showProgress();
-        categoriesInteractor.getAllCategories(access_token,this);
+        categoriesBindersInteractor.getCategoriesAndBinders(access_token,filter, sort, this);
     }
 
     @Override
-    public void onGetAllCategoriesSucceed(AllCategoriesResponseDTO allCategoriesResponseDTO) {
-
+    public void onGetCategoriesWithBindersSucceed(CategoriesAndBindersDTO categoriesAndBindersDTO) {
         categoriesView.hideProgress();
-        categoriesView.setAllCategories(allCategoriesResponseDTO);
+        categoriesView.setCategoriesAndBinders(categoriesAndBindersDTO);
     }
 
     @Override
-    public void onGetAllCategoriesFailed(String message) {
+    public void onGetCategoriesWithBindersFailed(String message) {
         categoriesView.hideProgress();
         categoriesView.showError(message);
-
     }
 }

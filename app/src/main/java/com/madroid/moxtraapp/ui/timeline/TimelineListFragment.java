@@ -82,7 +82,7 @@ public class TimelineListFragment extends BaseFragment implements TimelineListVi
         recyclerView.setHasFixedSize(true);
         timelinePresenter = new com.madroid.moxtraapp.ui.timeline.TimelinePresenterImpl(this);
         String accessToken = PreferencesUtils.getInstance(getActivity()).getString(AppConstants.ACCESS_TOKEN);
-        timelinePresenter.getAllBinders(accessToken,"all");
+        timelinePresenter.getAllBinders(accessToken,"all",null);
     }
 
     private void showAllConversations(List<BindersResponseDTO.Binder> sessions) {
@@ -252,14 +252,14 @@ public class TimelineListFragment extends BaseFragment implements TimelineListVi
                     switch (item.getItemId()) {
                         case R.id.menu_all:
 //                            showAllConversations();
-                            timelinePresenter.getAllBinders(accessToken,"all");
+                            timelinePresenter.getAllBinders(accessToken,"all",null);
                             return true;
                         case R.id.menu_favorite:
-                            timelinePresenter.getFavoriteBinders(accessToken,"favorite");
+                            timelinePresenter.getFavoriteBinders(accessToken,"favorite",null);
                             Toast.makeText(getActivity(), "Popularity!", Toast.LENGTH_SHORT).show();
                             return true;
                         case R.id.menu_unread:
-                            timelinePresenter.getUnReadBinders(accessToken,"unread");
+                            timelinePresenter.getUnReadBinders(accessToken,"unread",null);
                             Toast.makeText(getActivity(), "menu_unread!", Toast.LENGTH_SHORT).show();
                             return true;
                         default:

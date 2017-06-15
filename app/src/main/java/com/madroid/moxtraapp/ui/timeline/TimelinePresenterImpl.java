@@ -22,23 +22,23 @@ public class TimelinePresenterImpl implements TimeLinePresenter, BindersInteract
 
 
     @Override
-    public void getAllBinders(String access_token, String filter) {
+    public void getAllBinders(String access_token, String filter, String sort) {
 
         timelineListView.showLoading();
-        bindersInteractor.fetchAllBinders(access_token,filter,this);
+        bindersInteractor.fetchAllBinders(access_token,filter,sort,this);
     }
 
     @Override
-    public void getUnReadBinders(String access_token, String filter) {
+    public void getUnReadBinders(String access_token, String filter, String sort) {
         timelineListView.showLoading();
-        bindersInteractor.fetchUnReadBinders(access_token,filter,this);
+        bindersInteractor.fetchUnReadBinders(access_token,filter,sort,this);
     }
 
     @Override
-    public void getFavoriteBinders(String access_token, String filter) {
+    public void getFavoriteBinders(String access_token, String filter,String sort) {
         timelineListView.showLoading();
 
-        bindersInteractor.fetchFavoriteBinders(access_token,filter,this);
+        bindersInteractor.fetchFavoriteBinders(access_token,filter,sort,this);
     }
 
     @Override

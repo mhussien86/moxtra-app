@@ -30,9 +30,9 @@ public class BindersInteractorImpl implements BindersInteractor {
     }
 
     @Override
-    public void fetchAllBinders(String accecss_tokes, String filter, final onFetchBinders onFetchBinders) {
+    public void fetchAllBinders(String accecss_tokes, String filter, String sort,  final onFetchBinders onFetchBinders) {
 
-        Observable<BindersResponseDTO> observable = bindersAPI.getAllBinders(accecss_tokes, filter);
+        Observable<BindersResponseDTO> observable = bindersAPI.getAllBinders(accecss_tokes, filter, sort);
 
         compositeSubscription.add(observable
                 .subscribeOn(Schedulers.newThread())
@@ -62,8 +62,8 @@ public class BindersInteractorImpl implements BindersInteractor {
     }
 
     @Override
-    public void fetchUnReadBinders(String accecss_tokes, String filter, final onFetchBinders onFetchBinders) {
-        Observable<BindersResponseDTO> observable = bindersAPI.getAllBinders(accecss_tokes, filter);
+    public void fetchUnReadBinders(String accecss_tokes, String filter, String sort, final onFetchBinders onFetchBinders) {
+        Observable<BindersResponseDTO> observable = bindersAPI.getAllBinders(accecss_tokes, filter, sort);
 
         compositeSubscription.add(observable
                 .subscribeOn(Schedulers.newThread())
@@ -92,8 +92,8 @@ public class BindersInteractorImpl implements BindersInteractor {
     }
 
     @Override
-    public void fetchFavoriteBinders(String accecss_tokes, String filter, final onFetchBinders onFetchBinders) {
-        Observable<BindersResponseDTO> observable = bindersAPI.getAllBinders(accecss_tokes, filter);
+    public void fetchFavoriteBinders(String accecss_tokes, String filter, String sort, final onFetchBinders onFetchBinders) {
+        Observable<BindersResponseDTO> observable = bindersAPI.getAllBinders(accecss_tokes, filter, sort);
 
         compositeSubscription.add(observable
                 .subscribeOn(Schedulers.newThread())

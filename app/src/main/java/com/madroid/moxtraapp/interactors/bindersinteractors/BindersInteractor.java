@@ -9,9 +9,9 @@ import com.madroid.moxtraapp.dtos.binders.BindersResponseDTO;
 public interface BindersInteractor {
 
 
-    void fetchAllBinders(String accecss_tokes,String filter, onFetchBinders onFetchBinders);
-    void fetchUnReadBinders(String accecss_tokes,String filter, onFetchBinders onFetchBinders);
-    void fetchFavoriteBinders(String accecss_tokes,String filter, onFetchBinders onFetchBinders);
+    void fetchAllBinders(String accecss_tokes,String filter, String sort, onFetchBinders onFetchBinders);
+    void fetchUnReadBinders(String accecss_tokes,String filter,String sort, onFetchBinders onFetchBinders);
+    void fetchFavoriteBinders(String accecss_tokes,String filter, String sort, onFetchBinders onFetchBinders);
 
     interface onFetchBinders{
 

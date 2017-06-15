@@ -6,6 +6,6 @@ package com.madroid.moxtraapp.ui.categories;
 
 public interface CategoriesPresenter {
 
-    void getAllCategories(String access_token);
+    void getCategoriesAndBinders(String access_token, String filter, String sort);
 
 }

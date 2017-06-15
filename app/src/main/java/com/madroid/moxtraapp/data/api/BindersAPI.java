@@ -11,5 +11,5 @@ import rx.Observable;
 public interface BindersAPI {
 
     @GET("/me/binders")
-    Observable<BindersResponseDTO> getAllBinders(@Query("access_token") String access_token,@Query("filter") String filter);
+    Observable<BindersResponseDTO> getAllBinders(@Query("access_token") String access_token,@Query("filter") String filter,@Query("sort") String sort);
 }

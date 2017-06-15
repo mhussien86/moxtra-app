@@ -1,6 +1,6 @@
 package com.madroid.moxtraapp.ui.categories;
 
-import com.madroid.moxtraapp.dtos.categories.AllCategoriesResponseDTO;
+import com.madroid.moxtraapp.dtos.catergoriesandbinders.CategoriesAndBindersDTO;
 
 /**
  * Created by mohamed on 13/03/17.
@@ -9,7 +9,7 @@ import com.madroid.moxtraapp.dtos.categories.AllCategoriesResponseDTO;
 public interface CategoriesView {
 
 
-    void setAllCategories(AllCategoriesResponseDTO allCategories);
+    void setCategoriesAndBinders(CategoriesAndBindersDTO categoriesAndBindersList);
 
     void showProgress();
 

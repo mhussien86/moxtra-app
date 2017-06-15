@@ -5,4 +5,5 @@
     <dimen name="design_bottom_navigation_text_size" tools:override="true">7sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">8sp</dimen>
     <dimen name="text_view_2388_size">16.67sp</dimen>
+    <dimen name="text_view_7579000C39CD4C1390E1BF0F33A017E8_size">16.0sp</dimen>
 </resources>
