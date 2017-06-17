@@ -1,7 +1,6 @@
 package com.madroid.moxtraapp.ui.categories;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +33,7 @@ public class RecentPeopleAdapter extends RecyclerView.Adapter<RecentPeopleAdapte
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recent_people_item_list, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recent_people_list_item, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -57,14 +56,15 @@ public class RecentPeopleAdapter extends RecyclerView.Adapter<RecentPeopleAdapte
 //        TextDrawable drawable = TextDrawable.builder()
 //                .buildRound("A", ResourcesCompat.getColor(mContext.getResources(), R.color.oldlavender, null));
 
+
         if(hasPersonalImage(binder.getSubBinder().getThumbnailUri())){
             Picasso.with(mContext).load(binder.getSubBinder().getThumbnailUri()).into(holder.profileImage);
             holder.profileImage.setVisibility(View.VISIBLE);
 //            holder.profileText.setVisibility(View.GONE);
         }
         else {
-            TextDrawable drawable = TextDrawable.builder()
-                    .buildRound("A", Color.GRAY);
+            TextDrawable drawable = TextDrawable.builder().beginConfig().fontSize(35).endConfig()
+                    .buildRound(initials(binder.getSubBinder().getName()), mContext.getResources().getColor(R.color.light_gray));
             holder.profileText.setImageDrawable(drawable);
 //            holder.profileImage.setVisibility(View.GONE);
             holder.profileText.setVisibility(View.VISIBLE);
@@ -98,5 +98,13 @@ public class RecentPeopleAdapter extends RecyclerView.Adapter<RecentPeopleAdapte
             return false;
         return true;
 
+    }
+
+    public String initials(String fullname){
+        StringBuilder initials = new StringBuilder();
+        for (String s : fullname.split(" ")) {
+            initials.append(s.charAt(0));
+        }
+        return initials.toString().toUpperCase();
     }
 }

@@ -47,8 +47,23 @@
             android:orientation="horizontal"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="17.7dp"
+            android:layout_marginRight="17.7dp"
+            android:background="@color/line_divider" />
+
     </LinearLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/categories_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/recentPeopleHolder"
+        android:orientation="vertical"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+         />
 
     <include
         android:id="@+id/layout_loading"

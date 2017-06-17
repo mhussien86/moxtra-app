@@ -15,6 +15,7 @@ import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.LoginResponseDTO;
 import com.madroid.moxtraapp.dtos.binders.BindersResponseDTO;
+import com.madroid.moxtraapp.dtos.categories.AllCategoriesResponseDTO;
 import com.madroid.moxtraapp.dtos.catergoriesandbinders.CategoriesAndBindersDTO;
 
 import org.parceler.Parcels;
@@ -38,6 +39,8 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
     View loadingLayout ;
     @Bind(R.id.recent_people_list)
     RecyclerView recentPeopleRecyclerView;
+    @Bind(R.id.categories_list)
+    RecyclerView categoriesRecyclerView;
     @Bind(R.id.recentPeopleHolder)
     View recentPeopleHolder;
     @Bind(R.id.toolbar)
@@ -45,15 +48,15 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
 
     CategoriesPresenter categoriesPresenter;
     List<BindersResponseDTO.Binder> recentPeople;
+    List<AllCategoriesResponseDTO.Category> categories;
     RecentPeopleAdapter mAdapter;
+    CategoriesAdapter cAdapter;
+    Map<Integer, List<BindersResponseDTO.Binder>> categoriesBindersMap;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//        StrictMode.setThreadPolicy(policy);
 
         View rootView = inflater.inflate(R.layout.categories_fragment, container, false);
         ButterKnife.bind(this,rootView);
@@ -61,7 +64,7 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
         Bundle b = getActivity().getIntent().getBundleExtra("bundle");
         LoginResponseDTO loginResponseDTO = Parcels.unwrap(b.getParcelable(AppConstants.LOGIN_RESPONSE));
         categoriesPresenter = new CategoriesPresenterImpl(this);
-        categoriesPresenter.getCategoriesAndBinders(loginResponseDTO.getResponse().getAccessToken(),"chat","feeds");
+        categoriesPresenter.getCategoriesAndBinders(loginResponseDTO.getResponse().getAccessToken(),"all","feeds");
         return rootView;
     }
 
@@ -69,25 +72,17 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
     @Override
     public void setCategoriesAndBinders(CategoriesAndBindersDTO categoriesAndBindersList) {
 
-        Map<Integer, List<BindersResponseDTO.Binder>> map = new HashMap<Integer, List<BindersResponseDTO.Binder>>();
+        List<BindersResponseDTO.Binder> binders = new ArrayList<>();
+        binders = categoriesAndBindersList.bindersResponseDTO.getData().getBinders();
+        categories = new ArrayList<>();
+        categories = categoriesAndBindersList.allCategoriesResponseDTO.getData().getCategories();
 
-        for (BindersResponseDTO.Binder binder : categoriesAndBindersList.bindersResponseDTO.getData().getBinders()) {
-            int key  = binder.getCategory();
-            if(map.containsKey(key)){
-                List<BindersResponseDTO.Binder> list = map.get(key);
-                list.add(binder);
-
-            }else{
-                List<BindersResponseDTO.Binder> list = new ArrayList<BindersResponseDTO.Binder>();
-                list.add(binder);
-                map.put(key, list);
-            }
-
-        }
-
-        setRecentPeopleList(categoriesAndBindersList.bindersResponseDTO.getData().getBinders());
+        setRecentPeopleList(binders);
+        setCategoriesWithBinders(binders, categories);
         mAdapter = new RecentPeopleAdapter(recentPeople, getContext());
+        cAdapter = new CategoriesAdapter(categories, categoriesBindersMap, getContext());
         recentPeopleRecyclerView.setAdapter(mAdapter);
+        categoriesRecyclerView.setAdapter(cAdapter);
         recentPeopleHolder.setVisibility(View.VISIBLE);
 
     }
@@ -98,10 +93,46 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
         Iterator<BindersResponseDTO.Binder> it = binders.iterator();
         while (it.hasNext()) {
             BindersResponseDTO.Binder binder = it.next();
-            if (binder.getSubBinder().getUsers().size() > 1) {
+            if (binder.getSubBinder().getUsers().size() > 1 && binder.getSubBinder().getConversation() == true) {
                 recentPeople.add(binder);
             }
         }
+    }
+
+    void setCategoriesWithBinders(List<BindersResponseDTO.Binder> binders, List<AllCategoriesResponseDTO.Category> categories){
+
+        List<BindersResponseDTO.Binder> tempBinder = new ArrayList<>();
+
+        Iterator<BindersResponseDTO.Binder> binderIt= binders.iterator();
+        Iterator<AllCategoriesResponseDTO.Category> categoriesIt = categories.iterator();
+
+        while (categoriesIt.hasNext()) {
+            AllCategoriesResponseDTO.Category category = categoriesIt.next();
+            int key = category.getId();
+            while (binderIt.hasNext()) {
+                BindersResponseDTO.Binder binder = binderIt.next();
+                if(binder.getCategory() == key && !binder.getSubBinder().getConversation()){
+                    tempBinder.add(binder);
+                }
+            }
+        }
+
+
+        categoriesBindersMap = new HashMap<Integer, List<BindersResponseDTO.Binder>>();
+
+        for (BindersResponseDTO.Binder binder : tempBinder) {
+            int key  = binder.getCategory();
+            if(categoriesBindersMap.containsKey(key)){
+                List<BindersResponseDTO.Binder> list = categoriesBindersMap.get(key);
+                list.add(binder);
+            }else{
+                List<BindersResponseDTO.Binder> list = new ArrayList<BindersResponseDTO.Binder>();
+                list.add(binder);
+                categoriesBindersMap.put(key, list);
+            }
+
+        }
+
     }
 
     @Override

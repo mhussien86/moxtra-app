@@ -68,6 +68,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.makeramen:roundedimageview:2.3.0'
     testCompile 'junit:junit:4.12'
     apt 'org.parceler:parceler:1.0.4'
     provided 'org.glassfish:javax.annotation:10.0-b28'

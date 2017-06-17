@@ -71,5 +71,12 @@
     <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="text_view_344AB95CD664432896DA95D5779DCD09_style" parent="android:Widget.TextView">
+        <item name="fontPath">fonts/${FONT_FILE}</item>
+        <item name="android:textColor">@color/tufts_blue</item>
+        <item name="android:textSize">@dimen/text_view_344AB95CD664432896DA95D5779DCD09_size</item>
+        <item name="android:textStyle">normal</item>
+
+    </style>
 
 </resources>

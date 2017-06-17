@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="17.7dp"
+    android:layout_marginRight="17.7dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp">
+
+        <TextView
+            style="@style/text_view_7579000C39CD4C1390E1BF0F33A017E8_style"
+            android:id="@+id/category_name"
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_alignParentRight="true">
+
+            <TextView
+                android:id="@+id/textView5"
+                style="@style/text_view_344AB95CD664432896DA95D5779DCD09_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:text="Add Binders" />
+            <ImageView
+                android:layout_width="wrap_content"
+                style="@style/text_view_344AB95CD664432896DA95D5779DCD09_style"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_small_arrow_right"/>
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/binders_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginBottom="13dp"
+        android:orientation="vertical" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_divider" />
+</LinearLayout>

@@ -6,10 +6,9 @@
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profile_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="61dp"
+        android:layout_height="61dp"
         android:src="@drawable/profile"
-        app:civ_border_width="1dp"
         android:layout_marginLeft="17dp"
         android:layout_marginBottom="21dp"
         android:visibility="gone"
@@ -17,8 +16,8 @@
 
     <ImageView
         android:id="@+id/profile_text"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="61dp"
+        android:layout_height="61dp"
         android:layout_alignTop="@id/profile_image"
         android:layout_marginLeft="17dp"
         android:layout_marginBottom="21dp"

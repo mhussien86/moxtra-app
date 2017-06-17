@@ -66,5 +66,9 @@
   <color name="gainsboro_1">#dfdfdf</color>
   <color name="steelblue">#4286b3</color>
   <color name="old_lavender">#727272</color>
+  <color name="light_gray">#b6b3b3</color>
+  <color name="line_divider">#F1F0F5</color>
+  <color name="tufts_blue">#2980B9</color>
+
 </resources>
 
