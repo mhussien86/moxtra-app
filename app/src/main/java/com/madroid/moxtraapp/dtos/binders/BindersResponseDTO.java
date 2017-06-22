@@ -3,13 +3,14 @@ package com.madroid.moxtraapp.dtos.binders;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by mohamed on 13/06/17.
  */
 
-public class BindersResponseDTO {
+public class BindersResponseDTO implements Serializable {
 
 
         @SerializedName("data")
@@ -37,7 +38,7 @@ public class BindersResponseDTO {
 
 
 
-    public class Actor {
+    public class Actor implements Serializable {
 
         @SerializedName("published")
         @Expose
@@ -130,7 +131,7 @@ public class BindersResponseDTO {
 
     }
 
-    public class Binder {
+    public class Binder implements Serializable {
 
         @SerializedName("category")
         @Expose
@@ -157,7 +158,7 @@ public class BindersResponseDTO {
 
     }
 
-    public class Binder_ {
+    public class Binder_ implements Serializable {
 
         @SerializedName("id")
         @Expose
@@ -393,7 +394,7 @@ public class BindersResponseDTO {
 
     }
 
-    public class Data {
+    public class Data implements Serializable {
 
         @SerializedName("unread_feeds")
         @Expose
@@ -422,7 +423,7 @@ public class BindersResponseDTO {
 
 
 
-    public class Generator {
+    public class Generator implements Serializable {
 
         @SerializedName("id")
         @Expose
@@ -438,7 +439,7 @@ public class BindersResponseDTO {
 
     }
 
-    public class LastFeed {
+    public class LastFeed implements Serializable {
 
         @SerializedName("published")
         @Expose
@@ -520,7 +521,7 @@ public class BindersResponseDTO {
 
     }
 
-    public class Object {
+    public class Object implements Serializable {
 
         @SerializedName("published")
         @Expose
@@ -669,7 +670,7 @@ public class BindersResponseDTO {
     }
 
 
-    public class Target {
+    public class Target implements Serializable {
 
         @SerializedName("published")
         @Expose
@@ -741,7 +742,7 @@ public class BindersResponseDTO {
     }
 
 
-    public class User {
+    public class User implements Serializable{
 
         @SerializedName("revision")
         @Expose
@@ -835,7 +836,7 @@ public class BindersResponseDTO {
     }
 
 
-    public class User_ {
+    public class User_ implements Serializable{
 
         @SerializedName("id")
         @Expose

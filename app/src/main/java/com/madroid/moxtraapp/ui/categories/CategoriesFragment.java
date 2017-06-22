@@ -1,13 +1,21 @@
 package com.madroid.moxtraapp.ui.categories;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.view.menu.MenuPopupHelper;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.madroid.moxtraapp.AppConstants;
 import com.madroid.moxtraapp.BaseActivity;
@@ -17,6 +25,8 @@ import com.madroid.moxtraapp.dtos.LoginResponseDTO;
 import com.madroid.moxtraapp.dtos.binders.BindersResponseDTO;
 import com.madroid.moxtraapp.dtos.categories.AllCategoriesResponseDTO;
 import com.madroid.moxtraapp.dtos.catergoriesandbinders.CategoriesAndBindersDTO;
+import com.madroid.moxtraapp.ui.meet.MeetingsContainerActivity;
+import com.madroid.moxtraapp.ui.timeline.ContactsListActivity;
 
 import org.parceler.Parcels;
 
@@ -76,11 +86,10 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
         binders = categoriesAndBindersList.bindersResponseDTO.getData().getBinders();
         categories = new ArrayList<>();
         categories = categoriesAndBindersList.allCategoriesResponseDTO.getData().getCategories();
-
         setRecentPeopleList(binders);
         setCategoriesWithBinders(binders, categories);
         mAdapter = new RecentPeopleAdapter(recentPeople, getContext());
-        cAdapter = new CategoriesAdapter(categories, categoriesBindersMap, getContext());
+        cAdapter = new CategoriesAdapter(categories, categoriesBindersMap, binders, getContext());
         recentPeopleRecyclerView.setAdapter(mAdapter);
         categoriesRecyclerView.setAdapter(cAdapter);
         recentPeopleHolder.setVisibility(View.VISIBLE);
@@ -159,9 +168,60 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
         LayoutInflater mInflater=LayoutInflater.from(getActivity());
         View mCustomView = mInflater.inflate(R.layout.categories_toolbar, null);
         toolbar.addView(mCustomView);
+        ImageView add = (ImageView) toolbar.findViewById(R.id.icon_add);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                showMenuPopup(view, R.menu.popup_new_action);
+            }
+        });
         ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
         ((BaseActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ((BaseActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+    }
+
+    private void showMenuPopup(View v, int resource) {
+        PopupMenu popup = new PopupMenu(getActivity(), v);
+        // Inflate the menu from xml
+        popup.getMenuInflater().inflate(resource, popup.getMenu());
+
+
+            // Setup menu item selection
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.menu_meet_now:
+                            getActivity().startActivity(new Intent(new Intent(getActivity(), MeetingsContainerActivity.class)).putExtra("data","start"));
+                            return true;
+                        case R.id.menu_group_conversation:
+                            Toast.makeText(getActivity(), "menu_group_conversation!", Toast.LENGTH_SHORT).show();
+                            return true;
+                        case R.id.menu_direct_message:
+                            try {
+                                Bundle b = getActivity().getIntent().getBundleExtra("bundle");
+                                LoginResponseDTO loginResponseDTO = Parcels.unwrap(b.getParcelable(AppConstants.LOGIN_RESPONSE));
+                                Intent intent = new Intent(getActivity(), ContactsListActivity.class);
+                                b.putParcelable(AppConstants.LOGIN_RESPONSE, Parcels.wrap(loginResponseDTO));
+                                intent.putExtra("bundle", b);
+                                startActivity(intent);
+                            }catch(Exception e){
+
+                            }
+                            return true;
+                        default:
+                            return false;
+                    }
+                }
+            });
+
+
+
+        MenuPopupHelper menuHelper = new MenuPopupHelper(getActivity(), (MenuBuilder) popup.getMenu(), v);
+        menuHelper.setForceShowIcon(true);
+        menuHelper.setGravity(Gravity.CENTER);
+        menuHelper.show();
 
     }
 }

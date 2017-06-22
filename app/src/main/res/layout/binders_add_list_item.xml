@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="17dp"
+    android:layout_marginRight="17dp">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/binder_image"
+        android:layout_width="30.0dp"
+        android:layout_height="30.0dp"
+        android:layout_marginBottom="15dp"
+        android:scaleType="fitCenter"
+        app:riv_corner_radius="10dip"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:id="@+id/binder_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tesssssssst"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/binder_image"/>
+
+    <com.hanks.library.AnimateCheckBox
+        android:id="@+id/add_binder_checkbox"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="15dp"
+        app:animDuration="200"
+        app:checkedColor="#64B5F6"
+        app:lineColor="#fff"
+        app:lineWidth="1.2dp"
+        app:unCheckColor="#9E9E9E"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"/>
+
+</RelativeLayout>
