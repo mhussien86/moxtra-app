@@ -12,18 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class BindersAddActivity extends AppCompatActivity {
 
     private  List<BindersResponseDTO.Binder> binders = new ArrayList<>();
+    private Integer categoryId;
+    private Unbinder unbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.common_activity);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         Intent i = getIntent();
         binders = (List<BindersResponseDTO.Binder>)i.getSerializableExtra("binders");
+        categoryId = i.getExtras().getInt("category_Id");
         startBindersAddFragment();
     }
 
@@ -37,10 +41,19 @@ public class BindersAddActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+//        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 
     public List<BindersResponseDTO.Binder> getBinders(){
         return binders;
+    }
+    public Integer getCategoryId(){
+        return categoryId;
     }
 }

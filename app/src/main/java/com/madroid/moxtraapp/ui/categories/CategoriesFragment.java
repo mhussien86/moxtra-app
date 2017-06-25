@@ -1,5 +1,6 @@
 package com.madroid.moxtraapp.ui.categories;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import com.madroid.moxtraapp.dtos.LoginResponseDTO;
 import com.madroid.moxtraapp.dtos.binders.BindersResponseDTO;
 import com.madroid.moxtraapp.dtos.categories.AllCategoriesResponseDTO;
 import com.madroid.moxtraapp.dtos.catergoriesandbinders.CategoriesAndBindersDTO;
+import com.madroid.moxtraapp.ui.DataHolder;
 import com.madroid.moxtraapp.ui.meet.MeetingsContainerActivity;
 import com.madroid.moxtraapp.ui.timeline.ContactsListActivity;
 
@@ -36,8 +38,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by mohamed on 13/03/17.
@@ -45,15 +48,15 @@ import butterknife.ButterKnife;
 
 public class CategoriesFragment extends BaseFragment implements CategoriesView {
 
-    @Bind(R.id.layout_loading)
+    @BindView(R.id.layout_loading)
     View loadingLayout ;
-    @Bind(R.id.recent_people_list)
+    @BindView(R.id.recent_people_list)
     RecyclerView recentPeopleRecyclerView;
-    @Bind(R.id.categories_list)
+    @BindView(R.id.categories_list)
     RecyclerView categoriesRecyclerView;
-    @Bind(R.id.recentPeopleHolder)
+    @BindView(R.id.recentPeopleHolder)
     View recentPeopleHolder;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     CategoriesPresenter categoriesPresenter;
@@ -62,19 +65,23 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
     RecentPeopleAdapter mAdapter;
     CategoriesAdapter cAdapter;
     Map<Integer, List<BindersResponseDTO.Binder>> categoriesBindersMap;
-
+    private Unbinder unbinder;
+    boolean shouldExecuteOnResume;
+    CategoriesFragment categoriesFragment;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.categories_fragment, container, false);
-        ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this,rootView);
         setUpToolBar();
         Bundle b = getActivity().getIntent().getBundleExtra("bundle");
         LoginResponseDTO loginResponseDTO = Parcels.unwrap(b.getParcelable(AppConstants.LOGIN_RESPONSE));
         categoriesPresenter = new CategoriesPresenterImpl(this);
         categoriesPresenter.getCategoriesAndBinders(loginResponseDTO.getResponse().getAccessToken(),"all","feeds");
+        shouldExecuteOnResume = false;
+        categoriesFragment = this;
         return rootView;
     }
 
@@ -89,7 +96,7 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
         setRecentPeopleList(binders);
         setCategoriesWithBinders(binders, categories);
         mAdapter = new RecentPeopleAdapter(recentPeople, getContext());
-        cAdapter = new CategoriesAdapter(categories, categoriesBindersMap, binders, getContext());
+        cAdapter = new CategoriesAdapter(categories, categoriesBindersMap, binders, getContext(), categoriesFragment);
         recentPeopleRecyclerView.setAdapter(mAdapter);
         categoriesRecyclerView.setAdapter(cAdapter);
         recentPeopleHolder.setVisibility(View.VISIBLE);
@@ -223,5 +230,35 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
         menuHelper.setGravity(Gravity.CENTER);
         menuHelper.show();
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (0) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    shouldExecuteOnResume = data.getBooleanExtra("onResume", false);
+                }
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        if(shouldExecuteOnResume) {
+            categoriesPresenter.getCategoriesAndBinders(DataHolder.getInstance().getToken(), "all", "feeds");
+            shouldExecuteOnResume = false;
+        }
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 }

@@ -13,7 +13,7 @@ import com.moxtra.isdk.util.TextUtils;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -79,13 +79,13 @@ public class TimelineListAdapter extends RecyclerView.Adapter<TimelineListAdapte
 
     public class ContactViewHolder extends RecyclerView.ViewHolder{
 
-        @Bind(R.id.contactName)
+        @BindView(R.id.contactName)
         TextView contactName ;
 
-        @Bind(R.id.contactMail)
+        @BindView(R.id.contactMail)
         TextView contactMail ;
 
-        @Bind(R.id.logo)
+        @BindView(R.id.logo)
         CircleImageView userImage;
 
         public ContactViewHolder(View itemView) {

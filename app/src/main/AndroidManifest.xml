@@ -56,7 +56,8 @@
         <activity
             android:name=".ui.intro.AppIntroActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.binders_add.BindersAddActivity" />
+        <activity android:name=".ui.binders_add.BindersAddActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

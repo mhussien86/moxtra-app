@@ -8,6 +8,7 @@ import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.R;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by mohamed on 14/05/17.
@@ -15,11 +16,13 @@ import butterknife.ButterKnife;
 
 public class MeetingsContainerActivity extends BaseActivity {
 
+    private Unbinder unbinder;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.common_activity);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
 
         if (getIntent().getStringExtra("data").equalsIgnoreCase("start")) {
             startMeetNowFragment();
@@ -53,6 +56,6 @@ public class MeetingsContainerActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

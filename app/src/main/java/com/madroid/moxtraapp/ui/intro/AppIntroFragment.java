@@ -14,7 +14,7 @@ import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.ui.login.LoginActivity;
 import com.viewpagerindicator.CirclePageIndicator;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -26,13 +26,13 @@ public class AppIntroFragment extends BaseFragment {
 
 
     View view ;
-    @Bind(R.id.intro_viewpager)
+    @BindView(R.id.intro_viewpager)
     ViewPager _mViewPager;
-    @Bind(R.id.indicator)
+    @BindView(R.id.indicator)
     CirclePageIndicator mIndicator;
     private IntroViewPagerAdapter _adapter;
 
-    @Bind(R.id.intro_login_btn)
+    @BindView(R.id.intro_login_btn)
     ImageButton introLogin;
     @Nullable
     @Override

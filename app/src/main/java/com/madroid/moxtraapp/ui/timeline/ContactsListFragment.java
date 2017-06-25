@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.madroid.moxtraapp.AppConstants;
 import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.BaseFragment;
@@ -19,11 +20,15 @@ import com.madroid.moxtraapp.dtos.LoginResponseDTO;
 import com.madroid.moxtraapp.ui.contactslist.ContactsSection;
 import com.moxtra.binder.sdk.MXException;
 import com.moxtra.sdk.MXChatManager;
+
 import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 /**
@@ -31,14 +36,15 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
  */
 public class ContactsListFragment extends BaseFragment {
 
-    @Bind(R.id.recycle_view)
+    @BindView(R.id.recycle_view)
     RecyclerView recyclerView;
 
     private SectionedRecyclerViewAdapter sectionAdapter;
 
     LoginResponseDTO responseDTO;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
+    private Unbinder unbinder;
 
     @Nullable
     @Override
@@ -46,7 +52,7 @@ public class ContactsListFragment extends BaseFragment {
 
         View rootView = inflater.inflate(R.layout.fragment_contact_list, container, false);
 
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         setUpToolBar("Contacts");
         try {
             Bundle b = getActivity().getIntent().getBundleExtra("bundle");
@@ -139,6 +145,6 @@ public class ContactsListFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

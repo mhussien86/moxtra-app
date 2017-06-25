@@ -29,7 +29,7 @@ import org.parceler.Parcels;
 
 import java.io.IOException;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import utils.PreferencesUtils;
@@ -40,19 +40,19 @@ import utils.PreferencesUtils;
 public class LoginFragment extends BaseFragment implements LoginView {
 
     LoginPresenter loginPresenter;
-    @Bind(R.id.username)
+    @BindView(R.id.username)
     EditText emailEditText;
 
-    @Bind(R.id.password)
+    @BindView(R.id.password)
     EditText passwordEditText;
 
-    @Bind(R.id.layout_loading)
+    @BindView(R.id.layout_loading)
     View loadingLayout;
 
-    @Bind(R.id.login_button)
+    @BindView(R.id.login_button)
     Button loginButton;
 
-    @Bind(R.id.checkBox)
+    @BindView(R.id.checkBox)
     CheckBox checkBox;
 
     @Nullable

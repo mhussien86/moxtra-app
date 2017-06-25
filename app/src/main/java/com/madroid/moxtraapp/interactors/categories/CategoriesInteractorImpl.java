@@ -4,6 +4,8 @@ import com.madroid.moxtraapp.data.APIConstants;
 import com.madroid.moxtraapp.data.ServiceGenerator;
 import com.madroid.moxtraapp.data.api.CategoriesAPI;
 import com.madroid.moxtraapp.dtos.categories.AllCategoriesResponseDTO;
+import com.madroid.moxtraapp.dtos.categories.BindersAddCategoryRequestDTO;
+import com.madroid.moxtraapp.dtos.simple.SimpleResponseDTO;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -15,19 +17,17 @@ import rx.subscriptions.CompositeSubscription;
  * Created by mohamed on 25/03/17.
  */
 
-public class CategoriesInteractorImpl implements CategoriesInteractor{
+public class CategoriesInteractorImpl implements CategoriesInteractor {
 
 
+    CategoriesAPI categoriesAPI;
+    CompositeSubscription compositeSubscription;
 
-    CategoriesAPI categoriesAPI ;
-    CompositeSubscription compositeSubscription ;
-
-    public CategoriesInteractorImpl(){
+    public CategoriesInteractorImpl() {
 
         categoriesAPI = new ServiceGenerator(APIConstants.API_SANDBOX).createService(CategoriesAPI.class);
         compositeSubscription = new CompositeSubscription();
     }
-
 
 
     @Override
@@ -48,7 +48,7 @@ public class CategoriesInteractorImpl implements CategoriesInteractor{
                     @Override
                     public void onError(Throwable e) {
 
-                        onGetAllCategoriesFinished.onGetAllCategoriesFailed(""+e.getMessage());
+                        onGetAllCategoriesFinished.onGetAllCategoriesFailed("" + e.getMessage());
                     }
 
                     @Override
@@ -62,10 +62,43 @@ public class CategoriesInteractorImpl implements CategoriesInteractor{
 
     }
 
+
+    @Override
+    public void assignBindersToCategory(Integer categoryId, String accecss_tokes,  BindersAddCategoryRequestDTO body, final OnAssignBindersToCategoryFinished onAssignBindersToCategoryFinished) {
+
+        Observable<SimpleResponseDTO> observable = categoriesAPI.assignBindersToCategory(categoryId, accecss_tokes, body);
+
+        compositeSubscription.add(observable
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<SimpleResponseDTO>() {
+                    @Override
+                    public void onCompleted() {
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        onAssignBindersToCategoryFinished.onAssignBindersToCategoryFailed("" + e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(SimpleResponseDTO responseDTO) {
+
+                        onAssignBindersToCategoryFinished.onAssignBindersToCategorySucceed(responseDTO);
+                    }
+
+
+                }));
+
+    }
+
     @Override
     public void unsubscribe() {
 
-        if(compositeSubscription!=null && compositeSubscription.hasSubscriptions()){
+        if (compositeSubscription != null && compositeSubscription.hasSubscriptions()) {
             compositeSubscription.unsubscribe();
         }
 

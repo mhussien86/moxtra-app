@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.binders.BindersResponseDTO;
 import com.madroid.moxtraapp.dtos.categories.AllCategoriesResponseDTO;
+import com.madroid.moxtraapp.ui.MainActivity;
 import com.madroid.moxtraapp.ui.binders_add.BindersAddActivity;
 
 import java.io.Serializable;
@@ -29,12 +30,14 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
     private final List<AllCategoriesResponseDTO.Category> categories;
     private final List<BindersResponseDTO.Binder> binders;
     Map<Integer, List<BindersResponseDTO.Binder>> categoriesBindersMap;
+    private CategoriesFragment categoriesFragment;
 
-    public CategoriesAdapter(List<AllCategoriesResponseDTO.Category> categories, Map<Integer, List<BindersResponseDTO.Binder>> categoriesBindersMap, List<BindersResponseDTO.Binder> binders, Context context) {
+    public CategoriesAdapter(List<AllCategoriesResponseDTO.Category> categories, Map<Integer, List<BindersResponseDTO.Binder>> categoriesBindersMap, List<BindersResponseDTO.Binder> binders, Context context, CategoriesFragment categoriesFragment) {
         this.categories = categories;
         this.binders = binders;
         this.categoriesBindersMap = categoriesBindersMap;
         this.mContext = context;
+        this.categoriesFragment = categoriesFragment;
 
     }
 
@@ -49,7 +52,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        AllCategoriesResponseDTO.Category category = categories.get(position);
+        final AllCategoriesResponseDTO.Category category = categories.get(position);
         holder.itemText.setText(category.getName());
 
         RecyclerView.Adapter mAdapter;
@@ -61,15 +64,18 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
         holder.addBinders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openAddBindersActivity();
+                openAddBindersActivity(category.getId());
             }
         });
     }
 
-    public void openAddBindersActivity(){
+    public void openAddBindersActivity(Integer categoryId){
         Intent intent = new Intent(mContext, BindersAddActivity.class);
         intent.putExtra("binders", (Serializable) binders);
-        mContext.startActivity(intent);
+        intent.putExtra("category_Id", (int) categoryId);
+        categoriesFragment.startActivityForResult(intent,0);
+        MainActivity mainActivity = (MainActivity) mContext;
+//        mainActivity.overridePendingTransition(R.anim.slidein_from_right, R.anim.slideout_to_left);
     }
 
     @Override

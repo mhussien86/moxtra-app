@@ -17,7 +17,7 @@ import com.madroid.moxtraapp.R;
 import java.util.Calendar;
 import java.util.Date;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
@@ -31,7 +31,7 @@ public class MeetingsFragment extends BaseFragment {
 
     View view ;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     @Nullable

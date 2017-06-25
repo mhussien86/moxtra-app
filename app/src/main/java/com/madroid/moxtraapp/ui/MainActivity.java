@@ -15,23 +15,24 @@ import com.madroid.moxtraapp.ui.meet.MeetingsFragment;
 import com.madroid.moxtraapp.ui.settings.SettingsFragment;
 import com.madroid.moxtraapp.ui.timeline.TimelineListFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
 
-    @Bind(R.id.bottom_navigation)
+    @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
 
-
+    private Unbinder unbinder;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
@@ -108,6 +109,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

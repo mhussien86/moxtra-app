@@ -8,17 +8,20 @@ import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.R;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by mohamed on 16/01/17.
  */
-public class ContactsListActivity extends BaseActivity{
+public class ContactsListActivity extends BaseActivity {
+
+    private Unbinder unbinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.common_activity);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         startContactsListFragment();
 
     }
@@ -27,12 +30,12 @@ public class ContactsListActivity extends BaseActivity{
 
         ContactsListFragment contactsListFragment = new ContactsListFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.layCommonActivity,contactsListFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.layCommonActivity, contactsListFragment).commit();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

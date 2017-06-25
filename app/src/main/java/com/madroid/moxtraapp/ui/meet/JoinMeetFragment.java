@@ -21,7 +21,7 @@ import com.moxtra.isdk.util.Log;
 import com.moxtra.sdk.MXChatManager;
 import com.moxtra.sdk.MXSDKException;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import utils.PreferencesUtils;
@@ -33,19 +33,19 @@ import utils.PreferencesUtils;
 public class JoinMeetFragment extends BaseFragment {
 
 
-    @Bind(R.id.et_meet_number)
+    @BindView(R.id.et_meet_number)
     EditText meetingName;
 
-    @Bind(R.id.switch_audio_on)
+    @BindView(R.id.switch_audio_on)
     BrandingSwitch switchAudio;
 
-    @Bind(R.id.switch_video_on)
+    @BindView(R.id.switch_video_on)
     BrandingSwitch switchVideo;
 
-    @Bind(R.id.btn_action)
+    @BindView(R.id.btn_action)
     BrandingStateButton actionButton;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     View view;

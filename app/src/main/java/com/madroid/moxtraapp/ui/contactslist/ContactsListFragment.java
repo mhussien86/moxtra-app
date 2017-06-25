@@ -25,9 +25,10 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.OnClick;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 /**
@@ -36,21 +37,23 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
 public class ContactsListFragment extends BaseFragment {
 
 
-    @Bind(R.id.recycle_view)
+    @BindView(R.id.recycle_view)
     RecyclerView recyclerView;
 
     private SectionedRecyclerViewAdapter sectionAdapter;
 
     LoginResponseDTO responseDTO;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
+    private Unbinder unbinder;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_contact_list, container, false);
 
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         setUpToolBar("Contacts");
         try {
             Bundle b = getActivity().getIntent().getBundleExtra("bundle");
@@ -72,7 +75,7 @@ public class ContactsListFragment extends BaseFragment {
         recyclerView.setLayoutManager(llm);
         recyclerView.setHasFixedSize(true);
 
-        for(char alphabet = 'A'; alphabet <= 'Z';alphabet++) {
+        for (char alphabet = 'A'; alphabet <= 'Z'; alphabet++) {
             List<LoginResponseDTO.Contact> contacts = getContactsWithLetter(alphabet);
 
             if (contacts.size() > 0) {
@@ -95,28 +98,29 @@ public class ContactsListFragment extends BaseFragment {
         List<LoginResponseDTO.Contact> contacts = new ArrayList<>();
 
         for (LoginResponseDTO.Contact contact : responseDTO.getResponse().getUserData().getContacts()) {
-                if (contact.getFirstName().charAt(0) == letter) {
-                    contacts.add(contact);
-                }
+            if (contact.getFirstName().charAt(0) == letter) {
+                contacts.add(contact);
+            }
         }
 
         return contacts;
     }
-    private void setUpToolBar(String pageTitle){
+
+    private void setUpToolBar(String pageTitle) {
         //add the Toolbar
 
-        LayoutInflater mInflater=LayoutInflater.from(getActivity());
+        LayoutInflater mInflater = LayoutInflater.from(getActivity());
         View mCustomView = mInflater.inflate(R.layout.categories_toolbar, null);
         toolbar.addView(mCustomView);
-        TextView title =((TextView)toolbar.findViewById(R.id.title));
+        TextView title = ((TextView) toolbar.findViewById(R.id.title));
         title.setText(pageTitle);
 
-        ImageView add = (ImageView)toolbar.findViewById(R.id.icon_add);
+        ImageView add = (ImageView) toolbar.findViewById(R.id.icon_add);
         add.setVisibility(View.INVISIBLE);
 
-        ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
-        ((BaseActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((BaseActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
+        ((BaseActivity) getActivity()).setSupportActionBar(toolbar);
+        ((BaseActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((BaseActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
 
     }
 
@@ -128,7 +132,7 @@ public class ContactsListFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
 

@@ -21,7 +21,7 @@ import org.parceler.Parcels;
 
 import java.util.Arrays;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -32,19 +32,19 @@ import butterknife.OnClick;
 
 public class ContactDetailsFragment extends BaseFragment {
 
-    @Bind(R.id.contact_name)
+    @BindView(R.id.contact_name)
     TextView contactName;
 
-    @Bind(R.id.contact_email)
+    @BindView(R.id.contact_email)
     TextView contactEmail;
 
-    @Bind(R.id.contact_phone)
+    @BindView(R.id.contact_phone)
     TextView contactPhone;
 
-    @Bind(R.id.chat_button)
+    @BindView(R.id.chat_button)
     Button chatButton;
 
-    @Bind(R.id.meet_button)
+    @BindView(R.id.meet_button)
     Button meetButton;
 
     LoginResponseDTO.Contact contact;

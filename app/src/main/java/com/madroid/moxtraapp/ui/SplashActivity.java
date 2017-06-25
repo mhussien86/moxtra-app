@@ -112,7 +112,7 @@ public class SplashActivity extends BaseActivity implements LoginView {
                         hideProgress();
                         Log.i(TAG, "Linked to moxtra account successfully.");
                         Log.e("Accecss token", loginResponseDTO.getResponse().getAccessToken());
-
+                        DataHolder.getInstance().setToken(loginResponseDTO.getResponse().getAccessToken());
                         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                         Bundle b = new Bundle();
                         b.putParcelable(AppConstants.LOGIN_RESPONSE, Parcels.wrap(loginResponseDTO));

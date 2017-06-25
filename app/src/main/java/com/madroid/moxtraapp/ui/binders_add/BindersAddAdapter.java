@@ -8,23 +8,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.hanks.library.AnimateCheckBox;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.binders.BindersResponseDTO;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.rey.material.widget.CheckBox;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.BindView;
 
 /**
  * Created by omarmakeen on 6/22/17.
  */
 
-public class BindersAddAdapter extends RecyclerView.Adapter<BindersAddAdapter.MyViewHolder>{
+public class BindersAddAdapter extends RecyclerView.Adapter<BindersAddAdapter.MyViewHolder> {
 
 
     private final Context mContext;
     private final List<BindersResponseDTO.Binder> binders;
+    private List<BindersResponseDTO.Binder> selectedBinders = new ArrayList<>();
 
     public BindersAddAdapter(List<BindersResponseDTO.Binder> binders, Context context) {
         this.binders = binders;
@@ -41,40 +46,58 @@ public class BindersAddAdapter extends RecyclerView.Adapter<BindersAddAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
 
         final BindersResponseDTO.Binder binder = binders.get(position);
         Picasso.with(mContext).load(binder.getSubBinder().getThumbnailUri()).into(holder.binderImage);
         holder.binderName.setText(binder.getSubBinder().getName());
+        holder.addCheckbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.addCheckbox.isChecked()) {
+//                    holder.addCheckbox.setChecked(true);
+                    selectedBinders.add(binder);
+                } else {
+//                    holder.addCheckbox.setChecked(false);
+                    selectedBinders.remove(binder);
+                }
+            }
+        });
 
     }
 
-    public void openAddBindersActivity(){
+    public void openAddBindersActivity() {
         Intent intent = new Intent(mContext, BindersAddActivity.class);
         mContext.startActivity(intent);
     }
 
     @Override
     public int getItemCount() {
-        return (binders!=null)?binders.size():0;
+        return (binders != null) ? binders.size() : 0;
     }
-
-
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public AnimateCheckBox addCheckbox;
-        public RoundedImageView binderImage ;
+        @BindView(R.id.add_binder_checkbox)
+        public CheckBox addCheckbox;
+        @BindView(R.id.binder_image)
+        public RoundedImageView binderImage;
+        @BindView(R.id.binder_name)
         public TextView binderName;
 
         public MyViewHolder(View view) {
             super(view);
-            addCheckbox = (AnimateCheckBox) view.findViewById(R.id.add_binder_checkbox);
-            binderImage = (RoundedImageView) view.findViewById(R.id.binder_image);
-            binderName = (TextView) view.findViewById(R.id.binder_name);
-        }
+            ButterKnife.bind(this, view);
+//            addCheckbox = (CheckBox) view.findViewById(R.id.add_binder_checkbox);
+//            binderImage = (RoundedImageView) view.findViewById(R.id.binder_image);
+//            binderName = (TextView) view.findViewById(R.id.binder_name);
 
+        }
+    }
+
+    public List<BindersResponseDTO.Binder> getSelectedBinders(){
+        return selectedBinders;
     }
 }
 

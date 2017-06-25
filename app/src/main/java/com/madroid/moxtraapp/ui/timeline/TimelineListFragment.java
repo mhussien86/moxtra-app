@@ -42,8 +42,9 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import utils.PreferencesUtils;
 
 /**
@@ -52,22 +53,24 @@ import utils.PreferencesUtils;
 public class TimelineListFragment extends BaseFragment implements TimelineListView {
 
 
-    @Bind(R.id.recycle_view)
+    @BindView(R.id.recycle_view)
     RecyclerView recyclerView;
 
     TimelineListAdapter contactsListAdapter;
 
-    TimeLinePresenter timelinePresenter ;
+    TimeLinePresenter timelinePresenter;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    private Unbinder unbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_timeline_list, container, false);
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         setUpToolBar();
 
         return rootView;
@@ -82,7 +85,7 @@ public class TimelineListFragment extends BaseFragment implements TimelineListVi
         recyclerView.setHasFixedSize(true);
         timelinePresenter = new com.madroid.moxtraapp.ui.timeline.TimelinePresenterImpl(this);
         String accessToken = PreferencesUtils.getInstance(getActivity()).getString(AppConstants.ACCESS_TOKEN);
-        timelinePresenter.getAllBinders(accessToken,"all",null);
+        timelinePresenter.getAllBinders(accessToken, "all", null);
     }
 
     private void showAllConversations(List<BindersResponseDTO.Binder> sessions) {
@@ -94,23 +97,23 @@ public class TimelineListFragment extends BaseFragment implements TimelineListVi
             public void onItemClick(BindersResponseDTO.Binder_ session) {
 
 //                if (session.isAChat()) {
-                    try {
-                        MXChatManager.getInstance().openChat(session.getId(), new MXChatManager.OnOpenChatListener() {
-                            @Override
-                            public void onOpenChatSuccess() {
+                try {
+                    MXChatManager.getInstance().openChat(session.getId(), new MXChatManager.OnOpenChatListener() {
+                        @Override
+                        public void onOpenChatSuccess() {
 
-                                Log.e("open chat", "open moxtra chat success");
-                            }
+                            Log.e("open chat", "open moxtra chat success");
+                        }
 
-                            @Override
-                            public void onOpenChatFailed(int i, String s) {
-                                Log.e("open chat", s);
-                            }
-                        });
-                    } catch (MXException.AccountManagerIsNotValid accountManagerIsNotValid) {
+                        @Override
+                        public void onOpenChatFailed(int i, String s) {
+                            Log.e("open chat", s);
+                        }
+                    });
+                } catch (MXException.AccountManagerIsNotValid accountManagerIsNotValid) {
 
 
-                    }
+                }
 //                } else if (session.isAMeet()) {
 //                    joinMeet(session);
 //                }
@@ -252,14 +255,14 @@ public class TimelineListFragment extends BaseFragment implements TimelineListVi
                     switch (item.getItemId()) {
                         case R.id.menu_all:
 //                            showAllConversations();
-                            timelinePresenter.getAllBinders(accessToken,"all",null);
+                            timelinePresenter.getAllBinders(accessToken, "all", null);
                             return true;
                         case R.id.menu_favorite:
-                            timelinePresenter.getFavoriteBinders(accessToken,"favorite",null);
+                            timelinePresenter.getFavoriteBinders(accessToken, "favorite", null);
                             Toast.makeText(getActivity(), "Popularity!", Toast.LENGTH_SHORT).show();
                             return true;
                         case R.id.menu_unread:
-                            timelinePresenter.getUnReadBinders(accessToken,"unread",null);
+                            timelinePresenter.getUnReadBinders(accessToken, "unread", null);
                             Toast.makeText(getActivity(), "menu_unread!", Toast.LENGTH_SHORT).show();
                             return true;
                         default:
@@ -273,7 +276,7 @@ public class TimelineListFragment extends BaseFragment implements TimelineListVi
                 public boolean onMenuItemClick(MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.menu_meet_now:
-                            getActivity().startActivity(new Intent(new Intent(getActivity(), MeetingsContainerActivity.class)).putExtra("data","start"));
+                            getActivity().startActivity(new Intent(new Intent(getActivity(), MeetingsContainerActivity.class)).putExtra("data", "start"));
                             return true;
                         case R.id.menu_group_conversation:
                             Toast.makeText(getActivity(), "menu_group_conversation!", Toast.LENGTH_SHORT).show();
@@ -286,7 +289,7 @@ public class TimelineListFragment extends BaseFragment implements TimelineListVi
                                 b.putParcelable(AppConstants.LOGIN_RESPONSE, Parcels.wrap(loginResponseDTO));
                                 intent.putExtra("bundle", b);
                                 startActivity(intent);
-                            }catch(Exception e){
+                            } catch (Exception e) {
 
                             }
                             return true;
@@ -308,7 +311,7 @@ public class TimelineListFragment extends BaseFragment implements TimelineListVi
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override
@@ -341,7 +344,7 @@ public class TimelineListFragment extends BaseFragment implements TimelineListVi
     @Override
     public void updateListWithAll(BindersResponseDTO bindersResponseDTO) {
 
-        Log.e("size",""+bindersResponseDTO.getData().getBinders().size());
+        Log.e("size", "" + bindersResponseDTO.getData().getBinders().size());
         showAllConversations(bindersResponseDTO.getData().getBinders());
 
     }

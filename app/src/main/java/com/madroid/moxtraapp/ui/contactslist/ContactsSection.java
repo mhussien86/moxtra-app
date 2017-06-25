@@ -9,7 +9,7 @@ import com.madroid.moxtraapp.dtos.LoginResponseDTO;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
@@ -81,10 +81,10 @@ public class ContactsSection extends StatelessSection {
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.contactName)
+        @BindView(R.id.contactName)
         TextView contactName;
 
-        @Bind(R.id.contactMail)
+        @BindView(R.id.contactMail)
         TextView contactMail;
 
         public ItemViewHolder(View itemView) {

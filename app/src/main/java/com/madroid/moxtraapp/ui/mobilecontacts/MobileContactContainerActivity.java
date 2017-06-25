@@ -7,14 +7,17 @@ import com.madroid.moxtraapp.BaseActivity;
 import com.madroid.moxtraapp.R;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class MobileContactContainerActivity extends BaseActivity {
+
+    private Unbinder unbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.common_activity);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         startMobileContactsFragment();
     }
 
@@ -28,6 +31,6 @@ public class MobileContactContainerActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }
