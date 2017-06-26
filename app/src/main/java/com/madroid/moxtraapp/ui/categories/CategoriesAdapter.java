@@ -13,7 +13,7 @@ import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.binders.BindersResponseDTO;
 import com.madroid.moxtraapp.dtos.categories.AllCategoriesResponseDTO;
 import com.madroid.moxtraapp.ui.MainActivity;
-import com.madroid.moxtraapp.ui.binders_add.BindersAddActivity;
+import com.madroid.moxtraapp.ui.categories_binders_add.BindersAddActivity;
 
 import java.io.Serializable;
 import java.util.List;

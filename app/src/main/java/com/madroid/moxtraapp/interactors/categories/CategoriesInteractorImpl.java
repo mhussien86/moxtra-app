@@ -1,5 +1,6 @@
 package com.madroid.moxtraapp.interactors.categories;
 
+import com.google.gson.JsonObject;
 import com.madroid.moxtraapp.data.APIConstants;
 import com.madroid.moxtraapp.data.ServiceGenerator;
 import com.madroid.moxtraapp.data.api.CategoriesAPI;
@@ -88,6 +89,38 @@ public class CategoriesInteractorImpl implements CategoriesInteractor {
                     public void onNext(SimpleResponseDTO responseDTO) {
 
                         onAssignBindersToCategoryFinished.onAssignBindersToCategorySucceed(responseDTO);
+                    }
+
+
+                }));
+
+    }
+
+    @Override
+    public void createCategory(String accecss_tokes, JsonObject category_name, final OnCreateCategoryFinished onCreateCategoryFinished) {
+
+        Observable<SimpleResponseDTO> observable = categoriesAPI.createCategory(accecss_tokes, category_name);
+
+        compositeSubscription.add(observable
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<SimpleResponseDTO>() {
+                    @Override
+                    public void onCompleted() {
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        onCreateCategoryFinished.onCreateCategoryFailed("" + e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(SimpleResponseDTO responseDTO) {
+
+                        onCreateCategoryFinished.onCreateCategorySucceed(responseDTO);
                     }
 
 

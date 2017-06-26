@@ -1,4 +1,4 @@
-package com.madroid.moxtraapp.ui.binders_add;
+package com.madroid.moxtraapp.ui.categories_binders_add;
 
 
 import android.content.Intent;

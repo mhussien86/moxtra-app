@@ -1,5 +1,6 @@
 package com.madroid.moxtraapp.interactors.categories;
 
+import com.google.gson.JsonObject;
 import com.madroid.moxtraapp.dtos.categories.AllCategoriesResponseDTO;
 import com.madroid.moxtraapp.dtos.categories.BindersAddCategoryRequestDTO;
 import com.madroid.moxtraapp.dtos.simple.SimpleResponseDTO;
@@ -14,6 +15,8 @@ public interface CategoriesInteractor {
 
     void assignBindersToCategory(Integer categoryId, String accecss_tokes,  BindersAddCategoryRequestDTO body, OnAssignBindersToCategoryFinished onAssignBindersToCategoryFinished);
 
+    void createCategory(String accecss_tokes, JsonObject category_name, OnCreateCategoryFinished onCreateCategoryFinished);
+
     interface OnGetAllCategoriesFinished{
 
         void onGetAllCategoriesSucceed(AllCategoriesResponseDTO allCategoriesResponseDTO);
@@ -24,6 +27,12 @@ public interface CategoriesInteractor {
 
         void onAssignBindersToCategorySucceed(SimpleResponseDTO response);
         void onAssignBindersToCategoryFailed(String message);
+    }
+
+    interface OnCreateCategoryFinished{
+
+        void onCreateCategorySucceed(SimpleResponseDTO response);
+        void onCreateCategoryFailed(String message);
     }
 
     void unsubscribe();

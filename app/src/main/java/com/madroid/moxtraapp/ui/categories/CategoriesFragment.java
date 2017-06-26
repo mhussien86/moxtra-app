@@ -27,8 +27,7 @@ import com.madroid.moxtraapp.dtos.binders.BindersResponseDTO;
 import com.madroid.moxtraapp.dtos.categories.AllCategoriesResponseDTO;
 import com.madroid.moxtraapp.dtos.catergoriesandbinders.CategoriesAndBindersDTO;
 import com.madroid.moxtraapp.ui.DataHolder;
-import com.madroid.moxtraapp.ui.meet.MeetingsContainerActivity;
-import com.madroid.moxtraapp.ui.timeline.ContactsListActivity;
+import com.madroid.moxtraapp.ui.categories_create.CreateCategoryActivity;
 
 import org.parceler.Parcels;
 
@@ -49,7 +48,7 @@ import butterknife.Unbinder;
 public class CategoriesFragment extends BaseFragment implements CategoriesView {
 
     @BindView(R.id.layout_loading)
-    View loadingLayout ;
+    View loadingLayout;
     @BindView(R.id.recent_people_list)
     RecyclerView recentPeopleRecyclerView;
     @BindView(R.id.categories_list)
@@ -74,12 +73,12 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.categories_fragment, container, false);
-        unbinder = ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         setUpToolBar();
         Bundle b = getActivity().getIntent().getBundleExtra("bundle");
         LoginResponseDTO loginResponseDTO = Parcels.unwrap(b.getParcelable(AppConstants.LOGIN_RESPONSE));
         categoriesPresenter = new CategoriesPresenterImpl(this);
-        categoriesPresenter.getCategoriesAndBinders(loginResponseDTO.getResponse().getAccessToken(),"all","feeds");
+        categoriesPresenter.getCategoriesAndBinders(loginResponseDTO.getResponse().getAccessToken(), "all", "feeds");
         shouldExecuteOnResume = false;
         categoriesFragment = this;
         return rootView;
@@ -104,7 +103,7 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
     }
 
 
-    void setRecentPeopleList(List<BindersResponseDTO.Binder> binders){
+    void setRecentPeopleList(List<BindersResponseDTO.Binder> binders) {
         recentPeople = new ArrayList<>();
         Iterator<BindersResponseDTO.Binder> it = binders.iterator();
         while (it.hasNext()) {
@@ -115,11 +114,11 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
         }
     }
 
-    void setCategoriesWithBinders(List<BindersResponseDTO.Binder> binders, List<AllCategoriesResponseDTO.Category> categories){
+    void setCategoriesWithBinders(List<BindersResponseDTO.Binder> binders, List<AllCategoriesResponseDTO.Category> categories) {
 
         List<BindersResponseDTO.Binder> tempBinder = new ArrayList<>();
 
-        Iterator<BindersResponseDTO.Binder> binderIt= binders.iterator();
+        Iterator<BindersResponseDTO.Binder> binderIt = binders.iterator();
         Iterator<AllCategoriesResponseDTO.Category> categoriesIt = categories.iterator();
 
         while (categoriesIt.hasNext()) {
@@ -127,7 +126,7 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
             int key = category.getId();
             while (binderIt.hasNext()) {
                 BindersResponseDTO.Binder binder = binderIt.next();
-                if(binder.getCategory() == key && !binder.getSubBinder().getConversation()){
+                if (binder.getCategory() == key && !binder.getSubBinder().getConversation()) {
                     tempBinder.add(binder);
                 }
             }
@@ -137,11 +136,11 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
         categoriesBindersMap = new HashMap<Integer, List<BindersResponseDTO.Binder>>();
 
         for (BindersResponseDTO.Binder binder : tempBinder) {
-            int key  = binder.getCategory();
-            if(categoriesBindersMap.containsKey(key)){
+            int key = binder.getCategory();
+            if (categoriesBindersMap.containsKey(key)) {
                 List<BindersResponseDTO.Binder> list = categoriesBindersMap.get(key);
                 list.add(binder);
-            }else{
+            } else {
                 List<BindersResponseDTO.Binder> list = new ArrayList<BindersResponseDTO.Binder>();
                 list.add(binder);
                 categoriesBindersMap.put(key, list);
@@ -166,13 +165,13 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
     @Override
     public void showError(String message) {
 
-        Snackbar.make(getView(),""+message,Snackbar.LENGTH_LONG).show();
+        Snackbar.make(getView(), "" + message, Snackbar.LENGTH_LONG).show();
     }
 
-    private void setUpToolBar(){
+    private void setUpToolBar() {
         //add the Toolbar
 
-        LayoutInflater mInflater=LayoutInflater.from(getActivity());
+        LayoutInflater mInflater = LayoutInflater.from(getActivity());
         View mCustomView = mInflater.inflate(R.layout.categories_toolbar, null);
         toolbar.addView(mCustomView);
         ImageView add = (ImageView) toolbar.findViewById(R.id.icon_add);
@@ -180,12 +179,12 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
             @Override
             public void onClick(View view) {
 
-                showMenuPopup(view, R.menu.popup_new_action);
+                showMenuPopup(view, R.menu.categories_popup_menu);
             }
         });
-        ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
-        ((BaseActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((BaseActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((BaseActivity) getActivity()).setSupportActionBar(toolbar);
+        ((BaseActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((BaseActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
     }
 
@@ -195,34 +194,22 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
         popup.getMenuInflater().inflate(resource, popup.getMenu());
 
 
-            // Setup menu item selection
-            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.menu_meet_now:
-                            getActivity().startActivity(new Intent(new Intent(getActivity(), MeetingsContainerActivity.class)).putExtra("data","start"));
-                            return true;
-                        case R.id.menu_group_conversation:
-                            Toast.makeText(getActivity(), "menu_group_conversation!", Toast.LENGTH_SHORT).show();
-                            return true;
-                        case R.id.menu_direct_message:
-                            try {
-                                Bundle b = getActivity().getIntent().getBundleExtra("bundle");
-                                LoginResponseDTO loginResponseDTO = Parcels.unwrap(b.getParcelable(AppConstants.LOGIN_RESPONSE));
-                                Intent intent = new Intent(getActivity(), ContactsListActivity.class);
-                                b.putParcelable(AppConstants.LOGIN_RESPONSE, Parcels.wrap(loginResponseDTO));
-                                intent.putExtra("bundle", b);
-                                startActivity(intent);
-                            }catch(Exception e){
-
-                            }
-                            return true;
-                        default:
-                            return false;
-                    }
+        // Setup menu item selection
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_create_category:
+                        Intent intent = new Intent(getActivity(), CreateCategoryActivity.class);
+                        categoriesFragment.startActivityForResult(intent,0);
+                        return true;
+                    case R.id.menu_manage_categories:
+                        Toast.makeText(getActivity(), "menu_manage_categories!", Toast.LENGTH_SHORT).show();
+                        return true;
+                    default:
+                        return false;
                 }
-            });
-
+            }
+        });
 
 
         MenuPopupHelper menuHelper = new MenuPopupHelper(getActivity(), (MenuBuilder) popup.getMenu(), v);
@@ -235,8 +222,8 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case (0) : {
+        switch (requestCode) {
+            case (0): {
                 if (resultCode == Activity.RESULT_OK) {
                     shouldExecuteOnResume = data.getBooleanExtra("onResume", false);
                 }
@@ -246,10 +233,9 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
     }
 
     @Override
-    public void onResume()
-    {  // After a pause OR at startup
+    public void onResume() {  // After a pause OR at startup
         super.onResume();
-        if(shouldExecuteOnResume) {
+        if (shouldExecuteOnResume) {
             categoriesPresenter.getCategoriesAndBinders(DataHolder.getInstance().getToken(), "all", "feeds");
             shouldExecuteOnResume = false;
         }

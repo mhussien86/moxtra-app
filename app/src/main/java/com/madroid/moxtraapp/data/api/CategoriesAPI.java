@@ -1,5 +1,6 @@
 package com.madroid.moxtraapp.data.api;
 
+import com.google.gson.JsonObject;
 import com.madroid.moxtraapp.dtos.categories.AllCategoriesResponseDTO;
 import com.madroid.moxtraapp.dtos.categories.BindersAddCategoryRequestDTO;
 import com.madroid.moxtraapp.dtos.simple.SimpleResponseDTO;
@@ -23,4 +24,7 @@ public interface CategoriesAPI {
 
     @POST("/me/categories/{categoryId}")
     Observable<SimpleResponseDTO> assignBindersToCategory(@Path("categoryId") Integer categoryId, @Query("access_token") String access_token,@Body BindersAddCategoryRequestDTO body);
+
+    @POST("/me/categories?")
+    Observable<SimpleResponseDTO> createCategory(@Query("access_token") String access_token,@Body JsonObject category_name);
 }

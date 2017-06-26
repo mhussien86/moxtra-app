@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.madroid.moxtraapp.ui.binders_add.BindersAddFragment">
+    tools:context="com.madroid.moxtraapp.ui.categories_binders_add.BindersAddFragment">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
