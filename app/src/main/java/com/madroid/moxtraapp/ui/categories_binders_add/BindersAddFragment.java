@@ -114,6 +114,7 @@ public class BindersAddFragment extends BaseFragment implements BindersAddView {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        bindersAddPresenter.unsubscribe();
     }
 
 

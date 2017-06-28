@@ -84,6 +84,7 @@ public class CreateCategoryFragment extends BaseFragment implements CreateCatego
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        createCategoryPresenter.unsubscribe();
     }
 
     @Override

@@ -8,4 +8,6 @@ public interface CategoriesPresenter {
 
     void getCategoriesAndBinders(String access_token, String filter, String sort);
 
+    void unsubscribe();
+
 }

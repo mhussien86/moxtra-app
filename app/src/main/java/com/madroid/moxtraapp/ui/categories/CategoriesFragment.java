@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.madroid.moxtraapp.AppConstants;
 import com.madroid.moxtraapp.BaseActivity;
@@ -28,9 +27,11 @@ import com.madroid.moxtraapp.dtos.categories.AllCategoriesResponseDTO;
 import com.madroid.moxtraapp.dtos.catergoriesandbinders.CategoriesAndBindersDTO;
 import com.madroid.moxtraapp.ui.DataHolder;
 import com.madroid.moxtraapp.ui.categories_create.CreateCategoryActivity;
+import com.madroid.moxtraapp.ui.categories_manage.ManageCategoriesActivity;
 
 import org.parceler.Parcels;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -67,6 +68,7 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
     private Unbinder unbinder;
     boolean shouldExecuteOnResume;
     CategoriesFragment categoriesFragment;
+    private List<BindersResponseDTO.Binder> binders;
 
     @Nullable
     @Override
@@ -88,7 +90,7 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
     @Override
     public void setCategoriesAndBinders(CategoriesAndBindersDTO categoriesAndBindersList) {
 
-        List<BindersResponseDTO.Binder> binders = new ArrayList<>();
+        binders = new ArrayList<>();
         binders = categoriesAndBindersList.bindersResponseDTO.getData().getBinders();
         categories = new ArrayList<>();
         categories = categoriesAndBindersList.allCategoriesResponseDTO.getData().getCategories();
@@ -193,9 +195,8 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
         // Inflate the menu from xml
         popup.getMenuInflater().inflate(resource, popup.getMenu());
 
-
-        // Setup menu item selection
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_create_category:
@@ -203,13 +204,34 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
                         categoriesFragment.startActivityForResult(intent,0);
                         return true;
                     case R.id.menu_manage_categories:
-                        Toast.makeText(getActivity(), "menu_manage_categories!", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(getActivity(), ManageCategoriesActivity.class);
+                        i.putExtra("categories", (Serializable) categories);
+                        getActivity().startActivityForResult(i,0);
                         return true;
                     default:
                         return false;
                 }
             }
         });
+
+        // Setup menu item selection
+//        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//            public boolean onMenuItemClick(MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.menu_create_category:
+//                        Intent intent = new Intent(getActivity(), CreateCategoryActivity.class);
+//                        categoriesFragment.startActivityForResult(intent,0);
+//                        return true;
+//                    case R.id.menu_manage_categories:
+//                        Intent i = new Intent(getActivity(), ManageCategoriesActivity.class);
+//                        i.putExtra("categories", (Serializable) categories);
+//                        categoriesFragment.startActivityForResult(i,0);
+//                        return true;
+//                    default:
+//                        return false;
+//                }
+//            }
+//        });
 
 
         MenuPopupHelper menuHelper = new MenuPopupHelper(getActivity(), (MenuBuilder) popup.getMenu(), v);
@@ -246,5 +268,6 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        categoriesPresenter.unsubscribe();
     }
 }

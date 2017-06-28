@@ -10,4 +10,6 @@ public interface BindersAddPresenter {
 
     void assignBindersToCategory(Integer categoryId, String access_token, BindersAddCategoryRequestDTO body);
 
+    void unsubscribe();
+
 }

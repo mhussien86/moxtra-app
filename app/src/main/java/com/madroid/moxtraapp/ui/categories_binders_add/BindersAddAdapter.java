@@ -89,9 +89,6 @@ public class BindersAddAdapter extends RecyclerView.Adapter<BindersAddAdapter.My
         public MyViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-//            addCheckbox = (CheckBox) view.findViewById(R.id.add_binder_checkbox);
-//            binderImage = (RoundedImageView) view.findViewById(R.id.binder_image);
-//            binderName = (TextView) view.findViewById(R.id.binder_name);
 
         }
     }

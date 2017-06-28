@@ -12,17 +12,17 @@ public class CategoriesPresenterImpl implements CategoriesPresenter, CategoriesB
 
 
     private final CategoriesView categoriesView;
-    CategoriesBindersInteractor categoriesBindersInteractor ;
+    CategoriesBindersInteractor categoriesBindersInteractor;
 
-    public CategoriesPresenterImpl(CategoriesView categoriesView){
-        this.categoriesView = categoriesView ;
+    public CategoriesPresenterImpl(CategoriesView categoriesView) {
+        this.categoriesView = categoriesView;
         categoriesBindersInteractor = new CategoriesBindersInteractorImpl();
     }
 
     @Override
     public void getCategoriesAndBinders(String access_token, String filter, String sort) {
         categoriesView.showProgress();
-        categoriesBindersInteractor.getCategoriesAndBinders(access_token,filter, sort, this);
+        categoriesBindersInteractor.getCategoriesAndBinders(access_token, filter, sort, this);
     }
 
     @Override
@@ -35,5 +35,10 @@ public class CategoriesPresenterImpl implements CategoriesPresenter, CategoriesB
     public void onGetCategoriesWithBindersFailed(String message) {
         categoriesView.hideProgress();
         categoriesView.showError(message);
+    }
+
+    @Override
+    public void unsubscribe() {
+        categoriesBindersInteractor.unsubscribe();
     }
 }

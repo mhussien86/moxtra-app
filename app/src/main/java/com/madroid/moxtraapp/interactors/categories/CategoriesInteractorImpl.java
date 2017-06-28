@@ -65,7 +65,7 @@ public class CategoriesInteractorImpl implements CategoriesInteractor {
 
 
     @Override
-    public void assignBindersToCategory(Integer categoryId, String accecss_tokes,  BindersAddCategoryRequestDTO body, final OnAssignBindersToCategoryFinished onAssignBindersToCategoryFinished) {
+    public void assignBindersToCategory(Integer categoryId, String accecss_tokes, BindersAddCategoryRequestDTO body, final OnAssignBindersToCategoryFinished onAssignBindersToCategoryFinished) {
 
         Observable<SimpleResponseDTO> observable = categoriesAPI.assignBindersToCategory(categoryId, accecss_tokes, body);
 
@@ -121,6 +121,77 @@ public class CategoriesInteractorImpl implements CategoriesInteractor {
                     public void onNext(SimpleResponseDTO responseDTO) {
 
                         onCreateCategoryFinished.onCreateCategorySucceed(responseDTO);
+                    }
+
+
+                }));
+
+    }
+
+    @Override
+    public void renameCategory(String accecss_tokes, JsonObject category, final OnRenameCategoryFinished onRenameCategoryFinished) {
+
+        Observable<SimpleResponseDTO> observable = categoriesAPI.renameCategory(accecss_tokes, category);
+
+        compositeSubscription.add(observable
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<SimpleResponseDTO>() {
+                    @Override
+                    public void onCompleted() {
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        onRenameCategoryFinished.onRenameCategoryFailed("" + e.getMessage());
+
+                    }
+
+                    @Override
+                    public void onNext(SimpleResponseDTO responseDTO) {
+
+                        onRenameCategoryFinished.onRenameCategorySucceed(responseDTO);
+
+                    }
+
+
+                }));
+
+    }
+
+
+    @Override
+    public void deleteCategory(Integer categoryId, String accecss_tokes, final OnDeleteCategoryFinished onDeleteCategoryFinished) {
+
+        Observable<SimpleResponseDTO> observable = categoriesAPI.deleteCategory(categoryId, accecss_tokes);
+
+        compositeSubscription.add(observable
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<SimpleResponseDTO>() {
+                    @Override
+                    public void onCompleted() {
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        onDeleteCategoryFinished.onDeleteCategoryFailed("" + e.getMessage());
+
+
+                    }
+
+                    @Override
+                    public void onNext(SimpleResponseDTO responseDTO) {
+
+                        onDeleteCategoryFinished.onDeleteCategorySucceed(responseDTO);
+
+
                     }
 
 

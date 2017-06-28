@@ -10,4 +10,6 @@ public interface CreateCategoryPresenter {
 
     void createCategory(String access_token, JsonObject category_name);
 
+    void unsubscribe();
+
 }

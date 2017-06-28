@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.madroid.moxtraapp.R;
 
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -24,10 +23,11 @@ public class CreateCategoryActivity extends AppCompatActivity {
 
     private void startCreateCategoryFragment() {
 
-        CreateCategoryFragment createCategoryFragment  = new CreateCategoryFragment();
+        CreateCategoryFragment createCategoryFragment = new CreateCategoryFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.layCommonActivity, createCategoryFragment).commit();
     }
+
 
     @Override
     protected void onDestroy() {

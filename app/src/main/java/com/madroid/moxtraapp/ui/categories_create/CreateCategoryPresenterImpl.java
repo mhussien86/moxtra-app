@@ -27,6 +27,11 @@ public class CreateCategoryPresenterImpl implements CreateCategoryPresenter, Cat
     }
 
     @Override
+    public void unsubscribe() {
+        categoriesInteractor.unsubscribe();
+    }
+
+    @Override
     public void onCreateCategorySucceed(SimpleResponseDTO responseDTO) {
         categoryView.hideProgress();
         categoryView.setCreateCategory(responseDTO);

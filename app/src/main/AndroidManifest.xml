@@ -60,6 +60,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ui.categories_create.CreateCategoryActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.categories_manage.ManageCategoriesActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

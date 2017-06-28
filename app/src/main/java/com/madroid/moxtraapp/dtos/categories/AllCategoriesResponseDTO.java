@@ -1,5 +1,6 @@
 package com.madroid.moxtraapp.dtos.categories;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -42,7 +43,7 @@ public class AllCategoriesResponseDTO {
         public List<Category> categories ;
     }
 
-    public class Category{
+    public class Category implements Serializable {
 
         public String getName() {
             return name;

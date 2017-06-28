@@ -38,5 +38,10 @@ public class BindersAddPresenterImpl implements BindersAddPresenter, CategoriesI
         bindersAddView.showError(message);
     }
 
+    @Override
+    public void unsubscribe(){
+        categoriesInteractor.unsubscribe();
+    }
+
 
 }
