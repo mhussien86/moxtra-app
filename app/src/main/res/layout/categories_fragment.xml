@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:id="@+id/toolbar_holder">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -22,46 +22,50 @@
 
 
     </android.support.design.widget.AppBarLayout>
-    <LinearLayout
+
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recentPeopleHolder"
-        android:orientation="vertical"
-        android:visibility="invisible"
         android:layout_below="@id/toolbar_holder">
 
-        <TextView
-            style="@style/text_view_7579000C39CD4C1390E1BF0F33A017E8_style"
-            android:id="@+id/text_view_7579000C39CD4C1390E1BF0F33A017E8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Recent People"
-            android:layout_marginLeft="17.7dp"
-            android:layout_marginBottom="10dp"
-            />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recent_people_list"
+        <LinearLayout
+            android:id="@+id/recentPeopleHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+            android:orientation="vertical"
+            android:visibility="invisible">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/line_divider" />
+            <TextView
+                android:id="@+id/text_view_7579000C39CD4C1390E1BF0F33A017E8"
+                style="@style/text_view_7579000C39CD4C1390E1BF0F33A017E8_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="17.7dp"
+                android:text="Recent People" />
 
-    </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recent_people_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/categories_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/recentPeopleHolder"
-        android:orientation="vertical"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-         />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_divider" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/categories_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/recentPeopleHolder"
+                android:orientation="vertical"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
     <include
         android:id="@+id/layout_loading"

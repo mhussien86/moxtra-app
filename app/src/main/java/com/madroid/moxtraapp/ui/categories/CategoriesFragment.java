@@ -45,7 +45,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * Created by mohamed on 13/03/17.
+ * Created by Omar Makeen on 13/03/17.
  */
 
 public class CategoriesFragment extends BaseFragment implements CategoriesView {
@@ -127,12 +127,13 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
 
         List<BindersResponseDTO.Binder> tempBinder = new ArrayList<>();
 
-        Iterator<BindersResponseDTO.Binder> binderIt = binders.iterator();
+
         Iterator<AllCategoriesResponseDTO.Category> categoriesIt = categories.iterator();
 
         while (categoriesIt.hasNext()) {
             AllCategoriesResponseDTO.Category category = categoriesIt.next();
             int key = category.getId();
+            Iterator<BindersResponseDTO.Binder> binderIt = binders.iterator();
             while (binderIt.hasNext()) {
                 BindersResponseDTO.Binder binder = binderIt.next();
                 if (binder.getCategory() == key && !binder.getSubBinder().getConversation()) {
@@ -208,38 +209,18 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
                 switch (item.getItemId()) {
                     case R.id.menu_create_category:
                         Intent intent = new Intent(getActivity(), CreateCategoryActivity.class);
-                        categoriesFragment.startActivityForResult(intent,0);
+                        categoriesFragment.startActivityForResult(intent, 0);
                         return true;
                     case R.id.menu_manage_categories:
                         Intent i = new Intent(getActivity(), ManageCategoriesActivity.class);
                         i.putExtra("categories", (Serializable) categories);
-                        categoriesFragment.startActivityForResult(i,0);
+                        categoriesFragment.startActivityForResult(i, 0);
                         return true;
                     default:
                         return false;
                 }
             }
         });
-
-        // Setup menu item selection
-//        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//            public boolean onMenuItemClick(MenuItem item) {
-//                switch (item.getItemId()) {
-//                    case R.id.menu_create_category:
-//                        Intent intent = new Intent(getActivity(), CreateCategoryActivity.class);
-//                        categoriesFragment.startActivityForResult(intent,0);
-//                        return true;
-//                    case R.id.menu_manage_categories:
-//                        Intent i = new Intent(getActivity(), ManageCategoriesActivity.class);
-//                        i.putExtra("categories", (Serializable) categories);
-//                        categoriesFragment.startActivityForResult(i,0);
-//                        return true;
-//                    default:
-//                        return false;
-//                }
-//            }
-//        });
-
 
         MenuPopupHelper menuHelper = new MenuPopupHelper(getActivity(), (MenuBuilder) popup.getMenu(), v);
         menuHelper.setForceShowIcon(true);

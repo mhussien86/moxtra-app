@@ -9,7 +9,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +61,7 @@ public class BindersAddFragment extends BaseFragment implements BindersAddView {
         BindersAddActivity bindersAddActivity = (BindersAddActivity) getActivity();
         binders = bindersAddActivity.getBinders();
         categoryId = bindersAddActivity.getCategoryId();
-        mAdapter = new BindersAddAdapter(binders, getContext());
+        mAdapter = new BindersAddAdapter(excludeBindersInCategory(binders, categoryId), getContext());
         LinearLayoutManager mLayoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(bindersAddList.getContext(),
@@ -73,6 +72,17 @@ public class BindersAddFragment extends BaseFragment implements BindersAddView {
         return rootView;
     }
 
+    private List<BindersResponseDTO.Binder> excludeBindersInCategory(List<BindersResponseDTO.Binder> binders, Integer categoryId) {
+        List<BindersResponseDTO.Binder> newBinders = new ArrayList<>();
+
+        for (BindersResponseDTO.Binder binder : binders) {
+            if (binder.getCategory() != categoryId && !binder.getSubBinder().getConversation())
+                newBinders.add(binder);
+        }
+
+        return newBinders;
+    }
+
     private void setUpToolBar() {
         //add the Toolbar
 
@@ -80,14 +90,20 @@ public class BindersAddFragment extends BaseFragment implements BindersAddView {
         View mCustomView = mInflater.inflate(R.layout.binders_add_toolbar, null);
         toolbar.addView(mCustomView);
         TextView add = (TextView) toolbar.findViewById(R.id.complete);
+        TextView cancel = (TextView) toolbar.findViewById(R.id.cancel);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Log.d("oo", "complete clciked");
-                createBindersAddCategoryBody();
-
-                bindersAddPresenter.assignBindersToCategory(categoryId, DataHolder.getInstance().getToken(), createBindersAddCategoryBody());
+                if (mAdapter.getSelectedBinders().size() > 0) {
+                    createBindersAddCategoryBody();
+                    bindersAddPresenter.assignBindersToCategory(categoryId, DataHolder.getInstance().getToken(), createBindersAddCategoryBody());
+                }
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
             }
         });
         ((BindersAddActivity) getActivity()).setSupportActionBar(toolbar);

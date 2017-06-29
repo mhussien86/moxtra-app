@@ -42,6 +42,7 @@ public class ManageCategoriesFragment extends BaseFragment implements ManageCate
     private List<AllCategoriesResponseDTO.Category> categories = new ArrayList<>();
     private Unbinder unbinder;
     private ManageCategoriesAdapter mAdapter;
+    private boolean actionDone;
     public ManageCategoriesPresenter manageCategoriesPresenter;
 
     public ManageCategoriesFragment() {
@@ -100,12 +101,14 @@ public class ManageCategoriesFragment extends BaseFragment implements ManageCate
         if (categories.contains(mAdapter.getSelectedCategory())) {
             categories.get(categories.indexOf(mAdapter.getSelectedCategory())).setName(mAdapter.getNewCategoryName());
         }
+        actionDone = true;
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void setDeleteCategory(SimpleResponseDTO responseDTO) {
         categories.remove(mAdapter.getSelectedCategory());
+        actionDone = true;
         mAdapter.notifyDataSetChanged();
     }
 
@@ -126,8 +129,10 @@ public class ManageCategoriesFragment extends BaseFragment implements ManageCate
 
     private void finishActivity() {
         Intent intent = new Intent();
-        intent.putExtra("onResume", true);
-        getActivity().setResult(RESULT_OK, intent);
+        if (actionDone) {
+            intent.putExtra("onResume", true);
+            getActivity().setResult(RESULT_OK, intent);
+        }
         getActivity().finish();
     }
 }
