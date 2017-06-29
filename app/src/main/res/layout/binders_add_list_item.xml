@@ -9,12 +9,14 @@
     <com.makeramen.roundedimageview.RoundedImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/binder_image"
-        android:layout_width="30.0dp"
-        android:layout_height="30.0dp"
+        android:layout_width="35.0dp"
+        android:layout_height="35.0dp"
         android:layout_marginBottom="15dp"
         android:scaleType="fitCenter"
-        app:riv_corner_radius="10dip"
+        app:riv_corner_radius="5dip"
         android:layout_marginTop="15dp"
+        app:riv_border_width="1dp"
+        app:riv_border_color="@color/light_gray"
         android:layout_alignParentLeft="true"/>
 
     <TextView
