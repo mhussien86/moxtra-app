@@ -35,7 +35,7 @@
             android:id="@+id/text_view_7579000C39CD4C1390E1BF0F33A017E8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Recent Categories"
+            android:text="Recent People"
             android:layout_marginLeft="17.7dp"
             android:layout_marginBottom="10dp"
             />
@@ -50,8 +50,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginLeft="17.7dp"
-            android:layout_marginRight="17.7dp"
             android:background="@color/line_divider" />
 
     </LinearLayout>

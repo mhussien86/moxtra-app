@@ -51,8 +51,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="35dp"
         android:orientation="vertical" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_divider" />
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/line_divider" />-->
 </LinearLayout>

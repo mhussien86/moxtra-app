@@ -1,7 +1,8 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.madroid.moxtraapp.ui.categories_binders_add.BindersAddFragment">
 
@@ -28,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_below="@id/toolbar_holder"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
     <include
@@ -38,4 +40,4 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
-</FrameLayout>
+</RelativeLayout>

@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.view.menu.MenuPopupHelper;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -99,6 +101,11 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
         mAdapter = new RecentPeopleAdapter(recentPeople, getContext());
         cAdapter = new CategoriesAdapter(categories, categoriesBindersMap, binders, getContext(), categoriesFragment);
         recentPeopleRecyclerView.setAdapter(mAdapter);
+        LinearLayoutManager mLayoutManager
+                = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(categoriesRecyclerView.getContext(),
+                mLayoutManager.getOrientation());
+        categoriesRecyclerView.addItemDecoration(mDividerItemDecoration);
         categoriesRecyclerView.setAdapter(cAdapter);
         recentPeopleHolder.setVisibility(View.VISIBLE);
 
@@ -206,7 +213,7 @@ public class CategoriesFragment extends BaseFragment implements CategoriesView {
                     case R.id.menu_manage_categories:
                         Intent i = new Intent(getActivity(), ManageCategoriesActivity.class);
                         i.putExtra("categories", (Serializable) categories);
-                        getActivity().startActivityForResult(i,0);
+                        categoriesFragment.startActivityForResult(i,0);
                         return true;
                     default:
                         return false;

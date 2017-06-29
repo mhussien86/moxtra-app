@@ -1,7 +1,9 @@
 package com.madroid.moxtraapp.ui.categories_manage;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.madroid.moxtraapp.BaseFragment;
 import com.madroid.moxtraapp.R;
 import com.madroid.moxtraapp.dtos.categories.AllCategoriesResponseDTO;
+import com.madroid.moxtraapp.dtos.simple.SimpleResponseDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,18 +26,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ManageCategoriesFragment extends BaseFragment {
+public class ManageCategoriesFragment extends BaseFragment implements ManageCategoriesView {
 
     @BindView(R.id.manage_categories_list)
     RecyclerView manageCategoriesList;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.layout_loading)
+    View loadingLayout;
     private List<AllCategoriesResponseDTO.Category> categories = new ArrayList<>();
     private Unbinder unbinder;
     private ManageCategoriesAdapter mAdapter;
+    public ManageCategoriesPresenter manageCategoriesPresenter;
 
     public ManageCategoriesFragment() {
         // Required empty public constructor
@@ -44,18 +52,18 @@ public class ManageCategoriesFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.manage_categories_fragment, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         ManageCategoriesActivity manageCategoriesActivity = (ManageCategoriesActivity) getActivity();
         categories = manageCategoriesActivity.getCategories();
-        mAdapter = new ManageCategoriesAdapter(categories, getContext());
+        mAdapter = new ManageCategoriesAdapter(categories, getContext(), ManageCategoriesFragment.this);
         LinearLayoutManager mLayoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(manageCategoriesList.getContext(),
                 mLayoutManager.getOrientation());
         manageCategoriesList.addItemDecoration(mDividerItemDecoration);
         manageCategoriesList.setAdapter(mAdapter);
+        manageCategoriesPresenter = new ManageCategoryPresenterImpl(this);
         setUpToolBar();
         return rootView;
     }
@@ -71,7 +79,7 @@ public class ManageCategoriesFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
 
-                getActivity().finish();
+                finishActivity();
             }
         });
         ((ManageCategoriesActivity) getActivity()).setSupportActionBar(toolbar);
@@ -86,4 +94,40 @@ public class ManageCategoriesFragment extends BaseFragment {
         unbinder.unbind();
     }
 
+    @Override
+    public void setRenameCategory(SimpleResponseDTO responseDTO) {
+
+        if (categories.contains(mAdapter.getSelectedCategory())) {
+            categories.get(categories.indexOf(mAdapter.getSelectedCategory())).setName(mAdapter.getNewCategoryName());
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setDeleteCategory(SimpleResponseDTO responseDTO) {
+        categories.remove(mAdapter.getSelectedCategory());
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showProgress() {
+        loadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        loadingLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showError(String message) {
+        Snackbar.make(getView(), "" + message, Snackbar.LENGTH_LONG).show();
+    }
+
+    private void finishActivity() {
+        Intent intent = new Intent();
+        intent.putExtra("onResume", true);
+        getActivity().setResult(RESULT_OK, intent);
+        getActivity().finish();
+    }
 }
